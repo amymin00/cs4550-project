@@ -2,12 +2,10 @@ import React from "react";
 
 const Header = () => {
   return (
-      <div className="container">
-        <h1>Header</h1>
-
+      <div>
         <nav className="navbar navbar-light bg-light">
           <div className="container-fluid">
-
+            <h2>Website name</h2>
             <form className="d-flex">
               <input className="form-control me-2" type="search"
                      placeholder="Search" aria-label="Search" />
