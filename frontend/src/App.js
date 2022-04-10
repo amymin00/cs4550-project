@@ -16,6 +16,7 @@ function App() {
               <Route path="home" exact={true} element={<HomeScreen />} />
               <Route path="login" element={<Login/>}/>
               <Route path="register" element={<Register/>}/>
+              {/*<Route path="profile" element={<Profile/>}/>*/}
             </Route>
           </Routes>
         </div>
