@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const Header = () => {
   return (
@@ -13,7 +14,9 @@ const Header = () => {
                         type="submit">Search
                 </button>
             </form>
-            <button className="btn btn-primary float-end">Log in</button>
+            <Link to="/login">
+              <button className="btn btn-primary float-end">Log in</button>
+            </Link>
           </div>
         </nav>
 
