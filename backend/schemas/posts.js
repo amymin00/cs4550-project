@@ -1,16 +1,15 @@
-import mongoose, { ObjectId } from 'mongoose';
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-// posts - id, group id, poster, timestamp, song/playlist focus, text, likes,
 const postsSchema = new Schema({
-    name: String,
-    'group_id': ObjectId, // a post belongs to a group
+    title: String,
+    poster: ObjectId,
     timestamp: Date,
-    'focus_item': ObjectId, // not sure how to represent this
+    song: ObjectId,
     text: String,
-    liked: [ObjectId], // so that multiple people can like at same time?
-    likes: Number,
+    liked: [ObjectId],
+    comments: [ObjectId],
 }, {collection: 'posts'});
 
 export default postsSchema;

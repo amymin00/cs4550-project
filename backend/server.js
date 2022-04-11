@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import userController from './controllers/users.js';
+import 'dotenv/config';
+import userController from './controllers/listeners.js';
 import postsController from './controllers/posts.js';
 import creatorsController from './controllers/creators.js';
 import groupsController from './controllers/groups.js';

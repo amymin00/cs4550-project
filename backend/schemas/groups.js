@@ -1,11 +1,13 @@
-import mongoose, { ObjectId } from 'mongoose';
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-// groups - id, name, purpose(?), list of users, need ideas for additional fields
-const postsSchema = new Schema({
+// groups = like subreddit
+const groupsSchema = new Schema({
     name: String,
-    users: [ObjectId], // again, not sure how to represent this
+    topic: String,
+    members: [ObjectId], // list of users
+    posts: [ObjectId],
 }, {collection: 'groups'});
 
-export default postsSchema;
+export default groupsSchema;

@@ -2,14 +2,13 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-// Thinking of changing this to verified?
 const creatorsSchema = new Schema({
     name: String,
     username: String,
     biography: String,
     image: String,
-    songs: [String], // might be the song ids taken from Spotify's API
-    followers: [ObjectId] // not sure how to represent users idk
+    songs: [String], // song ids taken from Spotify's Web API
+    followers: [ObjectId]
 }, {collection: 'creators'});
 
 export default creatorsSchema;
