@@ -4,12 +4,12 @@ const { Schema } = mongoose;
 
 const postsSchema = new Schema({
     title: String,
-    poster: ObjectId,
+    poster: mongoose.Types.ObjectId,
     timestamp: Date,
-    song: ObjectId,
+    song: String,
     text: String,
-    liked: [ObjectId],
-    comments: [ObjectId],
+    liked: [mongoose.Types.ObjectId],
+    comments: [mongoose.Types.ObjectId],
 }, {collection: 'posts'});
 
 export default postsSchema;

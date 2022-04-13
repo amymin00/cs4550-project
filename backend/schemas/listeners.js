@@ -4,13 +4,13 @@ const { Schema } = mongoose;
 
 const listenersSchema = new Schema({
     name: String,
-    username: String,
+    listenername: String,
     password: String,
     biography: String,
     image: String,
     playlists: [String],
-    followers: [ObjectId],
-    followees: [ObjectId],
+    followers: [mongoose.Types.ObjectId],
+    followees: [mongoose.Types.ObjectId],
 }, {collection: 'listeners'});
 
 export default listenersSchema;

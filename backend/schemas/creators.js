@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 
 const creatorsSchema = new Schema({
     name: String,
-    username: String,
+    listenername: String,
     biography: String,
     image: String,
     songs: [String], // song ids taken from Spotify's Web API
-    followers: [ObjectId]
+    followers: [mongoose.Types.ObjectId]
 }, {collection: 'creators'});
 
 export default creatorsSchema;

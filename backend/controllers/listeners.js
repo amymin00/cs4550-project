@@ -1,33 +1,33 @@
 import * as listenersDao from '../daos/listeners.js';
 
-const createUser = async (req, res) => {
-    const newUser = req.body;
-    newUser.likes = 0;
-    const insertedUser = await listenersDao.createUser(newUser);
-    res.json(insertedUser);
+const createListener = async (req, res) => {
+    const newListener = req.body;
+    newListener.likes = 0;
+    const insertedListener = await listenersDao.createListener(newListener);
+    res.json(insertedListener);
 }
 
-const findAlllisteners = async (req, res) => {
-    const listeners = await listenersDao.findAlllisteners();
+const findAllListeners = async (req, res) => {
+    const listeners = await listenersDao.findAllListeners();
     res.json(listeners);
 }  
 
-const updateUser = async (req, res) => {
-    const userdIdToUpdate = req.params.tid;
-    const updatedUser = req.body;
-    const status = await listenersDao.updateUser(userdIdToUpdate, updatedUser);
+const updateListener = async (req, res) => {
+    const ListenerdIdToUpdate = req.params.id;
+    const updatedListener = req.body;
+    const status = await listenersDao.updateListener(listenerdIdToUpdate, updatedListener);
     res.send(status);
-}   
+}
 
-const deleteUser = async (req, res) => {
-    const userdIdToDelete = req.params.tid;
-    const status = await listenersDao.deleteUser(userdIdToDelete);
+const deleteListener = async (req, res) => {
+    const listenerdIdToDelete = req.params.id;
+    const status = await listenersDao.deleteListener(listenerdIdToDelete);
     res.send(status);
 }   
 
 export default app => {
-    app.post('/api/listeners', createUser);
-    app.get('/api/listeners', findAlllisteners);
-    app.put('/api/listeners/:tid', updateUser);
-    app.delete('/api/listeners/:tid', deleteUser);
+    app.post('/api/listeners', createListener);
+    app.get('/api/listeners', findAllListeners);
+    app.put('/api/listeners/:id', updateListener);
+    app.delete('/api/listeners/:id', deleteListener);
 }

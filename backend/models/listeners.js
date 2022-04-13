@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import tuitsSchema from './tuits-schema.js'
+import listenersSchema from '../schemas/listeners.js';
 
-const listenersModel = mongoose.model('listenersModel', tuitsSchema);
+const listenersModel = mongoose.model('ListenersModel', listenersSchema);
 
 export default listenersModel;

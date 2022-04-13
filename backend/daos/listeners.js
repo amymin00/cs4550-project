@@ -1,6 +1,6 @@
-import listenersModel from './tuits-model.js';
+import listenersModel from '../models/listeners.js';
 
-export const findAlllisteners = () => listenersModel.find();
-export const createUser = (user) => listenersModel.create(user);
-export const deleteUser = (uid) => listenersModel.deleteOne({_id: uid});
-export const updateUser = (uid, user) => listenersModel.updateOne({_id: uid}, {$set: user})
+export const findAlLListeners = () => listenersModel.find();
+export const createListener = (listener) => listenersModel.create(listener);
+export const deleteListener = (id) => listenersModel.deleteOne({_id: id});
+export const updateListener = (id, listener) => listenersModel.updateOne({_id: id}, {$set: listener})
