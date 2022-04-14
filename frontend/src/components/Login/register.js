@@ -66,15 +66,11 @@ const Register = ({
 
             {/*TODO implement reducer, update this with reducer*/}
             <div className="form-outline mb-4">
-              <label>
-                Register as an artist
-                <input
-                    className="ms-2"
-                    name="isArtist"
-                    type="checkbox"
-                    checked={user.type === "artist"}
-                    onChange={() => setUserType()}/>
-              </label>
+              <select className="form-select">
+                <option selected>Select account type</option>
+                <option value="listener">Listener</option>
+                <option value="artist">Artist</option>
+              </select>
             </div>
 
             <button type="submit"
