@@ -24,6 +24,9 @@ const Profile = ({
         <h4>{user.username}
           <span className="d-inline-block">{user.creator && <i className="fa fa-check-circle"/>}
           </span></h4>
+        <Link to="/editprofile">
+          <button className="btn btn-primary float-end">Edit Profile</button>
+        </Link>
         <hr className="border-2 border-top border-dark" />
         <div className="d-inline-block">
           <h2 className="d-inline-block pe-3">following</h2>
