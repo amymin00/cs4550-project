@@ -6,14 +6,10 @@ import {createUser} from "../../actions/user-actions";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const [name, setName] =
-      useState();
-  const [username, setUsername] =
-      useState();
-  const [password, setPassword] =
-      useState();
-  const [creator, setCreator] =
-      useState();
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [creator, setCreator] = useState(false);
   const user = {
     name: name,
     username: username,
@@ -41,14 +37,18 @@ const Register = () => {
           <h1 className="text-center text-primary mb-5">Register</h1>
           <form>
             <div className="form-outline mb-4">
-              <input type="text" id="registerName" className="form-control"
+              <input required 
+                     type="text" id="registerName" 
+                     className="form-control"
                      placeholder="John Smith"
                      onChange={(event) => setName(event.target.value)}/>
               <label className="form-label" htmlFor="registerName">Name</label>
             </div>
 
             <div className="form-outline mb-4">
-              <input type="text" id="registerUsername" className="form-control"
+              <input required
+                     type="text" id="registerUsername" 
+                     className="form-control"
                      placeholder="johnsmith"
                      onChange={(event) => setUsername(event.target.value)}/>
               <label className="form-label"
@@ -56,7 +56,9 @@ const Register = () => {
             </div>
 
             <div className="form-outline mb-4">
-              <input type="password" id="registerPassword"
+              <input required
+                     type="password" 
+                     id="registerPassword"
                      placeholder="password"
                      className="form-control"
                      onChange={(event) => setPassword(event.target.value)}/>
@@ -65,10 +67,12 @@ const Register = () => {
             </div>
             {/*TODO implement reducer, update this with reducer*/}
             <div className="form-outline mb-4">
-              <select className="form-select">
+              <select required
+                      className="form-select"
+                      onChange={e => setCreator(e.target.value)}>
                 <option selected>Select account type</option>
-                <option value={0}>Listener</option>
-                <option value={1}>Artist</option>
+                <option value={false}>Listener</option>
+                <option value={true}>Artist</option>
               </select>
             </div>
 
