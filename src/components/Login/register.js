@@ -1,21 +1,33 @@
-import React from "react";
+import React, {useState} from "react";
+import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
+import {createUser} from "../../actions/user-actions";
 
-const Register = ({
-  user = {
-    type: "listener" // default
+
+const Register = () => {
+  const dispatch = useDispatch();
+  const [name, setName] =
+      useState();
+  const [username, setUsername] =
+      useState();
+  const [password, setPassword] =
+      useState();
+  const [creator, setCreator] =
+      useState();
+  const user = {
+    name: name,
+    username: username,
+    password: password,
+    creator: creator,
+    biography: "",
+    image: "",
+    songs: [],
+    playlists: [],
+    followers: [],
+    followees: [],
   }
-}) => {
+  // TODO create user functionality
 
-  const setUserType = () => {
-    console.log(user.type);
-    if (user.type === "artist") {
-      user.type = "listener";
-    } else {
-      user.type = "artist";
-    }
-    console.log(user.type);
-  };
 
   return (
       <div>
@@ -30,55 +42,40 @@ const Register = ({
           <form>
             <div className="form-outline mb-4">
               <input type="text" id="registerName" className="form-control"
-                     placeholder="John Smith"/>
+                     placeholder="John Smith"
+                     onChange={(event) => setName(event.target.value)}/>
               <label className="form-label" htmlFor="registerName">Name</label>
             </div>
 
             <div className="form-outline mb-4">
               <input type="text" id="registerUsername" className="form-control"
-                     placeholder="johnsmith"/>
+                     placeholder="johnsmith"
+                     onChange={(event) => setUsername(event.target.value)}/>
               <label className="form-label"
                      htmlFor="registerUsername">Username</label>
             </div>
 
             <div className="form-outline mb-4">
-              <input type="email" id="registerEmail" className="form-control"
-                     placeholder="johnsmith@webdev.com"/>
-              <label className="form-label"
-                     htmlFor="registerEmail">Email</label>
-            </div>
-
-            <div className="form-outline mb-4">
               <input type="password" id="registerPassword"
                      placeholder="password"
-                     className="form-control"/>
+                     className="form-control"
+                     onChange={(event) => setPassword(event.target.value)}/>
               <label className="form-label"
                      htmlFor="registerPassword">Password</label>
             </div>
-
-            <div className="form-outline mb-4">
-              <input type="password" id="registerRepeatPassword"
-                     placeholder="password"
-                     className="form-control"/>
-              <label className="form-label" htmlFor="registerRepeatPassword">Repeat
-                password</label>
-            </div>
-
             {/*TODO implement reducer, update this with reducer*/}
             <div className="form-outline mb-4">
-              <label>
-                Register as an artist
-                <input
-                    className="ms-2"
-                    name="isArtist"
-                    type="checkbox"
-                    checked={user.type === "artist"}
-                    onChange={() => setUserType()}/>
-              </label>
+              <select className="form-select">
+                <option selected>Select account type</option>
+                <option value={0}>Listener</option>
+                <option value={1}>Artist</option>
+              </select>
             </div>
 
             <button type="submit"
-                    className="btn btn-primary btn-block mb-3">Register
+                    className="btn btn-primary btn-block mb-3"
+                    onClick={() => createUser(dispatch, user)}>
+              Register
             </button>
 
             <div className="text-center">

@@ -17,6 +17,10 @@ const Header = () => {
             <Link to="/login">
               <button className="btn btn-primary float-end">Log in</button>
             </Link>
+            {/* if logged in show my profile, otherwise show log in */}
+            <Link to="/profile">
+              <button className="btn btn-primary float-end">My Profile</button>
+            </Link>
           </div>
         </nav>
 
