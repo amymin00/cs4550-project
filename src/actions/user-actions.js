@@ -13,13 +13,14 @@ export const findAllUsers = async (dispatch) => {
   });
 }
 
-/*export const deleteUser = async (dispatch, user) => {
+export const deleteUser = async (dispatch, user) => {
   await service.deleteUser(user);
   dispatch({
     type: DELETE_USER,
     user
   })
-}*/
+}
+
 export const createUser = async (dispatch, user) => {
   const newUser = await service.createUser(user);
   console.log(user)

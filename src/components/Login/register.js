@@ -15,7 +15,7 @@ const Register = () => {
     username: username,
     password: password,
     creator: creator,
-    biography: "",
+    biography: "About me",
     image: "",
     songs: [],
     playlists: [],
@@ -65,7 +65,6 @@ const Register = () => {
               <label className="form-label"
                      htmlFor="registerPassword">Password</label>
             </div>
-            {/*TODO implement reducer, update this with reducer*/}
             <div className="form-outline mb-4">
               <select required
                       className="form-select"

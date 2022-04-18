@@ -15,7 +15,6 @@ import userReducer from "./reducers/user-reducer";
 import {combineReducers, createStore} from "redux";
 import {Provider} from "react-redux";
 
-
 function App() {
 
   const reducer = combineReducers({
