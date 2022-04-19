@@ -1,3 +1,0 @@
-/*
-TODO after getting data
- */

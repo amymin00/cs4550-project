@@ -27,15 +27,10 @@ const Register = () => {
 
   return (
       <div>
-        <div className="d-inline-block mt-2">
-          <Link to="/home">
-            <button className="btn btn-primary float-end">Home</button>
-          </Link>
-        </div>
         <div className="container mt-3">
           {/*https://mdbootstrap.com/docs/standard/extended/login/*/}
           <h1 className="text-center text-primary mb-5">Register</h1>
-          <form>
+          <form action="/home">
             <div className="form-outline mb-4">
               <input required 
                      type="text" id="registerName" 

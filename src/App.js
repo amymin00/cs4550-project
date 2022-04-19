@@ -25,8 +25,8 @@ function App() {
   return (
       <Provider store={store}>
       <BrowserRouter>
+        <Header />
         <div className="container">
-          <Header/>
           <Routes>
             <Route path="/">
               <Route index element={<HomeScreen />} />
