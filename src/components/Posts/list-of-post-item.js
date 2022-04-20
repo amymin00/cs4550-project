@@ -1,5 +1,5 @@
 import {useDispatch} from "react-redux";
-import {updatePost} from "../../actions/post-actions";
+import {deletePost, updatePost} from "../../actions/post-actions";
 import {useState} from "react";
 import {createComment} from "../../actions/comment-actions";
 
@@ -11,7 +11,7 @@ const PostListItem = ({
     timestamp: 0,
     song: "",
     text: "",
-    likes: 0,
+    likes: [],
     comments: [],
   }
 }) => {
@@ -28,6 +28,11 @@ const PostListItem = ({
   return (
       <ul className="list-group-item">
         <div className="card">
+          <div className="float-end mb-0">
+            <i onClick={() => deletePost(
+                dispatch, post)}
+               className="fa fa-times"/>
+          </div>
           <img src="..." className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">Song name</h5>
@@ -41,7 +46,7 @@ const PostListItem = ({
                   <span><i className="far fa-heart text-red"
                            onClick={() => updatePost(dispatch, {
                              ...post,
-                             likes: post.likes + 1
+                             post: post.likes.push("3pU1pel2ZJ8d1ExY_mYYy"), // TODO add user.id when functional
                            })}></i>
                   </span> {post.likes.length} </p>
             <p className="pe-3 d-inline-block"><span><i className="far fa-comment"></i></span> {post.comments.length}</p>
