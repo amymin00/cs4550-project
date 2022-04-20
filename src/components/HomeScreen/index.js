@@ -1,13 +1,13 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import Footer from "../Footer";
+import CommentList from "../Posts/Comments";
+import PostList from "../Posts";
 
 const HomeScreen = () => {
   return (
       <div>
-      <div  className="align-bottom">
-        <Footer />
-      </div>
+        {/*<CommentList />*/}
+        <PostList />
       </div>
   )
 };
