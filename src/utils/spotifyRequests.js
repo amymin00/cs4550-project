@@ -1,6 +1,6 @@
 // import 'dotenv-webpack/config';
 import axios from 'axios';
-import qs from 'qs';
+// import qs from 'qs';
 
 const spotifyAuth = async () => {
     const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
@@ -9,6 +9,23 @@ const spotifyAuth = async () => {
     console.log(`client id: ${clientId}`);
     console.log(`client secret: ${clientSecret}`);
     const DEFAULT_TOKEN = 'BQBphedjijY_PDBKjbqvCn1Ja0qL-csRWFY7FuiopPBJ7Lhkb6TBX9Qa9vacL5PiAnxAQY1HHyy7dWS5CrGCtez0N655aj4QBelIynGcjM0FlsBn9VetNPDH37Btt-dQ-BnmYcVWqPdVVVKO7Q';
+
+    var authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        headers: {
+          'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret).toString('base64')
+        },
+        form: {
+          grant_type: 'client_credentials'
+        },
+        json: true
+      };
+      
+    // request.post(authOptions, function(error, response, body) {
+    //     if (!error && response.statusCode === 200) {
+    //         var token = body.access_token;
+    //     }
+    // });
 
     const headers = {
         headers: {
@@ -20,15 +37,15 @@ const spotifyAuth = async () => {
           password: clientSecret,
         },
     };
-        const data = {
+    const data = {
         grant_type: 'client_credentials',
     };
 
     try {
         const response = await axios.post(
             'http://accounts.spotify.com/api/token',
-            qs.stringify(data),
-            headers
+            // qs.stringify(data),
+            authOptions // headers
         );
 
         console.log(`got access token: ${response.data.access_token}`);   

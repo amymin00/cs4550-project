@@ -1,10 +1,13 @@
+import {useDispatch} from "react-redux";
+import {deleteUser} from "../../actions/user-actions";
+
 const ListOfUsersItem = ({
   user = {
-    name: "",
-    username: "",
-    password: "",
+    name: "bill",
+    username: "bill-webdev",
+    password: "p@ssword",
     creator: false,
-    biography: "",
+    biography: "hello",
     image: "",
     songs: [],
     playlists: [],
@@ -12,6 +15,7 @@ const ListOfUsersItem = ({
     followees: [],
   }
 }) => {
+  const dispatch = useDispatch();
   return (
       <ul className="list-group-item">
         <div className="d-inline-block">
@@ -32,8 +36,10 @@ const ListOfUsersItem = ({
         </div>
         <div className="float-end">
           {/* TODO unfollow functionality */}
-          <button className="btn btn-primary rounded-pill mt-2 mb-2">
-            Unfollow
+          <button className="btn btn-danger rounded-pill mt-2 mb-2"
+                  onClick={() => deleteUser(
+                      dispatch, user)}>
+            Delete
           </button>
         </div>
       </ul>

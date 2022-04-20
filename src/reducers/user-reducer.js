@@ -10,7 +10,7 @@ const usersReducer = (state = [], action) => {
     case CREATE_USER:
       return [
         ...state,
-        action.newTuit
+        action.newUser
       ];
     case FIND_ALL_USERS:
       return action.users;

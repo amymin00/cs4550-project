@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import Following from "./ListOfUsers/following";
 import ListOfPostsItem from "../Posts/list-of-post-item";
+import UserList from "../user-list";
 
 const Profile = ({
   user = {
@@ -30,6 +30,7 @@ const Profile = ({
         <hr className="border-2 border-top border-dark" />
         <div className="d-inline-block">
           <h2 className="d-inline-block pe-3">following</h2>
+          <UserList />
           <h2 className="d-inline-block">followers</h2>
         </div>
 
