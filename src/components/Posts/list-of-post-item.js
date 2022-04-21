@@ -24,7 +24,7 @@ const PostListItem = ({
     timestamp: 0,
     text: newComment,
   };
-  console.log(newComment);
+
   return (
       <ul className="list-group-item">
         <div className="card">
@@ -50,7 +50,7 @@ const PostListItem = ({
                            })}></i>
                   </span> {post.likes.length} </p>
             <p className="pe-3 d-inline-block"><span><i className="far fa-comment"></i></span> {post.comments.length}</p>
-            {/* TODO add new comment*/}
+            {/* TODO fix add new comment*/}
           </div>
           <div>
               <textarea className="form-control" value={newComment} placeholder="Cool post!"
