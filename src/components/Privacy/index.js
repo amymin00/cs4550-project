@@ -1,17 +1,53 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const PrivacyPolicy = () => {
   return (
-      <div className="container">
-        <Link to="/home"> Home </Link>
-        <h2>Privacy Policy</h2>
-        <p>
-
-        </p>
-      </div>
+    <div className="container">
+      <Link to="/home"> Home </Link>
+      <h2>Privacy Policy</h2>
+      <p>
+        "Spotify with Friends" was built to give Spotify listeners and artists a
+        better way to share what music their friends are listening to, as well
+        as explore new songs and artists. We are dedicated to respecting users'
+        privacy and personal information by providing transparency into our
+        privacy practices:
+      </p>
+      <ul>
+        <li>
+          "Spotify with Friends" will not store any of your information if you
+          do not create an account. If you are registered and choose to post,
+          however, you will be submitting information to us.
+        </li>
+        <li>
+          If you register on our website, we will collect information readily
+          available from your Spotify account. This information is only used to
+          build a stronger sense of community and identity between users on our
+          website.
+        </li>
+        <li>
+          If you choose to post, anything you post will be available for anyone
+          registered with an account to see. Posting is entirely optional and
+          while your posts may help other users discover new music, we want you
+          to understand that you will also be broadcasting your listening
+          history to the public.
+        </li>
+        <li>
+          Finally, if you choose to save any posts or songs, we will store that
+          information for your use.
+        </li>
+      </ul>
+      <p>
+        We cannot guarantee that your data will be safely stored, as we do not
+        have the capacity to implement the necessary security and encryption
+        into our website. The majority of our services can be used without
+        registering and without giving us any of your information. Thank you for
+        reading and we hope that you understand the implications of using our
+        website.
+      </p>
+    </div>
   );
-}
+};
 
 export default PrivacyPolicy;
 

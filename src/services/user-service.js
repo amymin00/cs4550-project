@@ -1,11 +1,16 @@
 import axios from 'axios';
 
-const USERS_API = 'https://cs4550-proj-server.herokuapp.com/api/users';
+const USERS_API = 'https://infinite-reef-07217.herokuapp.com/api/users' //'https://cs4550-proj-server.herokuapp.com/api/users';
 
 export const findAllUsers = async () => {
   const response = await axios.get(USERS_API);
   const users = response.data;
   return users;
+}
+
+export const findUser = async (user) => {
+  const response = await axios.get(`${USERS_API}/${user._id}`);
+  return response.data;
 }
 
 export const createUser = async (user) => {

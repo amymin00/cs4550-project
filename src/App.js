@@ -14,11 +14,13 @@ import EditProfile from "./components/Profile/EditProfile";
 import userReducer from "./reducers/user-reducer";
 import {combineReducers, createStore} from "redux";
 import {Provider} from "react-redux";
+import commentsReducer from "./reducers/comment-reducer";
+import postsReducer from "./reducers/post-reducer";
 
 function App() {
 
   const reducer = combineReducers({
-    users: userReducer
+    users: userReducer, comments: commentsReducer, posts: postsReducer
   });
   const store = createStore(reducer);
   return (
