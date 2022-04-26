@@ -20,7 +20,6 @@ const Login = () => {
     };
 
     return (
-<<<<<<< Updated upstream
         <div className="container mt-3">
             <h1 className="text-center text-primary mb-5">Log in</h1>
             <form>
@@ -33,23 +32,6 @@ const Login = () => {
                             placeholder="johnsmith"/>
                     <label className="form-label">Username</label>
                 </div>
-=======
-        <div>
-            {/* <div className="d-inline-block mt-2">
-                <Link to="/home">
-                    <button className="btn btn-primary float-end">Home</button>
-                </Link>
-            </div> */}
-            <div className="container mt-3">
-                {/*https://mdbootstrap.com/docs/standard/extended/login/*/}
-                <h1 className="text-center text-primary mb-5">Log in</h1>
-                <form>
-                    <div className="form-outline mb-4">
-                    <input type="text" id="loginName" className="form-control"
-                            placeholder="johnsmith@webdev.com"/>
-                    <label className="form-label">Email or username</label>
-                    </div>
->>>>>>> Stashed changes
 
                 {/* password */}
                 <div className="form-outline mb-4">

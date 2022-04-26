@@ -1,11 +1,7 @@
 import axios from 'axios';
 
-<<<<<<< Updated upstream
 const API_URI = process.env.REACT_APP_API_URI || 'https://infinite-reef-07217.herokuapp.com/api';
 const USERS_API = `${API_URI}/users`;
-=======
-const USERS_API = 'https://infinite-reef-07217.herokuapp.com/api/users';
->>>>>>> Stashed changes
 
 export const findAllUsers = async () => {
   const response = await axios.get(USERS_API);
@@ -13,16 +9,10 @@ export const findAllUsers = async () => {
   return users;
 }
 
-<<<<<<< Updated upstream
-export const findUser = async (user) => {
-  const response = await axios.get(`${USERS_API}/${user._id}`);
-  return response.data;
-=======
 export const findUserById = async userId => {
     const response = await axios.get(`${USERS_API}/${userId}`);
     const user = response.data;
     return user;
->>>>>>> Stashed changes
 }
 
 export const createUser = async (user) => {

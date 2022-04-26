@@ -26,7 +26,6 @@ function App() {
   });
   const store = createStore(reducer);
   return (
-<<<<<<< Updated upstream
         <ProfileProvider>
             <Provider store={store}>
                 <BrowserRouter>
@@ -52,26 +51,6 @@ function App() {
             </Provider>
         </ProfileProvider>
       
-=======
-      <Provider store={store}>
-      <BrowserRouter>
-        <Header />
-        <div className="container">
-          <Routes>
-            <Route path="/">
-              <Route index element={<HomeScreen />} />
-              <Route path="home" exact={true} element={<HomeScreen />} />
-              <Route path="login" element={<Login/>}/>
-              <Route path="register" element={<Register/>}/>
-              <Route path="profile/:id" element={<Profile/>}/>
-              <Route path="editprofile" element={<EditProfile/>}/>
-              <Route path="privacy" element={<PrivacyPolicy/>}/>
-            </Route>
-          </Routes>
-        </div>
-      </BrowserRouter>
-      </Provider>
->>>>>>> Stashed changes
   );
 }
 
