@@ -4,7 +4,7 @@ import { useProfile } from '../../contexts/profileContext';
 
 const SecureMenu = () => {
     const [loggedIn, setLoggedIn] = useState(false);
-    const { checkLoggedIn, logout } = useProfile();
+    const { checkLoggedIn, logout, profile } = useProfile();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,7 +33,7 @@ const SecureMenu = () => {
         return (
             <>
                 <li className="nav-item">
-                    <Link to='/profile' className='dropdown-item'>
+                    <Link to={`/profile/${profile._id}`} className='dropdown-item'>
                         Profile
                     </Link>
                 </li>

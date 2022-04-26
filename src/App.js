@@ -37,12 +37,16 @@ function App() {
                             <Route path="home" exact={true} element={<HomeScreen />} />
                             <Route path="login" element={<Login/>}/>
                             <Route path="register" element={<Register/>}/>
-                            <Route path="/profile" element={
+                            <Route path="/profile/:id" element={
                                 <SecureRoute>
                                     <Profile/>
                                 </SecureRoute>
                             }/>
-                            <Route path="editprofile" element={<EditProfile/>}/>
+                            <Route path="editprofile" element={
+                                <SecureRoute>
+                                    <EditProfile/>
+                                </SecureRoute>
+                            }/>
                             <Route path="privacy" element={<PrivacyPolicy/>}/>
                         </Route>
                     </Routes>

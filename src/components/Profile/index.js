@@ -3,15 +3,19 @@ import {Link, useParams} from "react-router-dom";
 import ListOfPostsItem from "../Posts/list-of-post-item";
 import UserList from "../user-list";
 import { findUserById } from "../../services/user-service";
+import { useProfile } from '../../contexts/profileContext';
 
 const Profile = () => {
-    const { userId } = useParams();
+    const { userId } = '9jgGRfZWjZ27uQGQhK4In'; // useParams();
     const [user, setUser] = useState(null);
     const getUser = async () => {
         const user = await findUserById(userId);
         setUser(user);
     }
     useEffect(getUser, [getUser]);
+
+    // const { profile } = useProfile();
+    // const user = profile;
     console.log(`user profile name here: ${user}`);
 
     return (
