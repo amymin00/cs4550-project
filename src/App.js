@@ -18,6 +18,7 @@ import commentsReducer from "./reducers/comment-reducer";
 import postsReducer from "./reducers/post-reducer";
 import { ProfileProvider } from './contexts/profileContext';
 import SecureRoute from './components/secureRoute';
+import AnonRoute from './components/anonRoute';
 
 function App() {
 
@@ -35,8 +36,16 @@ function App() {
                         <Route path="/">
                             <Route index element={<HomeScreen />} />
                             <Route path="home" exact={true} element={<HomeScreen />} />
-                            <Route path="login" element={<Login/>}/>
-                            <Route path="register" element={<Register/>}/>
+                            <Route path="login" element={
+                                <AnonRoute>
+                                    <Login/>
+                                </AnonRoute>
+                            }/>
+                            <Route path="register" element={
+                                <AnonRoute>
+                                    <Register/>
+                                </AnonRoute>
+                            }/>
                             <Route path="/profile/:userId" element={
                                 <SecureRoute>
                                     <Profile/>
