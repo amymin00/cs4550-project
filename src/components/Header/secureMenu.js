@@ -40,10 +40,10 @@ const SecureMenu = () => {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <a className='dropdown-item'
+                    <button className='dropdown-item'
                         onClick={handleLogoutBtn}>
                             Logout
-                    </a>
+                    </button>
                 </li>
             </>
         );

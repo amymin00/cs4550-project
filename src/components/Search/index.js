@@ -20,6 +20,10 @@ export default function Search() {
         }
     };
 
+    const refreshPage = () => { 
+        window.location.reload(); 
+    }
+
     return (
         <div className='dropdown'>
             <form className="d-flex">
@@ -42,7 +46,8 @@ export default function Search() {
                             <li className='dropdown-item'>
                                 <Link to={`songs/details/${song.id}`}
                                     className="text-decoration-none"
-                                    key={song.id}>
+                                    key={song.id}
+                                    onClick={refreshPage}>
                                     <div className='row w-auto'>
                                         <div className='col-3'>
                                             <img src={song.album.cover} alt=''
