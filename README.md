@@ -1,3 +1,10 @@
+# Setting up the client-side CS4550 Web Dev Project - Spotify with Friends
+
+Clone this repository and run `npm install` in the resulting directory.
+Create an .env file in the root and add REACT_APP_LOCAL_API_URI=http://localhost:4000/api to the file.
+
+------------------
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

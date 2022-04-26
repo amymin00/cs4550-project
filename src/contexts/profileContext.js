@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 
 const ProfileContext = React.createContext();
-const API_URI = process.env.REACT_APP_API_URI || 'https://infinite-reef-07217.herokuapp.com/api';
+const API_URI = process.env.REACT_APP_LOCAL_API_URI || process.env.REACT_APP_REMOTE_API_URI;
 const api = axios.create({withCredentials: true});
 
 export const ProfileProvider = ({children}) => {
