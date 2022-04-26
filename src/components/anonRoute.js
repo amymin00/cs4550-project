@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from "react-router-dom";
 import { useProfile } from '../contexts/profileContext';
 
-const SecureRoute = ({children}) => {
+const AnonRoute = ({children}) => {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
     const { checkLoggedIn } = useProfile();
@@ -20,13 +20,13 @@ const SecureRoute = ({children}) => {
         check();
     }, [checkLoggedIn]);
 
-    if (currentUser) {
+    if (!currentUser) {
         return children;
     } else if (loading) {
         return null;
     } else {
-        return <Navigate to="/login"/>;
+        return <Navigate to="/"/>;
     }
 };
 
-export default SecureRoute;
+export default AnonRoute;
