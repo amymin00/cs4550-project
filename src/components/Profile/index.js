@@ -6,37 +6,52 @@ import { findUserById } from "../../services/user-service";
 import { useProfile } from '../../contexts/profileContext';
 
 const Profile = () => {
-    const { userId } = '9jgGRfZWjZ27uQGQhK4In'; // useParams();
-    const [user, setUser] = useState(null);
-    const getUser = async () => {
-        const user = await findUserById(userId);
-        setUser(user);
-    }
-    useEffect(getUser, [getUser]);
+    const { userId } = useParams();
+    const { currentUser } = useProfile();
+    const [profileUser, setProfileUser] = useState(null);
 
-    console.log(`user profile name here: ${user}`);
+    useEffect(() => {
+        if (currentUser._id === userId) {
+            setProfileUser(currentUser);
+        } else {
+            // const getUser = async () => {
+            //     const user = await findUserById(userId);
+            //     setProfileUser(user);
+            // }
+            // getUser();
+            console.log('something went wrong!');
+        }
+    }, [currentUser, userId]);
 
-    return (
-        <div>
-            <h2>{user.name}</h2>
-            <h4>{user.username}
-                <span className="d-inline-block">
-                    {user.creator && <i className="fa fa-check-circle"/>}
-                </span>
-            </h4>
-            <Link to="/editprofile">
-                <button className="btn btn-primary float-end">Edit Profile</button>
-            </Link>
-            <hr className="border-2 border-top border-dark" />
-            <div className="d-inline-block">
-                <h2 className="d-inline-block pe-3">following</h2>
-                <UserList />
-                <h2 className="d-inline-block">followers</h2>
+    console.log(`user profile name here: ${profileUser.name}`);
+
+    if (profileUser) {
+        return (
+            <div>
+                <h2>{profileUser.name}</h2>
+                <h4>{profileUser.username}
+                    <span className="d-inline-block">
+                        {profileUser.creator && <i className="fa fa-check-circle"/>}
+                    </span>
+                </h4>
+                <Link to="/editprofile">
+                    <button className="btn btn-primary float-end">Edit Profile</button>
+                </Link>
+                <hr className="border-2 border-top border-dark" />
+                <div className="d-inline-block">
+                    <h2 className="d-inline-block pe-3">following</h2>
+                    <UserList />
+                    <h2 className="d-inline-block">followers</h2>
+                </div>
+                <ListOfPostsItem />
             </div>
-            <ListOfPostsItem />
-        </div>
-
-    );
+        );
+    } else {
+        return (
+            <div>Oops!</div>
+        )
+    }
+    
 }
 
 export default Profile;

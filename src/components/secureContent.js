@@ -15,7 +15,7 @@ const SecureContent = ({children, anonymousContent}) => {
             }
         }
         check();
-    }, []);
+    }, [checkLoggedIn]);
 
     console.log(`:))) logged in? ${loggedIn}`);
 

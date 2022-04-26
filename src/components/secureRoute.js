@@ -4,7 +4,7 @@ import { useProfile } from '../contexts/profileContext';
 
 const SecureRoute = ({children}) => {
     const [currentUser, setCurrentUser] = useState();
-    const [waiting, setWaiting] = useState(true);
+    const [loading, setLoading] = useState(true);
     const { checkLoggedIn } = useProfile();
     
     useEffect(() => {
@@ -12,17 +12,17 @@ const SecureRoute = ({children}) => {
             try {
                 const user = await checkLoggedIn();
                 setCurrentUser(user);
-                setWaiting(false);
+                setLoading(false);
             } catch (e) {
-                setWaiting(false);
+                setLoading(false);
             }
         }
         check();
-    }, []);
+    }, [checkLoggedIn]);
 
     if (currentUser) {
         return children;
-    } else if (waiting) {
+    } else if (loading) {
         return null;
     } else {
         return <Navigate to="/login"/>;
