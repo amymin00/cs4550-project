@@ -3,23 +3,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useProfile } from '../../contexts/profileContext';
 
 const SecureMenu = () => {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const { checkLoggedIn, logout, profile } = useProfile();
+    const [currentUser, setCurrentUser] = useState();
+    const [waiting, setWaiting] = useState(true);
+    const { checkLoggedIn, logout } = useProfile();
     const navigate = useNavigate();
-
+    
     useEffect(() => {
         const check = async () => {
             try {
-                await checkLoggedIn();
-                setLoggedIn(true);
+                const user = await checkLoggedIn();
+                setCurrentUser(user);
+                setWaiting(false);
             } catch (e) {
-                setLoggedIn(false);
+                setWaiting(false);
             }
         }
         check();
     }, [checkLoggedIn]);
 
-    const handleLogout = async () => {
+    const handleLogoutBtn = async () => {
         try {
             await logout();
             navigate('/login');
@@ -29,22 +31,24 @@ const SecureMenu = () => {
         }
     };
 
-    if (loggedIn) {
+    if (currentUser) {
         return (
             <>
                 <li className="nav-item">
-                    <Link to={`/profile/${profile._id}`} className='dropdown-item'>
+                    <Link to={`/profile/${currentUser._id}`} className='dropdown-item'>
                         Profile
                     </Link>
                 </li>
                 <li className="nav-item">
                     <a className='dropdown-item'
-                        onClick={handleLogout}>
+                        onClick={handleLogoutBtn}>
                             Logout
                     </a>
                 </li>
             </>
         );
+    } else if (waiting) {
+        return null;
     } else {
         return (
             <>

@@ -10,7 +10,9 @@ const Register = () => {
     const userTypeRef = useRef();
     const navigate = useNavigate();
 
-    const handleSignUp = async () => {
+    const handleSignUp = async e => {
+        e.preventDefault();
+        
         try {
             const user = {
                 name: nameRef.current.value,

@@ -14,8 +14,7 @@ const Profile = () => {
     }
     useEffect(getUser, [getUser]);
 
-    // const { profile } = useProfile();
-    // const user = profile;
+
     console.log(`user profile name here: ${user}`);
 
     return (
