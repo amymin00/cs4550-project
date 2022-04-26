@@ -1,14 +1,27 @@
+<<<<<<< Updated upstream
 import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useProfile } from "../../contexts/profileContext";
 
 const Register = () => {
     const { register } = useProfile();
+=======
+import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { createUser } from "../../actions/user-actions";
+import { useProfile } from "../../contexts/profile-context";
+
+
+const Register = () => {
+    const dispatch = useDispatch();
+>>>>>>> Stashed changes
     const nameRef = useRef();
     const usernameRef = useRef();
     const passwordRef = useRef();
     const userTypeRef = useRef();
     const navigate = useNavigate();
+<<<<<<< Updated upstream
 
     const handleSignUp = async () => {
         try {
@@ -63,13 +76,64 @@ const Register = () => {
                                 htmlFor="registerPassword">Password</label>
                     </div>
 
+=======
+    const { signup } = useProfile();
+    
+    const handleSignUp = () => {
+        createUser(dispatch, user);
+    };
+
+    return (
+        <div>
+            <div className="container mt-3">
+                <h1 className="text-center text-primary mb-5">Register</h1>
+                <form action="/home">
+                    {/* name */}
+                    <div className="form-outline mb-4">
+                        <input required 
+                                ref={nameRef}
+                                type="text" id="registerName" 
+                                className="form-control"
+                                placeholder="John Smith" />
+                        <label className="form-label" htmlFor="registerName">Name</label>
+                    </div>
+
+                    {/* username */}
+                    <div className="form-outline mb-4">
+                        <input required
+                                ref={usernameRef}
+                                type="text" id="registerUsername" 
+                                className="form-control"
+                                placeholder="johnsmith"/>
+                        <label className="form-label"
+                                htmlFor="registerUsername">Username</label>
+                    </div>
+
+                    {/* password */}
+                    <div className="form-outline mb-4">
+                        <input required
+                                ref={passwordRef}
+                                type="password" 
+                                id="registerPassword"
+                                placeholder="password"
+                                className="form-control"/>
+                        <label className="form-label"
+                                htmlFor="registerPassword">Password</label>
+                    </div>
+
+>>>>>>> Stashed changes
                     {/* user type */}
                     <div className="form-outline mb-4">
                         <select required
                                 ref={userTypeRef}
+<<<<<<< Updated upstream
                                 className="form-select"
                                 defaultValue={'DEFAULT'}>
                             <option value='DEFAULT' disabled>Select account type</option>
+=======
+                                className="form-select">
+                            <option selected>Select account type</option>
+>>>>>>> Stashed changes
                             <option value={false}>Listener</option>
                             <option value={true}>Artist</option>
                         </select>
@@ -87,7 +151,11 @@ const Register = () => {
                 </form>
             </div>
         </div>
+<<<<<<< Updated upstream
     );
+=======
+    )
+>>>>>>> Stashed changes
 };
 
 export default Register;
