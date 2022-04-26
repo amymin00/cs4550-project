@@ -11,7 +11,11 @@ const ListOfCommentsItem = ({
   return (
       <ul className="list-group-item">
         <div className="d-inline-block">
-          {comment.author && comment.timestamp && <p className="fw-bold pe-3">{comment.author} <span><p>{comment.timestamp}</p></span></p>}
+          {comment.author && comment.timestamp && 
+          <p className="fw-bold pe-3">
+              {comment.author} 
+              <br />
+              {comment.timestamp}</p>}
           {comment.text &&<p>{comment.text}</p>}
         </div>
       </ul>

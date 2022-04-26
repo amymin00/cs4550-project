@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const USERS_API = 'https://infinite-reef-07217.herokuapp.com/api/users' //'https://cs4550-proj-server.herokuapp.com/api/users';
+const API_URI = process.env.REACT_APP_API_URI || 'https://infinite-reef-07217.herokuapp.com/api';
+const USERS_API = `${API_URI}/users`;
 
 export const findAllUsers = async () => {
   const response = await axios.get(USERS_API);
