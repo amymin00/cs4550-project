@@ -1,54 +1,68 @@
 import React, {useEffect, useRef, useState} from 'react';
-import axios from "axios";
-// import Pre from "../utils/pre";
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
-import { searchForSongs } from '../../utils/spotifyRequests';
+import { Link } from "react-router-dom";
+import { searchForSongs } from '../../services/song-service';
 
 export default function Search() {
-//     const [songs, setSongs] = useState([]);
-    const songs = [
-        {
-            id: "1329873",
-            title: "abc",
-            artist: "Tom Smith",
-        },
-        {
-            id: "987132",
-            title: "defghi jklmnpqrst",
-            artist: "Michael Jackson",
-        }
-    ]
-    const [query, setQuery] = useState("");
+    const [songs, setSongs] = useState([]);
+    const queryRef = useRef();
+    
+    const fetchSongs = async e => {
+        e.preventDefault();
+        const query = queryRef.current.value;
 
-    useEffect(() => {
-        const data = searchForSongs(query);
-        console.log(`in search index.js: ${data}`);
-        console.log('would change songs list here');
-        // setSongs(data);
-    }, [query]);
+        if (query) {
+            const data = await searchForSongs(query);
+            // console.log(`in search index.js: ${data}`);
+            // console.log('would change songs list here');
+            setSongs(data);
+        } else {
+            setSongs([]);
+        }
+    };
 
     return (
-        <div>
-            <input className="form-control me-2" 
-                    type="search"
-                    placeholder="Search" 
-                    aria-label="Search"
-                    onChange={(e) => setQuery(e.target.value)} />
+        <div className='dropdown'>
+            <form className="d-flex">
+                <input ref={queryRef}
+                        className="form-control me-2" 
+                        type="search"
+                        placeholder="Search song titles" 
+                        aria-label="Search" />
+                <button className="btn btn-outline-success"
+                        type="submit"
+                        onClick={fetchSongs}>
+                    Search
+                </button>
+            </form>
             {
-                songs &&
-                <div className="dropdown show dropdown-menu rounded-0 shadow-sm border-0">
+                songs.length > 0 &&
+                <ul className="show dropdown-menu rounded-0 shadow-sm border-0">
                     {
-                        songs.map(song =>
-                            <Link to={`song/details/${song.id}`}
-                                className="text-decoration-none">
-                                <li className="dropdown-item">
-                                    {song.title} 
-                                    <span className='text-secondary'> {song.artist}</span>
-                                </li>
-                            </Link>
+                        songs.slice(0, 10).map(song =>
+                            <li className='dropdown-item'>
+                                <Link to={`songs/details/${song.id}`}
+                                    className="text-decoration-none"
+                                    key={song.id}>
+                                    <div className='row w-auto'>
+                                        <div className='col-3'>
+                                            <img src={song.album.cover} alt=''
+                                                className='w-100'></img>
+                                        </div>
+                                        <div className='col-9'>
+                                            <div className='row w-100 text-wrap'>
+                                                    {song.name}
+                                                    <span className='text-secondary'>{song.artists[0].name}</span>
+                                            </div>
+                                            <div>
+                                                <span className='text-secondary'>{song.album.released.substring(0,4)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </li>
                         )
                     }
-                </div>
+                </ul>
             }
         </div>
   );
