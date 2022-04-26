@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const COMMENTS_API = 'https://infinite-reef-07217.herokuapp.com/api/comments'
+const API_URI = process.env.REACT_APP_LOCAL_API_URI || 'https://infinite-reef-07217.herokuapp.com/api';
+const COMMENTS_API = `${API_URI}/comments`;
 
 export const findAllComments = async () => {
   const response = await axios.get(COMMENTS_API);

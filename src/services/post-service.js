@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const POSTS_API = 'https://infinite-reef-07217.herokuapp.com/api/posts' //'https://cs4550-proj-server.herokuapp.com/api/posts';
+const API_URI = process.env.REACT_APP_LOCAL_API_URI || 'https://infinite-reef-07217.herokuapp.com/api';
+const POSTS_API = `${API_URI}/posts`;
 
 export const findAllPosts = async () => {
   const response = await axios.get(POSTS_API);

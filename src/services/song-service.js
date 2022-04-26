@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URI = process.env.REACT_APP_API_URI || 'https://infinite-reef-07217.herokuapp.com/api';
+const API_URI = process.env.REACT_APP_LOCAL_API_URI || 'https://infinite-reef-07217.herokuapp.com/api';
 const SONGS_API = `${API_URI}/songs`;
 
 export const searchForSongs = async query => {
