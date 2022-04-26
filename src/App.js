@@ -16,6 +16,8 @@ import {combineReducers, createStore} from "redux";
 import {Provider} from "react-redux";
 import commentsReducer from "./reducers/comment-reducer";
 import postsReducer from "./reducers/post-reducer";
+import { ProfileProvider } from './contexts/profileContext';
+import SecureRoute from './components/secureRoute';
 
 function App() {
 
@@ -24,24 +26,35 @@ function App() {
   });
   const store = createStore(reducer);
   return (
-      <Provider store={store}>
-      <BrowserRouter>
-        <div className="container">
-          <Header/>
-          <Routes>
-            <Route path="/">
-              <Route index element={<HomeScreen />} />
-              <Route path="home" exact={true} element={<HomeScreen />} />
-              <Route path="login" element={<Login/>}/>
-              <Route path="register" element={<Register/>}/>
-              <Route path="profile" element={<Profile/>}/>
-              <Route path="editprofile" element={<EditProfile/>}/>
-              <Route path="privacy" element={<PrivacyPolicy/>}/>
-            </Route>
-          </Routes>
-        </div>
-      </BrowserRouter>
-      </Provider>
+        <ProfileProvider>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Header />
+                    <div className="container">
+                    <Routes>
+                        <Route path="/">
+                            <Route index element={<HomeScreen />} />
+                            <Route path="home" exact={true} element={<HomeScreen />} />
+                            <Route path="login" element={<Login/>}/>
+                            <Route path="register" element={<Register/>}/>
+                            <Route path="/profile/:id" element={
+                                <SecureRoute>
+                                    <Profile/>
+                                </SecureRoute>
+                            }/>
+                            <Route path="editprofile" element={
+                                <SecureRoute>
+                                    <EditProfile/>
+                                </SecureRoute>
+                            }/>
+                            <Route path="privacy" element={<PrivacyPolicy/>}/>
+                        </Route>
+                    </Routes>
+                    </div>
+                </BrowserRouter>
+            </Provider>
+        </ProfileProvider>
+      
   );
 }
 

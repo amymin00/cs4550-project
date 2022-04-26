@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const USERS_API = 'https://infinite-reef-07217.herokuapp.com/api/users' //'https://cs4550-proj-server.herokuapp.com/api/users';
+const API_URI = process.env.REACT_APP_API_URI || 'https://infinite-reef-07217.herokuapp.com/api';
+const USERS_API = `${API_URI}/users`;
 
 export const findAllUsers = async () => {
   const response = await axios.get(USERS_API);
@@ -8,14 +9,15 @@ export const findAllUsers = async () => {
   return users;
 }
 
-export const findUser = async (user) => {
-  const response = await axios.get(`${USERS_API}/${user._id}`);
-  return response.data;
+export const findUserById = async userId => {
+    const response = await axios.get(`${USERS_API}/${userId}`);
+    const user = response.data;
+    return user;
 }
 
 export const createUser = async (user) => {
   console.log(user);
-  const response = await axios.post(USERS_API, user)
+  const response = await axios.post(`${API_URI}/register`, user)
   return response.data;
 }
 

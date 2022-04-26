@@ -17,6 +17,7 @@ const UserList = () => {
     });
   }
   useEffect(findAllUsers, [dispatch]);
+  
   return (
       <div className="mt-5">
       <ul className="list-group">
