@@ -15,7 +15,7 @@ import * as service from "../../services/user-service";
 
 
 const Profile = () => {
-    const { userId } = useParams();
+    // const { userId } = useParams();
     const { currentUser } = useProfile();
     const [profileUser, setProfileUser] = useState(null);
     const [followers, setFollowers] = useState([]);
@@ -49,6 +49,8 @@ const Profile = () => {
     }, [currentUser]);
 
     console.log(`profileUser: ${profileUser}`);
+
+    // console.log(`profileUser: ${profileUser}`);
 
     // console.log(`user profile name here: ${profileUser.name}`);
 
