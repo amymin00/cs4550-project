@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useProfile } from "../../contexts/profileContext";
+import refreshPage from "../../utils/refreshPage";
 
 const Register = () => {
     const { register } = useProfile();
@@ -21,6 +22,7 @@ const Register = () => {
                 creator: userTypeRef.current.value,
             };
             await register(user);
+            refreshPage();
             navigate('/');
         } catch (e) {
             alert('Unable to sign up with given user credentials. Try again');

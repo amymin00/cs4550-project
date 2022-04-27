@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useProfile } from "../../contexts/profileContext";
+import refreshPage from "../../utils/refreshPage";
 
 const Login = () => {
     const { login } = useProfile();
@@ -12,6 +13,7 @@ const Login = () => {
         e.preventDefault();
         try {
             await login(usernameRef.current.value, passwordRef.current.value);
+            refreshPage();
             navigate('/');
         } catch (e) {
             console.log(e);

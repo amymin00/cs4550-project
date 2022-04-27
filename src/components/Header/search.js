@@ -1,10 +1,17 @@
-import React, {useEffect, useRef, useState} from 'react';
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { searchForSongs } from '../../services/song-service';
+import refreshPage from '../../utils/refreshPage';
 
 export default function Search() {
     const [songs, setSongs] = useState([]);
     const queryRef = useRef();
+    const [showResults, setShowResults] = React.useState(false)
+    const onFocus = () => setShowResults(true)
+    const onBlur = () => setShowResults(false)
+
+    // return <input type="text" onFocus={onFocus} onBlur={onBlur} />
+
     
     const fetchSongs = async e => {
         e.preventDefault();
@@ -18,32 +25,35 @@ export default function Search() {
         }
     };
 
-    const refreshPage = () => { 
-        window.location.reload(); 
-    }
-
     return (
         <div className='dropdown'>
-            <form className="d-flex">
+            {/* Search form */}
+            <form className='d-flex'>
                 <input ref={queryRef}
-                        className="form-control me-2" 
-                        type="search"
-                        placeholder="Search song titles" 
-                        aria-label="Search" />
-                <button className="btn btn-outline-success"
-                        type="submit"
+                        className='form-control me-2' 
+                        type='search'
+                        placeholder='Search song titles' 
+                        aria-label='Search'
+                        onFocus={onFocus} />
+                        {/* onBlur={onBlur} /> */}
+                <button className='btn btn-outline-success'
+                        type='submit'
                         onClick={fetchSongs}>
                     Search
                 </button>
             </form>
+
+            {/* Search results dropdown */}
             {
-                songs.length > 0 &&
-                <ul className="show dropdown-menu rounded-0 shadow-sm border-0">
+                songs.length > 0 && showResults &&
+                <ul className='show dropdown-menu rounded-0 shadow-sm border-0'
+                    onFocus={onFocus}
+                    onBlur={onBlur}>
                     {
                         songs.slice(0, 10).map(song =>
                             <li className='dropdown-item'>
                                 <Link to={`/songs/details/${song.id}`}
-                                    className="text-decoration-none"
+                                    className='text-decoration-none'
                                     key={song.id}
                                     onClick={refreshPage}>
                                     <div className='row w-auto'>
