@@ -1,7 +1,5 @@
 // Styles
 import './App.css';
-import './vendors/bootstrap.min.css';
-import './vendors/fontawesome-free-5.15.4-web/css/all.min.css';
 // Package imports
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -60,8 +58,8 @@ function App() {
                                             <EditProfile/>
                                         </SecureRoute>
                                     } />
-                                    <Route path="/privacy" element={<PrivacyPolicy />} />
                                     <Route path="/songs/details/:songId" element={<SongDetails />} />
+                                    <Route path="/privacy" element={<PrivacyPolicy />} />
                                 </Route>
                             </Routes>
                         </div>
