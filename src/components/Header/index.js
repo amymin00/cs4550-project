@@ -5,7 +5,7 @@ import SecureMenu from './secureMenu';
 const Header = () => {
 
     return (
-        <nav className="navbar navbar-light bg-light">
+        <nav className="navbar navbar-light bg-light mb-2">
           <div className="container-fluid">
             <h2><a style={{ textDecoration: 'none', color: 'black' }} href="/home">Spotify with Friends</a></h2>
             <Search />

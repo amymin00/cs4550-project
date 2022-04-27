@@ -22,49 +22,49 @@ import AnonRoute from './components/anonRoute';
 
 function App() {
 
-  const reducer = combineReducers({
-    users: userReducer, comments: commentsReducer, posts: postsReducer
-  });
-  const store = createStore(reducer);
-  return (
-        <ProfileProvider>
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Header />
-                    <div className="container">
-                    <Routes>
-                        <Route path="/">
-                            <Route index element={<HomeScreen />} />
-                            <Route path="home" exact={true} element={<HomeScreen />} />
-                            <Route path="login" element={
-                                <AnonRoute>
-                                    <Login/>
-                                </AnonRoute>
-                            }/>
-                            <Route path="register" element={
-                                <AnonRoute>
-                                    <Register/>
-                                </AnonRoute>
-                            }/>
-                            <Route path="/profile/:userId" element={
-                                <SecureRoute>
-                                    <Profile/>
-                                </SecureRoute>
-                            }/>
-                            <Route path="editprofile" element={
-                                <SecureRoute>
-                                    <EditProfile/>
-                                </SecureRoute>
-                            }/>
-                            <Route path="privacy" element={<PrivacyPolicy/>}/>
-                        </Route>
-                    </Routes>
-                    </div>
-                </BrowserRouter>
-            </Provider>
-        </ProfileProvider>
-      
-  );
+    const reducer = combineReducers({
+        users: userReducer, comments: commentsReducer, posts: postsReducer
+    });
+    const store = createStore(reducer);
+    return (
+            <ProfileProvider>
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <Header />
+                        <div className="container">
+                            <Routes>
+                                <Route path="/">
+                                    <Route index element={<HomeScreen />} />
+                                    <Route path="/home" exact={true} element={<HomeScreen />} />
+                                    <Route path="/login" element={
+                                        <AnonRoute>
+                                            <Login/>
+                                        </AnonRoute>
+                                    }/>
+                                    <Route path="/register" element={
+                                        <AnonRoute>
+                                            <Register/>
+                                        </AnonRoute>
+                                    }/>
+                                    <Route path="/profile/:userId" element={
+                                        <SecureRoute>
+                                            <Profile/>
+                                        </SecureRoute>
+                                    }/>
+                                    <Route path="/editprofile" element={
+                                        <SecureRoute>
+                                            <EditProfile/>
+                                        </SecureRoute>
+                                    }/>
+                                    <Route path="/privacy" element={<PrivacyPolicy/>}/>
+                                </Route>
+                            </Routes>
+                        </div>
+                    </BrowserRouter>
+                </Provider>
+            </ProfileProvider>
+        
+    );
 }
 
 export default App;

@@ -19,7 +19,7 @@ const SecureMenu = () => {
             }
         }
         check();
-    }, [checkLoggedIn]);
+    }, []);
 
     const handleLogoutBtn = async () => {
         try {
