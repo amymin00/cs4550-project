@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { searchForSongs } from '../../services/song-service';
 import refreshPage from '../../utils/refreshPage';
+import './style.css';
 
 export default function Search({className=''}) {
     const [songs, setSongs] = useState([]);
@@ -62,12 +63,12 @@ export default function Search({className=''}) {
                                                 className='w-100'></img>
                                         </div>
                                         <div className='col-9'>
-                                            <div className='row w-100 text-wrap'>
+                                            <div className='row w-100 text-wrap text-dark'>
                                                     {song.name}
-                                                    <span className='text-secondary'>{song.artists[0].name}</span>
+                                                    <span className='text-info'>{song.artists[0].name}</span>
                                             </div>
                                             <div>
-                                                <span className='text-secondary'>{song.album.released.substring(0,4)}</span>
+                                                <span className='text-info'>{song.album.released.substring(0,4)}</span>
                                             </div>
                                         </div>
                                     </div>

@@ -5,7 +5,7 @@ import SecureMenu from './secureMenu';
 
 const NavBar = () => {
     return (
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3 mb-2">
             <Link to='/' className='navbar-brand mr-5'>
                 Spotify with Friends
             </Link>
