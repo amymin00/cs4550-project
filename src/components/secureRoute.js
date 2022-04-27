@@ -18,7 +18,7 @@ const SecureRoute = ({children}) => {
             }
         }
         check();
-    }, []);
+    }, [checkLoggedIn]);
 
     if (currentUser) {
         return children;
