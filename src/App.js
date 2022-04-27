@@ -25,7 +25,6 @@ import SecureRoute from './components/secureRoute';
 import AnonRoute from './components/anonRoute';
 
 function App() {
-
     const reducer = combineReducers({
         users: userReducer, comments: commentsReducer, posts: postsReducer
     });
@@ -68,7 +67,6 @@ function App() {
                     </BrowserRouter>
                 </Provider>
             </ProfileProvider>
-        
     );
 }
 
