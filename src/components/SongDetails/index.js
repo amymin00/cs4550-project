@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { findSong } from "../../services/song-service";
+import Loading from "../Loading";
 
 /**
  * song object: 
@@ -38,7 +39,7 @@ const SongDetails = () => {
             <div>TBD - details page for song {song.name} by {song.artists[0].name} here</div>
         )
     } else {
-        return <div className="text-secondary">Loading...</div>
+        return <Loading />
     }
 }
 
