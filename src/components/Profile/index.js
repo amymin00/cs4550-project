@@ -1,63 +1,103 @@
 import React, { useEffect, useState } from "react";
 import {Link, useParams} from "react-router-dom";
+import { useProfile } from '../../contexts/profileContext';
 import ListOfPostsItem from "../Posts/list-of-post-item";
 import UserList from "../user-list";
-import { findUserById } from "../../services/user-service";
-import { useProfile } from '../../contexts/profileContext';
+import * as service from "../../services/user-service";
+
+/**
+ * TODOS:
+ * 1. Find out how to get profile for anyone
+ * 2. get posts/comments made by this user
+ * 3. get this user's songs
+ */
+
 
 const Profile = () => {
-    const { userId } = useParams();
+    // const { userId } = useParams();
     const { currentUser } = useProfile();
-    // const [profileUser, setProfileUser] = useState(null);
+    // const [profileUser, setProfileUser] = useState(currentUser);
+    const [followers, setFollowers] = useState([]);
+    const [following, setFollowing] = useState([]);
 
-    // console.log(`currentUser: ${currentUser.name}`);
+    console.log(`currentUser: ${currentUser.name}`);
+
+    useEffect(() => {
+        const findUsersFollowers = async () => {
+            const followers = await service.findUsersFollowers(currentUser);
+            setFollowers(followers);
+        };
+        const findUsersFollowing = async () => {
+            const following = await service.findUsersFollowers(currentUser);
+            setFollowing(following);
+        };
+        findUsersFollowers();
+        findUsersFollowing();
+    }, [currentUser]);
+
+    // if (currentUser._id === userId) {
+    //     setProfileUser(currentUser);
+    // } else {
+    //     // const getUser = async () => {
+    //     //     const user = await findUserById(userId);
+    //     //     setProfileUser(user);
+    //     // }
+    //     // getUser();
+    //     console.log('something went wrong!');
+    // }
 
     // useEffect(() => {
-    //     if (currentUser._id === userId) {
-    //         setProfileUser(currentUser);
-    //     } else {
-    //         // const getUser = async () => {
-    //         //     const user = await findUserById(userId);
-    //         //     setProfileUser(user);
-    //         // }
-    //         // getUser();
-    //         console.log('something went wrong!');
+    //     if (profileUser._id !== userId) {
+
     //     }
+    //     const getUser = async () => {
+    //         const user = await findUserById(userId);
+    //         setProfileUser(user);
+    //     }
+    //     getUser();
     // }, [currentUser, userId]);
+
+    // console.log(`profileUser: ${profileUser}`);
 
     // console.log(`user profile name here: ${profileUser.name}`);
 
-    return (
-        <div>Profile page to be fixed soon :(</div>
-    );
+    // return (
+    //     <div>Profile page to be fixed soon :(</div>
+    // );
 
-    // if (profileUser) {
-    //     return (
-    //         <div>
-    //             <h2>{profileUser.name}</h2>
-    //             <h4>{profileUser.username}
-    //                 <span className="d-inline-block">
-    //                     {profileUser.creator && <i className="fa fa-check-circle"/>}
-    //                 </span>
-    //             </h4>
-    //             <Link to="/editprofile">
-    //                 <button className="btn btn-primary float-end">Edit Profile</button>
-    //             </Link>
-    //             <hr className="border-2 border-top border-dark" />
-    //             <div className="d-inline-block">
-    //                 <h2 className="d-inline-block pe-3">following</h2>
-    //                 <UserList />
-    //                 <h2 className="d-inline-block">followers</h2>
-    //             </div>
-    //             <ListOfPostsItem />
-    //         </div>
-    //     );
-    // } else {
-    //     return (
-    //         <div>Oops!</div>
-    //     )
-    // }
-    
+    return (
+        <div>
+            <div className="row justify-content-between align-items-center">
+                <h5 className="w-auto">
+                    <span className="h1"><strong>{currentUser.name}</strong></span>
+                    <span className="text-secondary profile-username">
+                        &nbsp; {currentUser.username} {currentUser.creator && <i className="fa fa-check-circle fa-xs"/>}
+                    </span>
+                </h5>
+                <Link to="/profile/edit" className="w-auto">
+                    <button className="ms-5 btn btn-primary float-end">Edit Profile</button>
+                </Link>
+            </div>
+            <hr className="border-2 border-top border-secondary me-5" />
+            <div className="row">
+                <div className="col-3">
+                    <h5 className="p-0">Followers</h5>
+                    {(followers.length > 0 && <UserList users={followers} />) ||
+                     (followers.length === 0 && <p>{currentUser.username} has no followers</p>)}
+
+                    <h5 className="p-0 mt-3">Following</h5>
+                    {(following.length > 0 && <UserList users={following} />) ||
+                     (following.length === 0 && <p>{currentUser.username} is not following anyone</p>)}
+                </div>
+                <div className="col-6">
+                    <ListOfPostsItem />
+                </div>
+                <div className="col-3">
+                    <h5 className="p-0">Saved Songs</h5>
+                </div>
+            </div>
+        </div>
+    );    
 }
 
 export default Profile;

@@ -18,7 +18,7 @@ const AnonRoute = ({children}) => {
             }
         }
         check();
-    }, [checkLoggedIn]);
+    }, []);
 
     if (!currentUser) {
         return children;

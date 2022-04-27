@@ -22,27 +22,23 @@ export const createUser = async (user) => {
 }
 
 export const deleteUser = async (user) => {
-  const response = await axios
-  .delete(`${USERS_API}/${user._id}`);
+  const response = await axios.delete(`${USERS_API}/${user._id}`);
   return response.data;
 }
 
 export const updateUser = async (user) => {
-  const response = await axios
-  .put(`${USERS_API}/${user._id}`, user);
+  const response = await axios.put(`${USERS_API}/${user._id}`, user);
   return response.data;
 }
 
-export const findAllFollowers = async (user) => {
-  // TODO type filtering?
-  const response = await axios.get(USERS_API);
+export const findUsersFollowers = async (user) => {
+  const response = await axios.get(`${USERS_API}/followers/${user._id}`);
   const followers = response.data;
   return followers;
 }
 
-export const findAllFollowing = async (user) => {
-  // TODO type filtering?
-  const response = await axios.get(USERS_API);
+export const findUsersFollowing = async (user) => {
+  const response = await axios.get(`${USERS_API}/following/${user._id}`);
   const following = response.data;
   return following;
 }
