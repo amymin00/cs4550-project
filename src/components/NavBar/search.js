@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { searchForSongs } from '../../services/song-service';
 import refreshPage from '../../utils/refreshPage';
 
-export default function Search() {
+export default function Search({className=''}) {
     const [songs, setSongs] = useState([]);
     const queryRef = useRef();
     const [showResults, setShowResults] = React.useState(false)
@@ -26,20 +26,20 @@ export default function Search() {
     };
 
     return (
-        <div className='dropdown'>
+        <div className={`dropdown ${className}`}>
             {/* Search form */}
-            <form className='d-flex'>
+            <form className='d-flex align-items-center bg-white rounded-2'>
                 <input ref={queryRef}
-                        className='form-control me-2' 
+                        className='form-control pe-2 bg-transparent border-0 ' 
                         type='search'
                         placeholder='Search song titles' 
                         aria-label='Search'
                         onFocus={onFocus} />
                         {/* onBlur={onBlur} /> */}
-                <button className='btn btn-outline-success'
+                <button className='btn btn-secondary rounded-0 rounded-end'
                         type='submit'
                         onClick={fetchSongs}>
-                    Search
+                    <i class="fa fa-search fa-lg mx-2"></i>
                 </button>
             </form>
 

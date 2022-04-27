@@ -15,7 +15,7 @@ import * as service from "../../services/user-service";
 
 
 const Profile = () => {
-    const { userId } = useParams();
+    const { username } = useParams();
     const { currentUser } = useProfile();
     const [profileUser, setProfileUser] = useState(null);
     const [followers, setFollowers] = useState([]);
@@ -24,16 +24,17 @@ const Profile = () => {
     console.log(`currentUser: ${currentUser.name}`);
 
     useEffect(() => {
-        if (currentUser && currentUser._id === userId) {
+        if (currentUser && currentUser.username === username) {
             setProfileUser(currentUser);
         } else {
-            const getUser = async () => {
-                const user = await service.findUserById(userId);
-                setProfileUser(user);
-            }
-            getUser();
+            setProfileUser(currentUser);
+            // const getUser = async () => {
+            //     const user = await service.findUserByUsername(username);
+            //     setProfileUser(user);
+            // }
+            // getUser();
         }
-    }, [currentUser, userId]);
+    }, [currentUser, username]);
 
     useEffect(() => {
         const findUsersFollowers = async () => {
@@ -57,9 +58,9 @@ const Profile = () => {
             <div>
                 <div className="row justify-content-between align-items-center">
                     <h5 className="w-auto">
-                        <span className="h1"><strong>{currentUser.name}</strong></span>
+                        <span className="h1"><strong>{profileUser.name}</strong></span>
                         <span className="text-secondary profile-username">
-                            &nbsp; {currentUser.username} {currentUser.creator && <i className="fa fa-check-circle fa-xs"/>}
+                            &nbsp; {profileUser.username} {profileUser.creator && <i className="fa fa-check-circle fa-xs"/>}
                         </span>
                     </h5>
                     <Link to="/profile/edit" className="w-auto">
@@ -71,11 +72,11 @@ const Profile = () => {
                     <div className="col-3">
                         <h5 className="p-0">Followers</h5>
                         {(followers.length > 0 && <UserList users={followers} />) ||
-                         (followers.length === 0 && <p>{currentUser.username} has no followers</p>)}
+                         (followers.length === 0 && <p>{profileUser.username} has no followers</p>)}
     
                         <h5 className="p-0 mt-3">Following</h5>
                         {(following.length > 0 && <UserList users={following} />) ||
-                         (following.length === 0 && <p>{currentUser.username} is not following anyone</p>)}
+                         (following.length === 0 && <p>{profileUser.username} is not following anyone</p>)}
                     </div>
                     <div className="col-6">
                         <ListOfPostsItem />

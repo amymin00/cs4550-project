@@ -20,7 +20,7 @@ const ListOfUsersItem = ({
   const dispatch = useDispatch();
   return (
         <ul className='list-group-item'>
-            <Link to={`/profile/${user._id}`}
+            <Link to={`/profile/${user.username}`}
                   className='row align-items-center text-dark'>
                 <div className='col w-auto'>
                     <span className='d-inline-block align-middle'>

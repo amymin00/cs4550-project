@@ -5,12 +5,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { combineReducers, createStore } from "redux";
 // Page component imports
+import NavBar from "./components/NavBar";
 import HomeScreen from "./components/HomeScreen"
 import Login from "./components/Login/log-in";
 import Register from "./components/Login/register";
 import Profile from "./components/Profile";
 import PrivacyPolicy from "./components/Privacy";
-import Header from "./components/Header";
 import React from "react";
 import EditProfile from "./components/Profile/EditProfile";
 import SongDetails from './components/SongDetails';
@@ -31,12 +31,11 @@ function App() {
             <ProfileProvider>
                 <Provider store={store}>
                     <BrowserRouter>
-                        <Header />
+                        <NavBar />
                         <div className="container">
                             <Routes>
                                 <Route path="/">
                                     <Route index element={<HomeScreen />} />
-                                    <Route path="/home" exact={true} element={<HomeScreen />} />
                                     <Route path="/login" element={
                                         <AnonRoute>
                                             <Login/>
@@ -47,7 +46,7 @@ function App() {
                                             <Register/>
                                         </AnonRoute>
                                     } />
-                                    <Route path="/profile/:userId" element={
+                                    <Route path="/profile/:username" element={
                                         <SecureRoute>
                                             <Profile/>
                                         </SecureRoute>

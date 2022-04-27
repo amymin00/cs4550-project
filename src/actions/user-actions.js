@@ -1,6 +1,7 @@
 import * as service from '../services/user-service';
 
 export const FIND_USER_BY_ID = 'FIND_USER_BY_ID';
+export const FIND_USER_BY_USERNAME = 'FIND_USER_BY_USERNAME';
 export const FIND_ALL_USERS = 'FIND_ALL_USERS';
 export const FIND_USERS_FOLLOWERS = 'FIND_USERS_FOLLOWERS';
 export const FIND_USERS_FOLLOWING = 'FIND_USERS_FOLLOWING';
@@ -13,6 +14,14 @@ export const findUserById = async (dispatch) => {
     const user = await service.findUserById();
     dispatch({
         type: FIND_USER_BY_ID,
+        user
+    });
+}
+
+export const findUserByUsername = async (dispatch) => {
+    const user = await service.findUserByUsername();
+    dispatch({
+        type: FIND_USER_BY_USERNAME,
         user
     });
 }
