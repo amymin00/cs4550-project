@@ -51,6 +51,8 @@ const Profile = () => {
 
     console.log(`profileUser: ${profileUser}`);
 
+    // console.log(`profileUser: ${profileUser}`);
+
     // console.log(`user profile name here: ${profileUser.name}`);
 
     if (profileUser) {
