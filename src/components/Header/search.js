@@ -12,8 +12,6 @@ export default function Search() {
 
         if (query) {
             const data = await searchForSongs(query);
-            // console.log(`in search index.js: ${data}`);
-            // console.log('would change songs list here');
             setSongs(data);
         } else {
             setSongs([]);
@@ -44,7 +42,7 @@ export default function Search() {
                     {
                         songs.slice(0, 10).map(song =>
                             <li className='dropdown-item'>
-                                <Link to={`songs/details/${song.id}`}
+                                <Link to={`/songs/details/${song.id}`}
                                     className="text-decoration-none"
                                     key={song.id}
                                     onClick={refreshPage}>

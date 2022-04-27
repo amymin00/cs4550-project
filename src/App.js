@@ -1,8 +1,12 @@
+// Styles
 import './App.css';
 import './vendors/bootstrap.min.css';
 import './vendors/fontawesome-free-5.15.4-web/css/all.min.css';
-import {BrowserRouter, Routes, Route}
-  from "react-router-dom";
+// Package imports
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import { combineReducers, createStore } from "redux";
+// Page component imports
 import HomeScreen from "./components/HomeScreen"
 import Login from "./components/Login/log-in";
 import Register from "./components/Login/register";
@@ -11,9 +15,9 @@ import PrivacyPolicy from "./components/Privacy";
 import Header from "./components/Header";
 import React from "react";
 import EditProfile from "./components/Profile/EditProfile";
+import SongDetails from './components/SongDetails';
+// Misc.
 import userReducer from "./reducers/user-reducer";
-import {combineReducers, createStore} from "redux";
-import {Provider} from "react-redux";
 import commentsReducer from "./reducers/comment-reducer";
 import postsReducer from "./reducers/post-reducer";
 import { ProfileProvider } from './contexts/profileContext';
@@ -40,23 +44,24 @@ function App() {
                                         <AnonRoute>
                                             <Login/>
                                         </AnonRoute>
-                                    }/>
+                                    } />
                                     <Route path="/register" element={
                                         <AnonRoute>
                                             <Register/>
                                         </AnonRoute>
-                                    }/>
+                                    } />
                                     <Route path="/profile/:userId" element={
                                         <SecureRoute>
                                             <Profile/>
                                         </SecureRoute>
-                                    }/>
-                                    <Route path="/editprofile" element={
+                                    } />
+                                    <Route path="/profile/edit" element={
                                         <SecureRoute>
                                             <EditProfile/>
                                         </SecureRoute>
-                                    }/>
-                                    <Route path="/privacy" element={<PrivacyPolicy/>}/>
+                                    } />
+                                    <Route path="/privacy" element={<PrivacyPolicy />} />
+                                    <Route path="/songs/details/:songId" element={<SongDetails />} />
                                 </Route>
                             </Routes>
                         </div>

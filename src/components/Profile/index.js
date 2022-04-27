@@ -5,6 +5,14 @@ import ListOfPostsItem from "../Posts/list-of-post-item";
 import UserList from "../user-list";
 import * as service from "../../services/user-service";
 
+/**
+ * TODOS:
+ * 1. Find out how to get profile for anyone
+ * 2. get posts/comments made by this user
+ * 3. get this user's songs
+ */
+
+
 const Profile = () => {
     // const { userId } = useParams();
     const { currentUser } = useProfile();
@@ -66,7 +74,7 @@ const Profile = () => {
                         &nbsp; {currentUser.username} {currentUser.creator && <i className="fa fa-check-circle fa-xs"/>}
                     </span>
                 </h5>
-                <Link to="/editprofile" className="w-auto">
+                <Link to="/profile/edit" className="w-auto">
                     <button className="ms-5 btn btn-primary float-end">Edit Profile</button>
                 </Link>
             </div>

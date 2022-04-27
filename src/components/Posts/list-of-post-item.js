@@ -38,7 +38,7 @@ const PostListItem = ({
               <h5 className="card-title">Song name</h5>
               <h6 className="card-subtitle">Artist name</h6>
               <hr />
-              <p className="card-text fw-bold">{post.author} <span><p>{post.timestamp}</p></span></p>
+              <p className="card-text fw-bold">{post.author} {post.timestamp}</p>
               <p className="card-text">{post.text}</p>
             </div>
           <div>

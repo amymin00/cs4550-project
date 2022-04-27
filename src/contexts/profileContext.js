@@ -10,9 +10,7 @@ export const ProfileProvider = ({children}) => {
 
     const register = async user => {
         const response = await api.post(`${API_URI}/register`, user);
-        console.log('got here, shouldve made new user');
         setCurrentUser(response.data);
-        console.log('after set profile');
         return response.data;
     }
 
