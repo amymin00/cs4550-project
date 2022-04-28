@@ -14,6 +14,16 @@ export const findPost = async (post) => {
   return response.data;
 }
 
+export const findPostByAuthor = async authorId => {
+    const response = await axios.get(`${POSTS_API}/author/${authorId}`);
+    return response.data;
+}
+
+export const findPostBySong = async songId => {
+    const response = await axios.get(`${POSTS_API}/song/${songId}`);
+    return response.data;
+}
+
 export const createPost = async (post) => {
   console.log(post);
   const response = await axios.post(POSTS_API, post)
