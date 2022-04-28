@@ -12,7 +12,7 @@ const EditProfile = ({
     songs: [],
     playlists: [],
     followers: [],
-    followees: [],
+    following: [],
   }
 }) => {
 
