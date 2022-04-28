@@ -1,7 +1,10 @@
 import {useDispatch} from "react-redux";
 import {deletePost, updatePost} from "../../actions/post-actions";
-import {useState} from "react";
+import React, {useState} from "react";
 import {createComment} from "../../actions/comment-actions";
+import {useProfile} from "../../contexts/profileContext";
+import ListOfCommentsItem from "./Comments/comment-list-item";
+import CommentList from "./Comments";
 
 const PostListItem = ({
   post = {
@@ -16,11 +19,11 @@ const PostListItem = ({
   }
 }) => {
   const dispatch = useDispatch();
-  // TODO get user name from user id in post.author
   const [newComment, setNewComment] =
       useState();
+  const { profile } = useProfile();
   const comment = {
-    author: "", // current user._id
+    author: '3pU1pel2ZJ8d1ExY_mYYy', // TODO only allow when logged in, fix with profile._id
     timestamp: 0,
     text: newComment,
   };
@@ -62,6 +65,9 @@ const PostListItem = ({
                 createComment(dispatch, comment)}>
               Comment
               </button>
+          </div>
+          <div className="mt-5">
+            <CommentList />
           </div>
         </div>
       </ul>

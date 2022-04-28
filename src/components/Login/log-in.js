@@ -13,7 +13,6 @@ const Login = () => {
         e.preventDefault();
         try {
             await login(usernameRef.current.value, passwordRef.current.value);
-            
             navigate('/');
             refreshPage();
         } catch (e) {
