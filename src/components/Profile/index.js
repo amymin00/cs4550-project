@@ -79,35 +79,6 @@ const Profile = () => {
     if (profileUser) {
         return (
             <div>
-<<<<<<< HEAD
-                <div className="row justify-content-between align-items-center">
-                    <h5 className="w-auto">
-                        <span className="h1"><strong>{currentUser.name}</strong></span>
-                        <span className="text-secondary profile-username">
-                            &nbsp; {currentUser.username} {currentUser.creator && <i className="fa fa-check-circle fa-xs"/>}
-                        </span>
-                    </h5>
-                    <Link to="/profile/edit" className="w-auto">
-                        <button className="ms-5 btn btn-primary float-end">Edit Profile</button>
-                    </Link>
-                </div>
-                <hr className="border-2 border-top border-secondary me-5" />
-                <div className="row">
-                    <div className="col-3">
-                        <h5 className="p-0">Followers</h5>
-                        {(followers.length > 0 && <UserList users={followers} />) ||
-                         (followers.length === 0 && <p>{currentUser.username} has no followers</p>)}
-    
-                        <h5 className="p-0 mt-3">Following</h5>
-                        {(following.length > 0 && <UserList users={following} />) ||
-                         (following.length === 0 && <p>{currentUser.username} is not following anyone</p>)}
-                    </div>
-                    <div className="col-6">
-                        <ListOfPostsItem />
-                    </div>
-                    <div className="col-3">
-                        <h5 className="p-0">Saved Songs</h5>
-=======
                 <div id='profile-header'>
                     <div className='row justify-content-between align-items-center'>
                         <h5 className='w-auto'>
@@ -187,7 +158,6 @@ const Profile = () => {
                                 no {!profileUser.creator && <span>saved</span>} songs
                             </p>
                         }
->>>>>>> origin/feature/amy-user-profile
                     </div>
                 </div>
             </div>
