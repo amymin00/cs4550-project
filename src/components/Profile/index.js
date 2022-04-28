@@ -10,7 +10,7 @@ import * as userService from '../../services/user-service';
 import * as songService from '../../services/song-service';
 
 /**
- * TODOS:
+ * TODO:
  * 1. Find out how to get profile for anyone
  * 2. get posts/comments made by this user
  * 3. get this user's songs
@@ -18,18 +18,13 @@ import * as songService from '../../services/song-service';
 
 
 const Profile = () => {
-<<<<<<< HEAD
-    // const { userId } = useParams();
-    const { currentUser } = useProfile();
-    const [profileUser, setProfileUser] = useState(null);
-=======
+
     const { username } = useParams();
     const { checkLoggedIn } = useProfile();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [thisUser, setThisUser] = useState();
     const [isThisUser, setIsThisUser] = useState(false);
     const [profileUser, setProfileUser] = useState();
->>>>>>> origin/feature/amy-user-profile
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
     const [usersSongs, setUsersSongs] = useState([]);

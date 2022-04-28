@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import { useDispatch, useNavigate } from "react-redux";
 
 const EditProfile = ({
   user = {
@@ -15,6 +16,9 @@ const EditProfile = ({
     following: [],
   }
 }) => {
+
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   return (
       <div>
