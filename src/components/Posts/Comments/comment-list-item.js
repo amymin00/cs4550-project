@@ -1,13 +1,15 @@
-import React from "react";
+import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from "react";
+import {deleteComment} from "../../../actions/comment-actions";
 
 const ListOfCommentsItem = ({
   comment = {
     author: "bill",
     timestamp: 1650033618075,
     text: "comment",
-
   }
 }) => {
+  console.log(comment._id);
   return (
       <ul className="list-group-item">
         <div className="d-inline-block">

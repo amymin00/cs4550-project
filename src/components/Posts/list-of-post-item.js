@@ -1,10 +1,10 @@
 import {useDispatch} from "react-redux";
 import {deletePost, updatePost} from "../../actions/post-actions";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {createComment} from "../../actions/comment-actions";
 import {useProfile} from "../../contexts/profileContext";
-import ListOfCommentsItem from "./Comments/comment-list-item";
 import CommentList from "./Comments";
+import * as commentService from "../../services/comment-service";
 
 const PostListItem = ({
   post = {
@@ -19,8 +19,8 @@ const PostListItem = ({
   }
 }) => {
   const dispatch = useDispatch();
-  const [newComment, setNewComment] =
-      useState();
+  const [newComment, setNewComment] = useState();
+  const [comments, setComments] = useState();
   const { profile } = useProfile();
   const comment = {
     author: '3pU1pel2ZJ8d1ExY_mYYy', // TODO only allow when logged in, fix with profile._id
@@ -28,14 +28,26 @@ const PostListItem = ({
     text: newComment,
   };
 
+  const findPostsComments = async () => {
+    const comments = await commentService.findCommentsInIdList(post.comments);
+    setComments(comments);
+    console.log(comments);
+  }
+  useEffect(findPostsComments, [dispatch]);
+
+  // add new comment to post.comments ???
+  const addNewComment = async () => {
+    const commentToAdd = await createComment(dispatch, comment);
+    console.log(commentToAdd);
+    await updatePost(dispatch, {
+      ...post,
+      post: post.comments.push(commentToAdd._id),
+    });
+  };
+
   return (
-      <ul className="list-group-item">
+      <ul className="list-group-item bg-secondary">
         <div className="card">
-          <div className="float-end mb-0">
-            <i onClick={() => deletePost(
-                dispatch, post)}
-               className="fa fa-times"/>
-          </div>
           <img src="..." className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">Song name</h5>
@@ -62,13 +74,18 @@ const PostListItem = ({
               </textarea>
               <button
                 className="btn btn-primary rounded-pill mt-2 mb-2 float-end" onClick={() =>
-                createComment(dispatch, comment)}>
+                  addNewComment()}>
               Comment
               </button>
           </div>
           <div className="mt-5">
-            <CommentList />
+            <CommentList comments={post.comments}/>
           </div>
+        </div>
+        <div className="float-end mb-0">
+          <i onClick={() => deletePost(
+              dispatch, post)}
+             className="pt-3 fa fa-trash text-dark fa-2x"/>
         </div>
       </ul>
   );
