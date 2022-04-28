@@ -34,26 +34,26 @@ function App() {
                         <NavBar />
                         <div className="container">
                             <Routes>
-                                <Route path="/">
+                                <Route exact path="/" >
                                     <Route index element={<HomeScreen />} />
-                                    <Route path="/login" element={
+                                    <Route exact path="/login" element={
                                         <AnonRoute>
                                             <Login/>
                                         </AnonRoute>
                                     } />
-                                    <Route path="/register" element={
+                                    <Route exact path="/register" element={
                                         <AnonRoute>
                                             <Register/>
                                         </AnonRoute>
                                     } />
                                     <Route path="/profile/:username" element={<Profile/>} />
-                                    <Route path="/profile/edit" element={
+                                    <Route exact path="/profile/edit" element={
                                         <SecureRoute>
                                             <EditProfile/>
                                         </SecureRoute>
                                     } />
                                     <Route path="/songs/details/:songId" element={<SongDetails />} />
-                                    <Route path="/privacy" element={<PrivacyPolicy />} />
+                                    <Route exact path="/privacy" element={<PrivacyPolicy />} />
                                 </Route>
                             </Routes>
                         </div>

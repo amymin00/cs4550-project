@@ -6,6 +6,7 @@ import refreshPage from "../../utils/refreshPage";
 const Register = () => {
     const { register } = useProfile();
     const nameRef = useRef();
+    const emailRef = useRef();
     const usernameRef = useRef();
     const passwordRef = useRef();
     const userTypeRef = useRef();
@@ -17,6 +18,7 @@ const Register = () => {
         try {
             const user = {
                 name: nameRef.current.value,
+                email: emailRef.current.value,
                 username: usernameRef.current.value,
                 password: passwordRef.current.value,
                 creator: userTypeRef.current.value,
@@ -42,6 +44,17 @@ const Register = () => {
                                 className="form-control"
                                 placeholder="John Smith" />
                         <label className="form-label" htmlFor="registerName">Name</label>
+                    </div>
+
+                    {/* email */}
+                    <div className="form-outline mb-4">
+                        <input required
+                                ref={emailRef}
+                                type="email" id="registerUsername" 
+                                className="form-control"
+                                placeholder="johnsmith@email.com" />
+                        <label className="form-label"
+                                htmlFor="registerUsername">Email</label>
                     </div>
 
                     {/* username */}
