@@ -36,24 +36,24 @@ function App() {
                             <Routes>
                                 <Route exact path="/" >
                                     <Route index element={<HomeScreen />} />
-                                    <Route exact path="/login" element={
+                                    <Route path="/login" element={
                                         <AnonRoute>
                                             <Login/>
                                         </AnonRoute>
                                     } />
-                                    <Route exact path="/register" element={
+                                    <Route path="/register" element={
                                         <AnonRoute>
                                             <Register/>
                                         </AnonRoute>
                                     } />
-                                    <Route path="/profile/:username" element={<Profile/>} />
+                                    <Route exact path="/profile/:username" element={<Profile/>} />
                                     <Route exact path="/profile/edit" element={
                                         <SecureRoute>
                                             <EditProfile/>
                                         </SecureRoute>
                                     } />
                                     <Route path="/songs/details/:songId" element={<SongDetails />} />
-                                    <Route exact path="/privacy" element={<PrivacyPolicy />} />
+                                    <Route path="/privacy" element={<PrivacyPolicy />} />
                                 </Route>
                             </Routes>
                         </div>

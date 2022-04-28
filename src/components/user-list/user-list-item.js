@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import FollowButton from '../../FollowButton';
+import refreshPage from '../../utils/refreshPage';
 
 const ListOfUsersItem = ({
     user = {
@@ -20,6 +21,7 @@ const ListOfUsersItem = ({
     return (
         <ul className='list-group-item row d-flex justify-content-between'>
             <Link to={`/profile/${user.username}`}
+                onClick={refreshPage}
                 className='col-9 align-items-center text-dark px-md-1 text-decoration-none'>
                 <span className='text-wrap'>
                     <p className='fw-bold mb-0'>{user.name}
