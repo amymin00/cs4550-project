@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PostList from "../Posts";
 import {createPost} from "../../actions/post-actions";
 import { useProfile } from '../../contexts/profileContext';
