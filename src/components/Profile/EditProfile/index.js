@@ -21,6 +21,7 @@ const EditProfile = ({
   const nameRef = useRef();
   const usernameRef = useRef();
   const passwordRef = useRef();
+  const biographyRef = useRef();
   const navigate = useNavigate();
 
   const handleEdit = async (e) => {
@@ -31,17 +32,19 @@ const EditProfile = ({
         name: nameRef.current.value,
         username: usernameRef.current.value,
         password: passwordRef.current.value,
+        biography: biographyRef.current.value
       };
       await updateCurrentUser(user);
       refreshPage();
       navigate("/");
     } catch (e) {
-      alert("Unable to edit profile with given user credentials. Try again");
+      alert(e + " Unable to edit profile with given user credentials. Try again");
     }
   };
 
   return (
     <div>
+    {/* TODO these buttons should navigate to /profile/:username but idk how */}
       <Link to="/profile">
         <button className="btn btn-danger float-end">Cancel</button>
       </Link>
@@ -52,7 +55,6 @@ const EditProfile = ({
         >
           Save
         </button>
-        {/*TODO add onClick for updating user*/}
       </Link>
       <form>
         <div className="form-outline mb-4">
@@ -67,7 +69,6 @@ const EditProfile = ({
             Name
           </label>
         </div>
-
         <div className="form-outline mb-4">
           <input
             type="text"
@@ -90,6 +91,18 @@ const EditProfile = ({
           />
           <label className="form-label" htmlFor="registerPassword">
             Password
+          </label>
+        </div>
+        <div className="form-outline mb-4">
+        <input
+            type="biography"
+            id="registerBiography"
+            placeholder={user.biography}
+            className="form-control"
+            ref={biographyRef}
+          />
+          <label className="form-label" htmlFor="registerBiography">
+            Biography
           </label>
         </div>
       </form>

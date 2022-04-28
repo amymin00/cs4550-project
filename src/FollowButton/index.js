@@ -34,11 +34,13 @@ const FollowButton = ({user = {
         check();
     }, []);
 
-    useEffect(() => {
-        if (currentUser) {
-            setIsFollowingUser(currentUser.following.includes(otherUser._id));
-        }
-    }, [currentUser]);
+
+// commenting this out because its not working and messing with the profile lol
+    // useEffect(() => {
+    //     if (currentUser) {
+    //         setIsFollowingUser(currentUser.following.includes(otherUser._id));
+    //     }
+    // }, [currentUser]);
 
     const handleClick = () => {
         if (isFollowingUser) {
