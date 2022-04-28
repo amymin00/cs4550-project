@@ -10,7 +10,7 @@ export const findAllComments = async () => {
 }
 
 export const findCommentsInIdList = async (listOfId) => {
-  const response = await axios.post(`${COMMENTS_API}/${listOfId}`, {comments: listOfId});
+  const response = await axios.post(`${COMMENTS_API}/post`, {comments: listOfId});
   const comments = response.data;
   return comments;
 }

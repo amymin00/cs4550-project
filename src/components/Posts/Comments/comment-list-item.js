@@ -1,6 +1,8 @@
 import {useDispatch} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {deleteComment} from "../../../actions/comment-actions";
+import {useProfile} from "../../../contexts/profileContext";
+import * as userService from "../../../actions/user-actions";
 
 const ListOfCommentsItem = ({
   comment = {
@@ -9,13 +11,24 @@ const ListOfCommentsItem = ({
     text: "comment",
   }
 }) => {
-  console.log(comment._id);
+  const dispatch = useDispatch();
+  const [author, setAuthor] = useState(null);
+  const { profile } = useProfile();
+
+  const getAuthor = async () => {
+    const author = await userService.findUserById(comment.author);
+    console.log(comment.author);
+    setAuthor(author);
+    console.log(author.name);
+  }
+  useEffect(getAuthor, []);
+
   return (
       <ul className="list-group-item">
         <div className="d-inline-block">
           {comment.author && comment.timestamp && 
           <p className="fw-bold pe-3">
-              {comment.author} 
+              {author.name}
               <br />
               {comment.timestamp}</p>}
           {comment.text &&<p>{comment.text}</p>}

@@ -5,6 +5,9 @@ import {createComment} from "../../actions/comment-actions";
 import {useProfile} from "../../contexts/profileContext";
 import CommentList from "./Comments";
 import * as commentService from "../../services/comment-service";
+import {useParams} from "react-router-dom";
+import {findSong} from "../../services/song-service";
+import * as userService from "../../actions/user-actions";
 
 const PostListItem = ({
   post = {
@@ -20,8 +23,17 @@ const PostListItem = ({
 }) => {
   const dispatch = useDispatch();
   const [newComment, setNewComment] = useState();
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState([]);
+  const [author, setAuthor] = useState(null);
   const { profile } = useProfile();
+
+  const getAuthor = async () => {
+    const author = await userService.findUserById(post.author);
+    setAuthor(author);
+    console.log(author.name);
+  }
+  useEffect(getAuthor, []);
+
   const comment = {
     author: '3pU1pel2ZJ8d1ExY_mYYy', // TODO only allow when logged in, fix with profile._id
     timestamp: 0,
@@ -31,11 +43,9 @@ const PostListItem = ({
   const findPostsComments = async () => {
     const comments = await commentService.findCommentsInIdList(post.comments);
     setComments(comments);
-    console.log(comments);
   }
   useEffect(findPostsComments, [dispatch]);
 
-  // add new comment to post.comments ???
   const addNewComment = async () => {
     const commentToAdd = await createComment(dispatch, comment);
     console.log(commentToAdd);
@@ -45,12 +55,21 @@ const PostListItem = ({
     });
   };
 
+  /*const [song, setSong] = useState(null);
+  useEffect(() => {
+    const getTrack = async () => {
+      const track = await findSong(post.song);
+      setSong(track);
+    };
+    getTrack();
+  }, [post.song]);*/
+
   return (
       <ul className="list-group-item bg-secondary">
         <div className="card">
-          <img src="..." className="card-img-top" alt="..." />
+          <img src="..." className="card-img-top" />
             <div className="card-body">
-              <h5 className="card-title">Song name</h5>
+              <h5 className="card-title">{post.song}</h5>
               <h6 className="card-subtitle">Artist name</h6>
               <hr />
               <p className="card-text fw-bold">{post.author} {post.timestamp}</p>
@@ -79,8 +98,8 @@ const PostListItem = ({
               </button>
           </div>
           <div className="mt-5">
-            <CommentList comments={post.comments}/>
-          </div>
+            <CommentList comments={comments} />
+            </div>
         </div>
         <div className="float-end mb-0">
           <i onClick={() => deletePost(
