@@ -13,8 +13,8 @@ const Login = () => {
         e.preventDefault();
         try {
             await login(usernameRef.current.value, passwordRef.current.value);
-            refreshPage();
             navigate('/');
+            refreshPage();
         } catch (e) {
             console.log(e);
             alert('Unable to login with given user credentials');
