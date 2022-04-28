@@ -46,11 +46,7 @@ function App() {
                                             <Register/>
                                         </AnonRoute>
                                     } />
-                                    <Route path="/profile/:username" element={
-                                        <SecureRoute>
-                                            <Profile/>
-                                        </SecureRoute>
-                                    } />
+                                    <Route path="/profile/:username" element={<Profile/>} />
                                     <Route path="/profile/edit" element={
                                         <SecureRoute>
                                             <EditProfile/>

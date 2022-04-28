@@ -34,7 +34,20 @@ export const ProfileProvider = ({children}) => {
         setCurrentUser(null);
     }
 
-    const value = {register, login, checkLoggedIn, logout, currentUser};
+    const updateCurrentUser = async updatedUser => {
+        try {
+            await api.put(`${API_URI}/users/${currentUser._id}`, updatedUser);
+            const response = await api.get(`${API_URI}/users/${currentUser._id}`);
+            const user = response.data;
+            setCurrentUser(user);
+            return user;
+        } catch (e) {
+            console.log(`Update user operation invalid: ${e}`);
+            throw e;
+        }
+    }
+
+    const value = {register, login, checkLoggedIn, logout, updateCurrentUser, currentUser};
 
     return (
         <ProfileContext.Provider value={value}>
