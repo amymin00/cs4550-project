@@ -33,15 +33,11 @@ const SecureMenu = () => {
         }
     };
 
-    const getFirstName = () => {
-        return currentUser.name.split(' ')[0];
-    }
-
     return (
         <>
             <button className='nav-link active btn btn-info p-1 px-2 mt-md-2' id='navbarDropdown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                 <span className='text-white-50'>
-                    {(currentUser && getFirstName()) ||
+                    {(currentUser && currentUser.username) ||
                      (!currentUser && <span>Join us</span>)}
                 </span>
             </button>

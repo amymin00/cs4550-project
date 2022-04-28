@@ -23,11 +23,12 @@ const Profile = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [thisUser, setThisUser] = useState();
     const [isThisUser, setIsThisUser] = useState(false);
-    const [profileUser, setProfileUser] = useState(null);
+    const [profileUser, setProfileUser] = useState();
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
     const [usersSongs, setUsersSongs] = useState([]);
 
+    // Get profile user and currently logged in user
     useEffect(() => {
         const check = async () => {
             try {
@@ -51,24 +52,27 @@ const Profile = () => {
         getProfileUser();
     }, []);
 
+    // Get profile user's followers, following, and song data objects
     useEffect(() => {
-        const findUsersFollowers = async () => {
-            const followers = await userService.findUsersFollowers(profileUser);
-            setFollowers(followers);
-        };
-        const findUsersFollowing = async () => {
-            // console.log('in findUsersFollowing');
-            const following = await userService.findUsersFollowing(profileUser);
-            // console.log(`user following ppl #: ${following.length}`);
-            setFollowing(following);
-        };
-        const findUsersSongs = async () => {
-            const songs = await songService.findSongsById(profileUser.songs);
-            setUsersSongs(songs);
+        if (profileUser) {
+            const findUsersFollowers = async () => {
+                const followers = await userService.findUsersFollowers(profileUser);
+                setFollowers(followers);
+            };
+            const findUsersFollowing = async () => {
+                // console.log('in findUsersFollowing');
+                const following = await userService.findUsersFollowing(profileUser);
+                // console.log(`user following ppl #: ${following.length}`);
+                setFollowing(following);
+            };
+            const findUsersSongs = async () => {
+                const songs = await songService.findSongsById(profileUser.songs);
+                setUsersSongs(songs);
+            }
+            findUsersFollowers();
+            findUsersFollowing();
+            findUsersSongs();
         }
-        findUsersFollowers();
-        findUsersFollowing();
-        findUsersSongs();
     }, [profileUser]);
 
     if (profileUser) {
@@ -89,7 +93,7 @@ const Profile = () => {
                                     Edit Profile
                                 </Link>
                             ) ||
-                            <FollowButton isLoggedIn={isLoggedIn} thisUser={thisUser} otherUser={profileUser} />
+                            <FollowButton user={profileUser} />
                         }
                     </div>
                     <div className='row'>
