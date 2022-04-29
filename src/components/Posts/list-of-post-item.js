@@ -115,7 +115,7 @@ const PostListItem = ({
                 {post.likes.includes(postAuthorId) && <span><i
                     className="fas fa-heart text-secondary pe-1"
                     onClick={() => {
-                      updatePost(dispatch, {
+                      isLoggedIn && updatePost(dispatch, {
                         ...post,
                         post: post.likes.splice(post.likes.indexOf(postAuthorId), 1),
                       })
@@ -124,15 +124,15 @@ const PostListItem = ({
                 {!post.likes.includes(postAuthorId) && <span><i
                     className="far fa-heart pe-1"
                     onClick={() => {
-                      !post.likes.includes(postAuthorId) &&
+                      isLoggedIn && !post.likes.includes(postAuthorId) &&
                       updatePost(dispatch, {
-                      ...post,
-                      post: post.likes.push(postAuthorId),
-                    })}}></i>
+                        ...post,
+                        post: post.likes.push(postAuthorId),
+                      })}}></i>
                   </span>}
                 {post.likes.length} </p>
               <p className="pe-3 d-inline-block"><span><i
-                  className="far fa-comment" onClick={() =>toggleDisplayComments()}></i></span> {post.comments.length}
+                  className="far fa-comment" onClick={() => toggleDisplayComments()}></i></span> {post.comments.length}
               </p>
             </div>
             <div className="ms-3 me-3">
@@ -152,7 +152,7 @@ const PostListItem = ({
               <CommentList comments={comments}/>
             </div>}
           </div>
-          {isLoggedIn && <div className="float-end">
+          {isLoggedIn && post.author=== postAuthorId && <div className="float-end">
             <i onClick={() => deletePost(
                 dispatch, post)}
                className="pt-3 fa fa-trash text-light fa-2x"/>
