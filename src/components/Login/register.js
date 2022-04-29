@@ -35,7 +35,7 @@ const Register = () => {
         <div>
             <div className="container mt-3">
                 <h1 className="text-center text-primary mb-5">Register</h1>
-                <form action="/">
+                <form>
                     {/* name */}
                     <div className="form-outline mb-4">
                         <input required 

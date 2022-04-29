@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ListOfPostsItem from "../Posts/list-of-post-item";
 import SongItem from "../SongListItem";
 import UserList from "../user-list";
 import PostList from "../Posts";
@@ -45,15 +44,20 @@ const ProfileMain = ({
             const findUsersSongs = async () => {
                 const songs = await songService.findSongsById(profileUser.songs);
                 setUsersSongs(songs);
-            }
+            };
             const findUsersPosts = async () => {
                 const posts = await postService.findPostsByAuthor(profileUser._id);
                 setUsersPosts(posts);
-            }
-            findUsersFollowers();
-            findUsersFollowing();
-            findUsersSongs();
-            findUsersPosts();
+            };
+            const getUsersObjects = async () => {
+                await Promise.all([
+                    findUsersFollowers(),
+                    findUsersFollowing(),
+                    findUsersSongs(),
+                    findUsersPosts()
+                ]);
+            };
+            getUsersObjects();
         }
     }, [profileUser]);
 
@@ -65,8 +69,8 @@ const ProfileMain = ({
                 {(followers.length > 0 && <UserList users={followers} />) ||
                         <p>
                             {
-                                (isThisUser && <span>You have </span>) ||
-                                <span>{profileUser.username} has </span>
+                                (isThisUser && 'You have ') ||
+                                `${profileUser.username} has `
                             }
                             no followers
                         </p>
@@ -79,29 +83,34 @@ const ProfileMain = ({
 
             {/* Middle column */}
             <div className='col-6 px-5'>
-                <CreatePost />
-                {(usersPosts.length > 0 && <PostList posts={usersPosts} className='mx-5' />) ||
-                        <p>
-                            {
-                                (isThisUser && <span>You have </span>) ||
-                                <span>{profileUser.username} has </span>
-                            }
-                            no posts to display
-                            {
-                                isThisUser && <span>. Create one now and share your songs with everyone!</span>
-                            }
-                        </p>
+                {isThisUser && <CreatePost />}
+                {(usersPosts.length > 0 && 
+                    <div className="mx-5">
+                        <h5 className="text-center">
+                            {(isThisUser && 'Your') || `${profileUser.name}'s`} posts
+                        </h5>
+                        <PostList posts={usersPosts} />
+                    </div>) ||
+                    <p>
+                        {
+                            (isThisUser && 'You have ') ||
+                            `${profileUser.username} has `
+                        }
+                        no posts to display
+                        {
+                            isThisUser && '. Create one now and share your songs with everyone!'
+                        }
+                    </p>
                 }
-                
             </div>
 
             {/* Right column */}
             <div className='col-3'>
                 <h5 className='p-0'>
                     {
-                        (!isThisUser && <span>{profileUser.name}'s </span>) ||
-                        (profileUser.creator && <span>Your </span>) || 
-                        <span>Saved </span>
+                        (!isThisUser && `${profileUser.name}'s `) ||
+                        (profileUser.creator && 'Your ') || 
+                        'Saved '
                     }
                     Songs
                 </h5>
@@ -122,10 +131,10 @@ const ProfileMain = ({
                     ) ||
                     <p>
                         {
-                            (isThisUser && <span>You have </span>) ||
-                            <span>{profileUser.username} has </span>
+                            (isThisUser && 'You have ') ||
+                            `${profileUser.username} has `
                         }
-                        no {!profileUser.creator && <span>saved</span>} songs
+                        no {!profileUser.creator && 'saved'} songs
                     </p>
                 }
             </div>

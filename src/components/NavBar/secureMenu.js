@@ -38,7 +38,7 @@ const SecureMenu = () => {
             <button className='nav-link active btn btn-info p-1 px-2 mt-lg-0 mt-2' id='navbarDropdown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                 <span className='text-white-50'>
                     {(currentUser && currentUser.username) ||
-                     (!currentUser && <span>Join us</span>)}
+                     (!currentUser && 'Join us')}
                 </span>
             </button>
             <ul className='dropdown-menu dropdown-menu-end'

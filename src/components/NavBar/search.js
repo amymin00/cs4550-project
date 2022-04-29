@@ -20,6 +20,11 @@ export default function Search({className=''}) {
         }
     };
 
+    const clearQuery = () => {
+        queryRef.current.value = "";
+        setSongs([]);
+    };
+
     return (
         <div id='search' className={`dropdown ${className}`}>
             {/* Search form */}
@@ -28,7 +33,7 @@ export default function Search({className=''}) {
                         id='navbarDropdown'
                         className='form-control pe-2 border-0 shadow-none' 
                         type='search'
-                        placeholder='Search song titles' 
+                        placeholder='Search song titles'
                         aria-label='Search'/>
                 <button className='btn btn-secondary rounded-0 rounded-end border-0'
                         type='submit'
@@ -39,7 +44,7 @@ export default function Search({className=''}) {
 
             {/* Search results dropdown */}
             {
-                songs.length > 0 && 
+                songs.length > 0 &&
                 <ul id='search-results-menu'
                     className='show dropdown-menu rounded-0 shadow-sm border-0'>
                     {
@@ -47,7 +52,8 @@ export default function Search({className=''}) {
                             <li key={song.id} className='dropdown-item'>
                                 <Link to={`/songs/details/${song.id}`}
                                     className='text-decoration-none'
-                                    key={song.id}>
+                                    key={song.id}
+                                    onClick={clearQuery}>
                                     <SongItem song={song} />
                                 </Link>
                             </li>

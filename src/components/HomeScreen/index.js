@@ -25,7 +25,7 @@ const HomeScreen = () => {
                 <h4>Maybe a list of newest users</h4>
             </div>
             <div className="col-5">
-                <CreatePost className="mx-5" /> 
+                <CreatePost className="" /> 
                 <h4 className="ms-5">Latest Activity</h4>
                 <PostList posts={posts} className='mt-4 mx-5' />
             </div>

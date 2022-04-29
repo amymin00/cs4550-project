@@ -31,8 +31,7 @@ export const createPost = async (post) => {
 }
 
 export const deletePost = async (post) => {
-  const response = await axios
-  .delete(`${POSTS_API}/${post._id}`);
+  const response = await axios.delete(`${POSTS_API}/${post._id}`);
   return response.data;
 }
 
