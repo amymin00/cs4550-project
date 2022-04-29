@@ -14,7 +14,7 @@ export const findPost = async (post) => {
   return response.data;
 }
 
-export const findPostByAuthor = async authorId => {
+export const findPostsByAuthor = async authorId => {
     const response = await axios.get(`${POSTS_API}/author/${authorId}`);
     return response.data;
 }

@@ -1,6 +1,7 @@
 import {useDispatch} from "react-redux";
 import React, {useEffect, useState} from "react";
-import {deleteComment} from "../../../actions/comment-actions";
+import * as userService from "../../../services/user-service";
+import timeAgo from "../../../utils/TimeAgoUtil";
 
 const ListOfCommentsItem = ({
   comment = {
@@ -10,16 +11,20 @@ const ListOfCommentsItem = ({
     text: "comment",
   }
 }) => {
-//   console.log(comment._id);
+  const [author, setAuthor] = useState(null);
+
+  const getAuthor = async () => {
+    const author = await userService.findUserById(comment.author);
+    setAuthor(author);
+  }
+  useEffect(getAuthor, []);
+
   return (
       <ul className="list-group-item">
         <div className="d-inline-block">
-          {comment.author && comment.timestamp && 
-          <p className="fw-bold pe-3">
-              {comment.author} 
-              <br />
-              {comment.timestamp}</p>}
-          {comment.text &&<p>{comment.text}</p>}
+          <p className="fw-bold pe-3">{author.name}
+            <span><p className="d-inline fw-normal ps-2">{timeAgo(comment.timestamp)}</p></span></p>
+          <p>{comment.text}</p>
         </div>
       </ul>
   );

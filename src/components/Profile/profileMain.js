@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import ListOfPostsItem from "../Posts/list-of-post-item";
 import SongItem from "../SongListItem";
 import UserList from "../user-list";
+import PostList from "../Posts";
+import CreatePost from "../Posts/createPost";
 import * as userService from '../../services/user-service';
 import * as songService from '../../services/song-service';
+import * as postService from '../../services/post-service';
 
 const ProfileMain = ({
     isThisUser = false,
@@ -24,6 +27,7 @@ const ProfileMain = ({
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
     const [usersSongs, setUsersSongs] = useState([]);
+    const [usersPosts, setUsersPosts] = useState([]);
 
     // Get profile user's followers, following, and song data objects
     useEffect(() => {
@@ -42,33 +46,56 @@ const ProfileMain = ({
                 const songs = await songService.findSongsById(profileUser.songs);
                 setUsersSongs(songs);
             }
+            const findUsersPosts = async () => {
+                const posts = await postService.findPostsByAuthor(profileUser._id);
+                setUsersPosts(posts);
+            }
             findUsersFollowers();
             findUsersFollowing();
             findUsersSongs();
+            findUsersPosts();
         }
     }, [profileUser]);
 
     return (
         <div className='row'>
+            {/* Left column */}
             <div className='col-3'>
                 <h5 className='p-0'>Followers</h5>
                 {(followers.length > 0 && <UserList users={followers} />) ||
-                    (followers.length === 0 && <p>
-                        {
-                        (isThisUser && <span>You have </span>) ||
-                        <span>{profileUser.username} has </span>
-                    }
-                        no followers
-                </p>)}
-
+                        <p>
+                            {
+                                (isThisUser && <span>You have </span>) ||
+                                <span>{profileUser.username} has </span>
+                            }
+                            no followers
+                        </p>
+                }
                 <h5 className='p-0 mt-3'>Following</h5>
                 {(following.length > 0 && <UserList users={following} />) ||
                     (isThisUser && <p>Add people to follow!</p>) ||
                     <p>{profileUser.username} is not following anyone</p>}
             </div>
-            <div className='col-6 px-4'>
-                <ListOfPostsItem  />
+
+            {/* Middle column */}
+            <div className='col-6 px-5'>
+                <CreatePost />
+                {(usersPosts.length > 0 && <PostList posts={usersPosts} className='mx-5' />) ||
+                        <p>
+                            {
+                                (isThisUser && <span>You have </span>) ||
+                                <span>{profileUser.username} has </span>
+                            }
+                            no posts to display
+                            {
+                                isThisUser && <span>. Create one now and share your songs with everyone!</span>
+                            }
+                        </p>
+                }
+                
             </div>
+
+            {/* Right column */}
             <div className='col-3'>
                 <h5 className='p-0'>
                     {

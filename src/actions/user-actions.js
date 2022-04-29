@@ -10,8 +10,8 @@ export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 
-export const findUserById = async (dispatch) => {
-    const user = await service.findUserById();
+export const findUserById = async (dispatch, id) => {
+    const user = await service.findUserById(id);
     dispatch({
         type: FIND_USER_BY_ID,
         user

@@ -1,44 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostList from "../Posts";
-import {createPost} from "../../actions/post-actions";
 import { useProfile } from '../../contexts/profileContext';
-import { useDispatch } from "react-redux";
-import SecureContent from "../secureContent";
+import * as service from '../../services/post-service';
+import { useDispatch, useSelector } from "react-redux";
+import CreatePost from "../Posts/createPost";
 
 const HomeScreen = () => {
     const dispatch = useDispatch();
-    const [newPost, setNewPost] = useState();
-    const post = {
-        title: "", // TODO add when srtyling new post
-        author: "", // TODO after implementing getUser by id
-        timestamp: 0, // handles in controller
-        song: "", // TODO after linking spotify
-        text: newPost,
-        likes: [],
-        comments: [],
-    };
+
+    const posts = useSelector(
+        state => state.posts);
+    const findAllPosts = async () => {
+      const posts = await service.findAllPosts();
+      dispatch({
+        type: 'FIND_ALL_POSTS',
+        posts: posts
+      });
+    }
+    useEffect(findAllPosts, [dispatch]);
     
     return (
-            <div className="row mt-3">
-                <div className="col">
-                    <h4>Latest Activity</h4>
-
-                </div>
-                <div className="col">
-                    <SecureContent>
-                        <textarea className="form-control" value={newPost} placeholder="Cool post!"
-                                    onChange={(event) => setNewPost(event.target.value)}>
-                        </textarea>
-                        <button
-                            className="btn btn-primary rounded-pill mt-2 mb-2 float-end" onClick={() =>
-                            createPost(dispatch, newPost)}>
-                            Post
-                        </button>
-                    </SecureContent>
-                    <PostList />
-                </div>
-                
+        <div className="row mt-3">
+            <div className="col">
+                <h4>Maybe a list of newest users</h4>
             </div>
+            <div className="col-5">
+                <CreatePost className="mx-5" /> 
+                <h4 className="ms-5">Latest Activity</h4>
+                <PostList posts={posts} className='mt-4 mx-5' />
+            </div>
+        </div>
     );
 };
 
