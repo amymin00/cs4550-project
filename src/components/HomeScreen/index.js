@@ -6,8 +6,8 @@ import {useProfile} from "../../contexts/profileContext";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const [newPost, setNewPost] =
-      useState();
+  const [newPost, setNewPost] = useState();
+  const [postAuthorId, setPostAuthorId] = useState();
   const { checkLoggedIn } = useProfile();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [thisUser, setThisUser] = useState();
@@ -19,6 +19,7 @@ const HomeScreen = () => {
         if (user) {
           setIsLoggedIn(true);
           setThisUser(user);
+          setPostAuthorId(user._id);
         }
       } catch (e) {
         console.log(`Caught error in user-list-item.js: ${e}`);
@@ -28,14 +29,23 @@ const HomeScreen = () => {
   }, []);
 
   const post = {
-    title: "New Post", // TODO add when srtyling new post
-    author: "KLA8oCyQ5YvAfIq2Gau5R", // current user
-    timestamp: 0, // handles in controller
-    song: "2up3OPMp9Tb4dAKM2erWXQ", // TODO get from saved songs
+    title: "New Post", // TODO add when styling new post
+    author: postAuthorId,
+    timestamp: 0,
+    song: "3UXw2DNuCIWA5WshABJnbj", // TODO get from saved songs
     text: newPost,
     likes: [],
     comments: [],
   };
+
+  const handleCreatePostOrAlertAnonUsers = () => {
+    if (isLoggedIn) {
+      createPost(dispatch, post);
+    } else {
+      alert("Please log in or create an account to post!");
+    }
+  }
+
   return (
       <div>
         <div>
@@ -44,8 +54,8 @@ const HomeScreen = () => {
                             setNewPost(event.target.value)}>
               </textarea>
           <button
-              className="btn btn-primary rounded-pill mt-2 mb-2 float-end" onClick={() =>
-              createPost(dispatch, post)}>
+              className="btn btn-primary rounded-pill mt-2 mb-2 float-end"
+              onClick={() => handleCreatePostOrAlertAnonUsers() }>
             Post
           </button>
         </div>
