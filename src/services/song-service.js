@@ -4,7 +4,7 @@ const API_URI = process.env.REACT_APP_LOCAL_API_URI || process.env.REACT_APP_REM
 const SONGS_API = `${API_URI}/songs`;
 
 export const findSong = async id => {
-    const response = await axios.get(`${SONGS_API}/${id}`);
+    const response = await axios.get(`${SONGS_API}/id/${id}`);
     const song = parseTrack(response.data);
     return song;
 }
@@ -12,7 +12,13 @@ export const findSong = async id => {
 export const searchForSongs = async query => {
     const formattedQuery = query.toLowerCase().replaceAll(' ', '-');
     const response = await axios.get(`${SONGS_API}/search/${formattedQuery}`);
-    const songs = parseSearchTrackResults(response.data);
+    const songs = parseSearchResults(response.data.tracks.items);
+    return songs;
+}
+
+export const findSongsById = async songIds => {
+    const response = await axios.post(`${SONGS_API}/list`, {songs: songIds});
+    const songs = parseSearchResults(response.data);
     return songs;
 }
 
@@ -39,7 +45,6 @@ const parseTrack = track => {
     };
 };
 
-const parseSearchTrackResults = data => {
-    const songs = data.tracks.items;
+const parseSearchResults = songs => {
     return songs.map(d => parseTrack(d));
 };

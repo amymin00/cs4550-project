@@ -22,10 +22,12 @@ export const ProfileProvider = ({children}) => {
     const checkLoggedIn = async () => {
         try {
             const response = await api.post(`${API_URI}/profile`);
-            setCurrentUser(response.data);
-            return response.data;
+            const user = response.data;
+            setCurrentUser(user);
+            return user;
         } catch (e) {
-            return false;
+            console.log(`Failed to retrieve current user: ${e}`);
+            throw e;
         }
     }
 
@@ -34,7 +36,18 @@ export const ProfileProvider = ({children}) => {
         setCurrentUser(null);
     }
 
-    const value = {register, login, checkLoggedIn, logout, currentUser};
+    const updateCurrentUser = async updatedUser => {
+        try {
+            await api.put(`${API_URI}/profile`, updatedUser);
+            const user = await checkLoggedIn();
+            return user;
+        } catch (e) {
+            console.log(`Update user operation invalid: ${e}`);
+            throw e;
+        }
+    }
+
+    const value = {register, login, checkLoggedIn, logout, updateCurrentUser, currentUser};
 
     return (
         <ProfileContext.Provider value={value}>

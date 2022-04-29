@@ -1,8 +1,7 @@
 import React from "react";
 import UserListItem from "./user-list-item";
 
-const UserList = ({users = []}) => {  
-    console.log(`users list length = ${users.length}`);
+const UserList = ({users = []}) => {
     return (
         <ul className="list-group">
             {

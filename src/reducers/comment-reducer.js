@@ -1,4 +1,10 @@
-import {FIND_ALL_COMMENTS, DELETE_COMMENT, CREATE_COMMENT, UPDATE_COMMENT}
+import {
+  FIND_ALL_COMMENTS,
+  DELETE_COMMENT,
+  CREATE_COMMENT,
+  UPDATE_COMMENT,
+  FIND_COMMENTS_IN_IDLIST
+}
   from "../actions/comment-actions";
 
 const commentsReducer = (state = [], action) => {
@@ -17,6 +23,7 @@ const commentsReducer = (state = [], action) => {
     case DELETE_COMMENT:
       return state.filter(
           comment => comment._id !== action.comment._id);
+
     default:
       return state;
   }
