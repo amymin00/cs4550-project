@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PostList from "../Posts";
-import {useDispatch} from "react-redux";
-import {createPost} from "../../actions/post-actions";
-import {useProfile} from "../../contexts/profileContext";
+import { useDispatch } from "react-redux";
+import { createPost } from "../../actions/post-actions";
+import { useProfile } from "../../contexts/profileContext";
+import * as service from "../../services/user-service";
+import UserList from "../user-list";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -11,6 +13,7 @@ const HomeScreen = () => {
   const { checkLoggedIn } = useProfile();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [thisUser, setThisUser] = useState();
+  const [users, setUsers] = useState();
 
   useEffect(() => {
     const check = async () => {
@@ -44,24 +47,45 @@ const HomeScreen = () => {
     } else {
       alert("Please log in or create an account to post!");
     }
-  }
+  };
+
+  useEffect(() => {
+    const findAllUsers = async () => {
+      const users = await service.findAllUsers(thisUser);
+      setUsers(users);
+    };
+    findAllUsers();
+  });
 
   return (
+    <div>
       <div>
-        <div>
-              <textarea className="form-control" value={newPost} placeholder="Cool post!"
-                        onChange={(event) =>
-                            setNewPost(event.target.value)}>
-              </textarea>
-          <button
-              className="btn btn-primary rounded-pill mt-2 mb-2 float-end"
-              onClick={() => handleCreatePostOrAlertAnonUsers() }>
-            Post
-          </button>
-        </div>
-        <PostList />
+        <textarea
+          className="form-control"
+          value={newPost}
+          placeholder="Cool post!"
+          onChange={(event) => setNewPost(event.target.value)}
+        ></textarea>
+        <button
+          className="btn btn-primary rounded-pill mt-2 mb-2 float-end"
+          onClick={() => handleCreatePostOrAlertAnonUsers()}
+        >
+          Post
+        </button>
       </div>
-  )
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <div className="mt-5 period" style={{ color: 'white'}}>.</div>
+            <UserList users={users} />
+          </div>
+          <div className="col">
+            <PostList />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default HomeScreen;
