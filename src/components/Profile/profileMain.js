@@ -64,7 +64,7 @@ const ProfileMain = ({
     return (
         <div className='row'>
             {/* Left column */}
-            <div className='col-3'>
+            <div className='col-4 col-lg-3 d-none d-md-block'>
                 <h5 className='p-0'>Followers</h5>
                 {(followers.length > 0 && <UserList users={followers} />) ||
                         <p>
@@ -82,10 +82,10 @@ const ProfileMain = ({
             </div>
 
             {/* Middle column */}
-            <div className='col-6 px-5'>
+            <div className='col-12 col-md-8 col-lg-6 px-3 px-xl-5'>
                 {isThisUser && <CreatePost />}
                 {(usersPosts.length > 0 && 
-                    <div className="mx-5">
+                    <div className="mx-3 mx-xl-5">
                         <h5 className="text-center">
                             {(isThisUser && 'Your') || `${profileUser.name}'s`} posts
                         </h5>
@@ -105,7 +105,7 @@ const ProfileMain = ({
             </div>
 
             {/* Right column */}
-            <div className='col-3'>
+            <div className='col-3 d-none d-lg-block'>
                 <h5 className='p-0'>
                     {
                         (!isThisUser && `${profileUser.name}'s `) ||
