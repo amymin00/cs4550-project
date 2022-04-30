@@ -7,6 +7,8 @@ import CreatePost from "../Posts/createPost";
 import * as userService from '../../services/user-service';
 import * as songService from '../../services/song-service';
 import * as postService from '../../services/post-service';
+import {useDispatch, useSelector} from "react-redux";
+import * as service from "../../services/post-service";
 
 const ProfileMain = ({
     isThisUser = false,
@@ -26,7 +28,18 @@ const ProfileMain = ({
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
     const [usersSongs, setUsersSongs] = useState([]);
-    const [usersPosts, setUsersPosts] = useState([]);
+
+    const dispatch = useDispatch();
+    const posts = useSelector(
+        state => state.posts);
+    const findUserPosts = async () => {
+        const posts = await postService.findPostsByAuthor(profileUser._id);
+        dispatch({
+            type: 'FIND_POSTS_BY_AUTHOR',
+            posts: posts
+        });
+    }
+    useEffect(findUserPosts, [dispatch]);
 
     // Get profile user's followers, following, and song data objects
     useEffect(() => {
@@ -45,16 +58,11 @@ const ProfileMain = ({
                 const songs = await songService.findSongsById(profileUser.songs);
                 setUsersSongs(songs);
             };
-            const findUsersPosts = async () => {
-                const posts = await postService.findPostsByAuthor(profileUser._id);
-                setUsersPosts(posts);
-            };
             const getUsersObjects = async () => {
                 await Promise.all([
                     findUsersFollowers(),
                     findUsersFollowing(),
                     findUsersSongs(),
-                    findUsersPosts()
                 ]);
             };
             getUsersObjects();
@@ -83,13 +91,13 @@ const ProfileMain = ({
 
             {/* Middle column */}
             <div className='col-12 col-md-8 col-lg-6 px-3 px-xl-5'>
-                {isThisUser && <CreatePost />}
-                {(usersPosts.length > 0 && 
+                {isThisUser && <CreatePost canPost={true}/>}
+                {(posts.length > 0 &&
                     <div className="mx-3 mx-xl-5">
                         <h5 className="text-center">
                             {(isThisUser && 'Your') || `${profileUser.name}'s`} posts
                         </h5>
-                        <PostList posts={usersPosts} />
+                        <PostList posts={posts} />
                     </div>) ||
                     <p>
                         {
