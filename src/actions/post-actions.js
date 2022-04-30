@@ -6,6 +6,7 @@ export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const FIND_POST_BY_ID = 'FIND_POST_BY_ID';
 export const FIND_POSTS_BY_SONG = 'FIND_POSTS_BY_SONG';
+export const FIND_POSTS_BY_AUTHOR = 'FIND_POSTS_BY_AUTHOR';
 
 export const findAllPosts = async (dispatch) => {
   const posts = await service.findAllPosts();
@@ -21,7 +22,15 @@ export const findPostsBySong = async (dispatch, songId) => {
       type: FIND_POSTS_BY_SONG,
       posts
     });
-  }
+}
+
+export const findPostsByAuthor = async (dispatch, userId) => {
+  const posts = await service.findPostsByAuthor(userId);
+  dispatch({
+    type: FIND_POSTS_BY_AUTHOR,
+    posts
+  });
+}
 
 export const findPost = async (dispatch) => {
   const post = await service.findPost();
