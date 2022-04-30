@@ -69,7 +69,6 @@ const FollowButton = ({user = {
                 await Promise.all([
                     updateLoggedInUser(),
                     updateOtherUser(),
-                    setIsFollowingUser(true)
                 ]);
             };
             performFollow();
@@ -100,7 +99,6 @@ const FollowButton = ({user = {
                 await Promise.all([
                     updateLoggedInUser(),
                     updateOtherUser(),
-                    setIsFollowingUser(false)
                 ]);
             };
             performUnfollow();
