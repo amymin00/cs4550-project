@@ -34,7 +34,7 @@ const parseTrack = track => {
             id: a.id, 
             name: a.name,
         }
-    });
+    }).slice(0,3);
 
     return {
         id: track.id,
@@ -42,6 +42,7 @@ const parseTrack = track => {
         artists: artists,
         length_ms: track.duration_ms,
         album: album,
+        explicit: track.explicit
     };
 };
 

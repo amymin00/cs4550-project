@@ -47,7 +47,7 @@ const EditProfile = ({
     return (
         <div>
             <h2 className="d-flex justify-content-center mb-3">Edit Profile</h2>
-            <form className="mx-5">
+            <form className="mx-5" onSubmit={handleEdit}>
                 <div className="form-outline mb-4">
                     <input
                         type="text"
@@ -108,8 +108,7 @@ const EditProfile = ({
                 </div>
             </form>
             <div className="row w-auto float-end me-5">
-                <button className="col w-auto btn btn-outline-primary me-3"
-                        onClick={handleEdit}>
+                <button className="col w-auto btn btn-outline-primary me-3">
                     Save
                 </button>
                 <button className="col w-auto btn btn-danger"

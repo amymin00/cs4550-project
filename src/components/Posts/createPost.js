@@ -5,19 +5,21 @@ import { useDispatch } from "react-redux";
 import { useProfile } from "../../contexts/profileContext";
 import * as service from '../../services/song-service';
 
-const CreatePost = ({className = ''}) => {
+const CreatePost = ({className = '',
+                     specificSong = undefined
+}) => {
     const dispatch = useDispatch();
     const { currentUser } = useProfile();
     // usersSongs initially undefined to wait for useProfile to 
     // correctly get currentUser and tell the difference between
     // that waiting and a user with no songs
-    const [usersSongs, setUsersSongs] = useState();
+    const [usersSongs, setUsersSongs] = useState(specificSong);
     const titleRef = useRef();
     const textRef = useRef();
     const songRef = useRef();
 
     useEffect(() => {
-        if (currentUser && !usersSongs) {
+        if (!specificSong && currentUser && !usersSongs) {
             const findUsersSongs = async () => {
                 const songs = await service.findSongsById(currentUser.songs);
                 setUsersSongs(songs);
@@ -33,16 +35,19 @@ const CreatePost = ({className = ''}) => {
             const post = {
                 title: titleRef.current.value,
                 author: currentUser._id,
-                song: songRef.current.value,
+                song: specificSong ? specificSong._id : songRef.current.value,
                 text: textRef.current.value,
             };
             await createPost(dispatch, post);
             
             titleRef.current.value = "";
-            songRef.current.value = "";
             textRef.current.value = "";
+
+            if (songRef.current) {
+                songRef.current.value = "";
+            }
         } catch (e) {
-            alert('Unable to create post. Try again');
+            alert(`Unable to create post. Try again ${e}`);
         }
     };
 
@@ -51,7 +56,7 @@ const CreatePost = ({className = ''}) => {
             <SecureContent>
                 <div className={`bg-light p-2 rounded-1 pb-5 mb-4 ${className}`}>
                     <h5 className="mb-2">Create a Post</h5>
-                    <form>    
+                    <form onSubmit={handleCreate}>    
                         {/* title */}
                         <div className="form-outline mb-2">
                             <input required 
@@ -62,26 +67,29 @@ const CreatePost = ({className = ''}) => {
                         </div>
                         
                         {/* song */}
-                        <div className="form-outline mb-4">
-                            <select required
-                                    ref={songRef}
-                                    className="form-select"
-                                    defaultValue={'DEFAULT'}>
-                                {
-                                    (
-                                        usersSongs && usersSongs.length > 0 &&
-                                        <option value='DEFAULT' disabled>Select a song to post about</option>
-                                    ) ||
-                                    <option value='DEFAULT' disabled className="text-wrap">
-                                        You have no {currentUser.creator && 'saved'} songs to share
-                                    </option>
-                                }
-                                {
-                                    usersSongs &&
-                                    usersSongs.map(s => <option value={s.id}>{s.name} by {s.artists[0].name}</option>)
-                                }
-                            </select>
-                        </div>
+                        {
+                            !specificSong && 
+                            <div className="form-outline mb-4">
+                                <select required
+                                        ref={songRef}
+                                        className="form-select"
+                                        defaultValue={'DEFAULT'}>
+                                    {
+                                        (
+                                            usersSongs && usersSongs.length > 0 &&
+                                            <option value='DEFAULT' disabled>Select a song to post about</option>
+                                        ) ||
+                                        <option value='DEFAULT' disabled className="text-wrap">
+                                            You have no {currentUser.creator && 'saved'} songs to share
+                                        </option>
+                                    }
+                                    {
+                                        usersSongs &&
+                                        usersSongs.map(s => <option value={s.id}>{s.name} by {s.artists[0].name}</option>)
+                                    }
+                                </select>
+                            </div>
+                        }
     
                         {/* text */}
                         <div className="form-outline mb-2">
@@ -91,9 +99,7 @@ const CreatePost = ({className = ''}) => {
                             </textarea>
                         </div>
     
-                        <button
-                            className="btn btn-primary mb-2 float-end" 
-                            onClick={handleCreate}>
+                        <button className="btn btn-primary mb-2 float-end">
                             Post
                         </button>
                     </form>

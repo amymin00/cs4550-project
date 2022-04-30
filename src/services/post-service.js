@@ -25,7 +25,7 @@ export const findPostBySong = async songId => {
 }
 
 export const createPost = async (post) => {
-  console.log(post);
+//   console.log(post);
   const response = await axios.post(POSTS_API, post)
   return response.data;
 }

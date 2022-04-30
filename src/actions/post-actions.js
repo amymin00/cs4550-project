@@ -32,7 +32,7 @@ export const deletePost = async (dispatch, post) => {
 
 export const createPost = async (dispatch, post) => {
   const newPost = await service.createPost(post);
-  console.log(newPost);
+//   console.log(newPost);
   dispatch({
     type: CREATE_POST,
     newPost

@@ -35,7 +35,7 @@ const Register = () => {
         <div>
             <div className="container mt-3">
                 <h1 className="text-center text-primary mb-5">Register</h1>
-                <form>
+                <form onSubmit={handleSignUp}>
                     {/* name */}
                     <div className="form-outline mb-4">
                         <input required 
@@ -93,8 +93,7 @@ const Register = () => {
                     </div>
 
                     <button type="submit"
-                            className="btn btn-primary btn-block mb-3"
-                            onClick={handleSignUp}>
+                            className="btn btn-primary btn-block mb-3">
                         Register
                     </button>
 

@@ -74,7 +74,7 @@ const PostListItem = ({
   const handleAddNewCommentOrAlertAnon = async () => {
     if (isLoggedIn) {
       const commentToAdd = await createComment(dispatch, comment);
-      console.log(commentToAdd);
+    //   console.log(commentToAdd);
       await updatePost(dispatch, {
         ...post,
         post: post.comments.push(commentToAdd._id),

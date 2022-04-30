@@ -52,7 +52,7 @@ export const findUsersFollowing = async (dispatch, user) => {
 
 export const createUser = async (dispatch, user) => {
     const newUser = await service.createUser(user);
-    console.log(newUser);
+    // console.log(newUser);
     dispatch({
         type: CREATE_USER,
         newUser

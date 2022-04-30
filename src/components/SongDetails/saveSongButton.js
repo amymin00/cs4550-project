@@ -58,7 +58,7 @@ const SaveSongButton = ({songId = '', className=''}) => {
                     ...currentUser,
                     songs: currentUser.songs.filter(id => id !== songId)
                 };
-                console.log(updatedUser.son)
+                // console.log(updatedUser.son)
                 await updateCurrentUser(updatedUser);
                 setCurrentUser(updatedUser);
             };
@@ -71,7 +71,8 @@ const SaveSongButton = ({songId = '', className=''}) => {
     if (currentUser) {
         return (
             <button className={btnStyle} onClick={handleClick}>
-                {(isSaved && 'Remove') || 'Save'}
+                <i className={`fa${(isSaved && 's') || 'r'} fa-heart pe-1`}></i>
+                {(isSaved && 'Unsave') || 'Save'}
             </button>
         );
     }
