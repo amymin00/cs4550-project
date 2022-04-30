@@ -14,7 +14,7 @@ const Login = () => {
         
         try {
             await login(usernameRef.current.value, passwordRef.current.value);
-            navigate('/');
+            navigate(-1);
             refreshPage();
         } catch (e) {
             console.log(e);

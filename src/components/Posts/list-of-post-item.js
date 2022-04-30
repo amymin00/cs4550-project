@@ -88,7 +88,7 @@ const PostListItem = ({
     setShowComments(!showComments);
   }
 
-  if (song) {
+  if (song && author) {
     return (
         <ul className={`list-group-item bg-secondary mb-4`}>
           <div className="card m-3">

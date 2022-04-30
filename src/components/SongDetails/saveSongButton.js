@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useProfile } from "../../contexts/profileContext";
+import { saveSong, unsaveSong } from "../../actions/song-actions";
 
 const SaveSongButton = ({songId = '', className=''}) => {
+    const dispatch = useDispatch();
+    const songSaved = useSelector(state => state.songSaved);
     const btnStyle = `w-auto btn btn-info ${className}`;
     const [currentUser, setCurrentUser] = useState();
-    const [isSaved, setIsSaved] = useState(false);
     const { checkLoggedIn, updateCurrentUser } = useProfile();
 
     useEffect(() => {
@@ -20,13 +23,18 @@ const SaveSongButton = ({songId = '', className=''}) => {
     }, []);
 
     useEffect(() => {
+        // Update initial state of saved song reducer value
         if (currentUser) {
-            setIsSaved(currentUser.songs.includes(songId));
+            if (currentUser.songs.includes(songId)) {
+                saveSong(dispatch);
+            } else {
+                unsaveSong(dispatch);
+            }
         }
     }, [currentUser]);
 
     const handleClick = () => {
-        if (isSaved) {
+        if (songSaved) {
             remove();
         } else {
             save();
@@ -35,17 +43,14 @@ const SaveSongButton = ({songId = '', className=''}) => {
 
     const save = async () => {
         try {
-            const saveSong = async () => {
-                currentUser.songs.push(songId);
-                // Below is to trigger the useEffect for currentUser
-                const updatedUser = {
-                    ...currentUser,
-                    songs: currentUser.songs
-                }
-                await updateCurrentUser(updatedUser);
-                setCurrentUser(updatedUser);
+            currentUser.songs.push(songId);
+            const perform = async () => {
+                await Promise.all([
+                    updateCurrentUser(currentUser),
+                    saveSong(dispatch)
+                ]);
             };
-            saveSong();
+            perform();
         } catch (e) {
             console.log(`In saveSongButton.js, unable to perform save functionality: ${e}`);
         }
@@ -53,16 +58,18 @@ const SaveSongButton = ({songId = '', className=''}) => {
 
     const remove = () => {
         try {
-            const removeSong = async () => {
-                const updatedUser = {
-                    ...currentUser,
-                    songs: currentUser.songs.filter(id => id !== songId)
-                };
-                // console.log(updatedUser.son)
-                await updateCurrentUser(updatedUser);
-                setCurrentUser(updatedUser);
+            const updatedUser = {
+                ...currentUser,
+                songs: currentUser.songs.filter(id => id !== songId)
             };
-            removeSong();
+            const perform = async () => {
+                await Promise.all([
+                    updateCurrentUser(updatedUser),
+                    unsaveSong(dispatch),
+                    setCurrentUser(updatedUser)
+                ]);
+            };
+            perform();
         } catch (e) {
             console.log(`In saveSongButton.js, unable to perform unsave functionality: ${e}`);
         }
@@ -71,8 +78,8 @@ const SaveSongButton = ({songId = '', className=''}) => {
     if (currentUser) {
         return (
             <button className={btnStyle} onClick={handleClick}>
-                <i className={`fa${(isSaved && 's') || 'r'} fa-heart pe-1`}></i>
-                {(isSaved && 'Unsave') || 'Save'}
+                <i className={`fa${(songSaved && 's') || 'r'} fa-heart pe-1`}></i>
+                {(songSaved && 'Unsave') || 'Save'}
             </button>
         );
     }

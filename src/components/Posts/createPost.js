@@ -1,53 +1,54 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import SecureContent from "../secureContent";
 import { createPost } from "../../actions/post-actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useProfile } from "../../contexts/profileContext";
-import * as service from '../../services/song-service';
+import { findUsersSongs } from '../../actions/song-actions';
 
 const CreatePost = ({className = '',
-                     specificSong = undefined
+                     specificSong = undefined,
+                     canPost = false,
 }) => {
     const dispatch = useDispatch();
+    const usersSongs = useSelector(state => state.songs);
     const { currentUser } = useProfile();
     // usersSongs initially undefined to wait for useProfile to 
     // correctly get currentUser and tell the difference between
     // that waiting and a user with no songs
-    const [usersSongs, setUsersSongs] = useState(specificSong);
     const titleRef = useRef();
     const textRef = useRef();
     const songRef = useRef();
 
     useEffect(() => {
-        if (!specificSong && currentUser && !usersSongs) {
-            const findUsersSongs = async () => {
-                const songs = await service.findSongsById(currentUser.songs);
-                setUsersSongs(songs);
-            };
-            findUsersSongs();
+        if (!specificSong && currentUser) {
+            findUsersSongs(dispatch, currentUser);
         }
-    }, [currentUser]);
+    }, [dispatch, currentUser]);
 
     const handleCreate = async e => {
         e.preventDefault();
 
         try {
-            const post = {
-                title: titleRef.current.value,
-                author: currentUser._id,
-                song: specificSong ? specificSong._id : songRef.current.value,
-                text: textRef.current.value,
-            };
-            await createPost(dispatch, post);
-            
-            titleRef.current.value = "";
-            textRef.current.value = "";
-
-            if (songRef.current) {
-                songRef.current.value = "";
+            if (canPost) {
+                const post = {
+                    title: titleRef.current.value,
+                    author: currentUser._id,
+                    song: specificSong ? specificSong.id : songRef.current.value,
+                    text: textRef.current.value,
+                };
+                await createPost(dispatch, post);
+                
+                titleRef.current.value = "";
+                textRef.current.value = "";
+    
+                if (songRef.current) {
+                    songRef.current.value = "";
+                }
+            } else if (specificSong) {
+                alert(`You must save ${specificSong.name} before posting about it`);
             }
         } catch (e) {
-            alert(`Unable to create post. Try again ${e}`);
+            alert(`Unable to create post. Try again`);
         }
     };
 

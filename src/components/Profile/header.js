@@ -1,5 +1,5 @@
 import React from "react";
-import FollowButton from "../../FollowButton";
+import FollowButton from "../FollowButton";
 import { Link } from "react-router-dom";
 
 const Header = ({isThisUser = false, 

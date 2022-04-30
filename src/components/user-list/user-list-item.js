@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import FollowButton from '../../FollowButton';
+import FollowButton from '../FollowButton';
 import refreshPage from '../../utils/refreshPage';
 
 const ListOfUsersItem = ({

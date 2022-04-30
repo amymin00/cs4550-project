@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Switch, useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useProfile } from '../../contexts/profileContext';
 import Loading from '../Loading';
 import Header from './header';

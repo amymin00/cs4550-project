@@ -5,10 +5,12 @@ import Loading from "../Loading";
 import SaveSongButton from "./saveSongButton";
 import PostList from "../Posts";
 import CreatePost from "../Posts/createPost";
-import { findPostBySong } from "../../services/post-service";
+import { findPostsBySong } from "../../actions/post-actions";
+import { findUsersSongs } from "../../actions/song-actions";
 import toMinutesSeconds from "../../utils/toMinutesSeconds";
 import { useProfile } from "../../contexts/profileContext";
 import './style.css';
+import { useDispatch, useSelector } from "react-redux";
 
 /**
  * song object: 
@@ -31,42 +33,44 @@ import './style.css';
 
 const SongDetails = () => {
     const { songId } = useParams();
+    const dispatch = useDispatch();
+    const usersSongs = useSelector(state => state.songs);
+    const songsPosts = useSelector(state => state.posts);
+    const songSaved = useSelector(state => state.songSaved);
     const [song, setSong] = useState(null);
-    const [songsPosts, setSongsPosts] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const { checkLoggedIn } = useProfile();
-    
+
     useEffect(() => {
         const check = async () => {
             try {
-                await checkLoggedIn();
-                setIsLoggedIn(true);
+                const user = await checkLoggedIn();
+                const setLoggedInInfo = async () => {
+                    await Promise.all([
+                        setIsLoggedIn(true),
+                        findUsersSongs(dispatch, user),
+                    ]);
+                };
+                setLoggedInInfo();
             } catch (e) {
                 console.log(`Error loading SongDetails page: ${e}`);
             }
         }
-        check();
-    }, []);
-
-    useEffect(() => {
         const getTrack = async () => {
             const track = await findSong(songId);
             setSong(track);
         };
-        getTrack();
-    }, [songId]);
+        const loadPage = async () => {
+            await Promise.all([
+                check(),
+                getTrack(),
+                findPostsBySong(dispatch, songId)
+            ]);
+        };
+        loadPage();
+    }, [dispatch]);
 
-    useEffect(() => {
-        if (song) {
-            const getPosts = async () => {
-                const posts = await findPostBySong(songId);
-                setSongsPosts(posts);
-            }
-            getPosts();
-        }
-    }, [song]);
-
-    if (song) {
+    if (song && usersSongs) {
         return (
             <>
                 <div className="row m-0 mt-3">
@@ -75,7 +79,7 @@ const SongDetails = () => {
                             <img src={song.album.cover} className="p-0 rounded h-auto w-auto fit-image shadow"/>
                         </div>
                         <CreatePost className="mt-4 me-5"
-                                    specificSong={song} /> 
+                                    specificSong={song} canPost={songSaved} /> 
                     </div>
                     <div className="col p-0 overflow-auto">
                         <div className="vh-75 bg-light-yellow ps-5 rounded-top-right p-3 position-relative">

@@ -25,7 +25,7 @@ const Register = () => {
             };
             await register(user);
             refreshPage();
-            navigate('/');
+            navigate(-1);
         } catch (e) {
             alert('Unable to sign up with given user credentials. Try again');
         }

@@ -15,16 +15,21 @@ import React from "react";
 import EditProfile from "./components/Profile/EditProfile";
 import SongDetails from './components/SongDetails';
 // Misc.
-import userReducer from "./reducers/user-reducer";
+import usersReducer from "./reducers/user-reducer";
 import commentsReducer from "./reducers/comment-reducer";
 import postsReducer from "./reducers/post-reducer";
+import { songsReducer, songSavedReducer } from './reducers/song-reducer';
 import { ProfileProvider } from './contexts/profileContext';
 import SecureRoute from './components/secureRoute';
 import AnonRoute from './components/anonRoute';
 
 function App() {
     const reducer = combineReducers({
-        users: userReducer, comments: commentsReducer, posts: postsReducer
+        users: usersReducer,
+        comments: commentsReducer, 
+        posts: postsReducer, 
+        songs: songsReducer,
+        songSaved: songSavedReducer,
     });
     const store = createStore(reducer);
     return (
