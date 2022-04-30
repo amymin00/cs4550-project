@@ -76,7 +76,6 @@ const HomeScreen = () => {
       <div className="container">
         <div className="row">
           <div className="col">
-            <div className="mt-5 period" style={{ color: 'white'}}>.</div>
             <UserList users={users} />
           </div>
           <div className="col">
