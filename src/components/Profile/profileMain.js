@@ -8,7 +8,6 @@ import * as userService from '../../services/user-service';
 import * as songService from '../../services/song-service';
 import * as postService from '../../services/post-service';
 import {useDispatch, useSelector} from "react-redux";
-import * as service from "../../services/post-service";
 
 const ProfileMain = ({
     isThisUser = false,
