@@ -75,7 +75,7 @@ const SongDetails = () => {
             <>
                 <div className="row m-0 mt-3 mb-4">
                     <div className="col-12 col-md-6 p-0 rounded-top-left">
-                        <div className="row m-0 justify-content-center img-height bg-light-yellow p-3 pe-md-5 rounded-top-left">
+                        <div className="row m-0 justify-content-center img-height bg-light-yellow p-3 pe-lg-5 rounded-top-left">
                             <img src={song.album.cover} className="p-0 rounded h-auto w-auto fit-image shadow"/>
                         </div>
                         <div className="bg-light-yellow ps-5 p-3 pt-0 pt-md-3 position-relative d-block d-md-none">
@@ -88,13 +88,13 @@ const SongDetails = () => {
                             <hr className='border-2 border-top border-dark' />
                             <h5 className="text-muted">Album: {song.album.name}</h5>
                             <h5 className="text-muted">Duration: {toMinutesSeconds(song.length_ms)}</h5>
-                            <SaveSongButton songId={songId} className="position-absolute end-0 bottom-0 me-3 mb-3" />
+                            <SaveSongButton songId={songId} className="position-absolute end-0 bottom-0 m-3" />
                         </div>
                         <CreatePost className="mt-4 me-3 me-lg-5"
                                     specificSong={song} canPost={songSaved} /> 
                     </div>
                     <div className="col-12 col-md-6 p-0 overflow-auto">
-                        <div className="img-height bg-light-yellow ps-5 rounded-top-right p-3 position-relative d-none d-md-block">
+                        <div className="img-height bg-light-yellow ps-3 ps-lg-5 rounded-top-right p-3 position-relative d-none d-md-block">
                             <h1 className="text-primary">
                                 <strong>{song.name}</strong>
                             </h1>

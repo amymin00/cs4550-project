@@ -15,17 +15,26 @@ export const findPost = async (post) => {
 }
 
 export const findPostsByAuthor = async authorId => {
-    const response = await axios.get(`${POSTS_API}/author/${authorId}`);
+    const response = await axios.get(`${POSTS_API}/author/id/${authorId}`);
+    return response.data;
+}
+
+export const findPostsByAuthorsList = async ids => {
+    const response = await axios.post(`${POSTS_API}/author/list`, {authors: ids});
     return response.data;
 }
 
 export const findPostsBySong = async songId => {
-    const response = await axios.get(`${POSTS_API}/song/${songId}`);
+    const response = await axios.get(`${POSTS_API}/song/id/${songId}`);
+    return response.data;
+}
+
+export const findPostsBySongsList = async ids => {
+    const response = await axios.post(`${POSTS_API}/song/list`, {songs: ids});
     return response.data;
 }
 
 export const createPost = async (post) => {
-//   console.log(post);
   const response = await axios.post(POSTS_API, post)
   return response.data;
 }

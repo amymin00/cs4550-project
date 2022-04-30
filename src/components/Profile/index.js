@@ -24,9 +24,7 @@ const Profile = () => {
         const check = async () => {
             try {
                 const user = await checkLoggedIn();
-                if (user && user.username === username) {
-                    setIsThisUser(true);
-                }
+                setIsThisUser(user && user.username === username);
             } catch (e) {
                 console.log(`Caught error in Profile index.js: ${e}`);
             }
@@ -34,9 +32,14 @@ const Profile = () => {
         const getProfileUser = async () => {
             const user = await userService.findUserByUsername(username);
             setProfileUser(user);
-        }
-        check();
-        getProfileUser();
+        };
+        const getUsers = async () => {
+            await Promise.all([
+                check(),
+                getProfileUser()
+            ]);
+        };
+        getUsers();
     }, []);
 
     if (profileUser) {
