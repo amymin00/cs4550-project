@@ -5,6 +5,7 @@ export const FIND_ALL_POSTS = 'FIND_ALL_POSTS';
 export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const FIND_POST_BY_ID = 'FIND_POST_BY_ID';
+export const FIND_POSTS_BY_SONG = 'FIND_POSTS_BY_SONG';
 
 export const findAllPosts = async (dispatch) => {
   const posts = await service.findAllPosts();
@@ -13,6 +14,14 @@ export const findAllPosts = async (dispatch) => {
     posts
   });
 }
+
+export const findPostsBySong = async (dispatch, songId) => {
+    const posts = await service.findPostsBySong(songId);
+    dispatch({
+      type: FIND_POSTS_BY_SONG,
+      posts
+    });
+  }
 
 export const findPost = async (dispatch) => {
   const post = await service.findPost();
@@ -32,7 +41,7 @@ export const deletePost = async (dispatch, post) => {
 
 export const createPost = async (dispatch, post) => {
   const newPost = await service.createPost(post);
-  console.log(newPost);
+//   console.log(newPost);
   dispatch({
     type: CREATE_POST,
     newPost

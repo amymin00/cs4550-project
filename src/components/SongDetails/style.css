@@ -1,0 +1,41 @@
+.song-name {
+    font-size: 10vw;
+}
+
+.fit-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+@media screen and (min-width: 1024px) {
+    .rounded-top-left {
+        border-top-left-radius: .75rem;
+    }
+
+    .img-height {
+        height: 75vh;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .rounded-top-left {
+        border-top-left-radius: .75rem;
+    }
+
+    .img-height {
+        height: 50vh;
+    }
+}
+
+.rounded-top-right {
+    border-top-right-radius: .75rem;
+}
+
+.bg-light-yellow {
+    background-color: #ffe9ba;
+}
+
+.h5, h5 {
+    font-size: 1.1rem;
+}

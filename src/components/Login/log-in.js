@@ -11,9 +11,10 @@ const Login = () => {
 
     const handleLogin = async e => {
         e.preventDefault();
+        
         try {
             await login(usernameRef.current.value, passwordRef.current.value);
-            navigate('/');
+            navigate(-1);
             refreshPage();
         } catch (e) {
             console.log(e);
@@ -24,7 +25,7 @@ const Login = () => {
     return (
         <div className="container mt-3">
             <h1 className="text-center text-primary mb-5">Log in</h1>
-            <form>
+            <form onSubmit={handleLogin}>
                 {/* username */}
                 <div className="form-outline mb-4">
                     <input required
@@ -46,8 +47,7 @@ const Login = () => {
                 </div>
 
                 <button type="submit"
-                        className="btn btn-primary btn-block mb-4"
-                        onClick={handleLogin}>
+                        className="btn btn-primary btn-block mb-4">
                     Login
                 </button>
 

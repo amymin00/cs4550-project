@@ -41,7 +41,7 @@ export const deleteComment = async (dispatch, comment) => {
 
 export const createComment = async (dispatch, comment) => {
   const newComment = await service.createComment(comment);
-  console.log(newComment);
+//   console.log(newComment);
   dispatch({
     type: CREATE_COMMENT,
     newComment

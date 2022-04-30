@@ -13,7 +13,7 @@ const NavBar = () => {
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className='collapse navbar-collapse' id='navbarSupportedContent'>
-                <ul className='navbar-nav ms-auto'>
+                <ul className='navbar-nav ms-auto align-items-center'>
                     <Search className='me-5' />
                     <li className='nav-item dropdown'>
                         <SecureMenu />

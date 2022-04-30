@@ -14,15 +14,24 @@ export const findPost = async (post) => {
   return response.data;
 }
 
+export const findPostsByAuthor = async authorId => {
+    const response = await axios.get(`${POSTS_API}/author/${authorId}`);
+    return response.data;
+}
+
+export const findPostsBySong = async songId => {
+    const response = await axios.get(`${POSTS_API}/song/${songId}`);
+    return response.data;
+}
+
 export const createPost = async (post) => {
-  console.log(post);
+//   console.log(post);
   const response = await axios.post(POSTS_API, post)
   return response.data;
 }
 
 export const deletePost = async (post) => {
-  const response = await axios
-  .delete(`${POSTS_API}/${post._id}`);
+  const response = await axios.delete(`${POSTS_API}/${post._id}`);
   return response.data;
 }
 

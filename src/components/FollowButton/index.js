@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import * as service from "../services/user-service";
-import { useProfile } from "../contexts/profileContext";
+import * as service from "../../services/user-service";
+import { useProfile } from "../../contexts/profileContext";
 
 const FollowButton = ({user = {
     _id: '0',
@@ -15,11 +15,10 @@ const FollowButton = ({user = {
     followers: [],
     following: [],
 }, className=''}) => {
-
+    const [followingUser, setFollowingUser] = useState(false);
     const btnStyle = `w-auto btn btn-secondary ${className}`;
     const [otherUser, setOtherUser] = useState(user);
     const [currentUser, setCurrentUser] = useState();
-    const [isFollowingUser, setIsFollowingUser] = useState(false);
     const { checkLoggedIn, updateCurrentUser } = useProfile();
 
     useEffect(() => {
@@ -35,20 +34,23 @@ const FollowButton = ({user = {
     }, []);
 
     useEffect(() => {
+        // Update initial state of follow user reducer value
         if (currentUser) {
-            setIsFollowingUser(currentUser.following.includes(otherUser._id));
+            setFollowingUser(currentUser.following.includes(otherUser._id));
         }
     }, [currentUser]);
 
     const handleClick = () => {
-        if (isFollowingUser) {
-            unfollowUser();
+        console.log('clicked the button');
+        if (followingUser) {
+            unfollow();
         } else {
-            followUser();
+            follow();
         }
     };
 
-    const followUser = async () => {
+    const follow = async () => {
+        console.log('in follow')
         try {
             const updateLoggedInUser = async () => {
                 currentUser.following.push(otherUser._id);
@@ -65,15 +67,21 @@ const FollowButton = ({user = {
                 await service.updateUser(otherUser);
                 setOtherUser(otherUser);
             };
-            updateLoggedInUser();
-            updateOtherUser();
-            setIsFollowingUser(true);
+            const perform = async () => {
+                await Promise.all([
+                    updateLoggedInUser(),
+                    updateOtherUser(),
+                    setFollowingUser(true)
+                ]);
+            };
+            perform();
         } catch (e) {
             console.log(`In FollowButton index.js, unable to perform follow functionality: ${e}`);
         }
     };
 
-    const unfollowUser = () => {
+    const unfollow = () => {
+        console.log('in unfollow')
         try {
             const updateLoggedInUser = async () => {
                 const updatedUser = {
@@ -91,9 +99,14 @@ const FollowButton = ({user = {
                 await service.updateUser(updatedUser);
                 setOtherUser(otherUser);
             };
-            updateLoggedInUser();
-            updateOtherUser();
-            setIsFollowingUser(false);
+            const perform = async () => {
+                await Promise.all([
+                    updateLoggedInUser(),
+                    updateOtherUser(),
+                    setFollowingUser(false)
+                ]);
+            };
+            perform();
         } catch (e) {
             console.log(`In FollowButton index.js, unable to perform follow functionality: ${e}`);
         }
@@ -102,7 +115,7 @@ const FollowButton = ({user = {
     if (currentUser && currentUser._id !== otherUser._id) {
         return (
             <button className={btnStyle} onClick={handleClick}>
-                {(isFollowingUser && <span>Unfollow</span>) || <span>Follow</span>}
+                {(followingUser && 'Unfollow') || 'Follow'}
             </button>
         );
     }
