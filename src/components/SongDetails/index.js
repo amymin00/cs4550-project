@@ -73,16 +73,12 @@ const SongDetails = () => {
     if (song && usersSongs) {
         return (
             <>
-                <div className="row m-0 mt-3">
-                    <div className="col p-0 rounded-top-left">
-                        <div className="row justify-content-center vh-75 bg-light-yellow p-3 pe-5 rounded-top-left">
+                <div className="row m-0 mt-3 mb-4">
+                    <div className="col-12 col-md-6 p-0 rounded-top-left">
+                        <div className="row m-0 justify-content-center img-height bg-light-yellow p-3 pe-md-5 rounded-top-left">
                             <img src={song.album.cover} className="p-0 rounded h-auto w-auto fit-image shadow"/>
                         </div>
-                        <CreatePost className="mt-4 me-5"
-                                    specificSong={song} canPost={songSaved} /> 
-                    </div>
-                    <div className="col p-0 overflow-auto">
-                        <div className="vh-75 bg-light-yellow ps-5 rounded-top-right p-3 position-relative">
+                        <div className="bg-light-yellow ps-5 p-3 pt-0 pt-md-3 position-relative d-block d-md-none">
                             <h1 className="text-primary">
                                 <strong>{song.name}</strong>
                             </h1>
@@ -94,8 +90,24 @@ const SongDetails = () => {
                             <h5 className="text-muted">Duration: {toMinutesSeconds(song.length_ms)}</h5>
                             <SaveSongButton songId={songId} className="position-absolute end-0 bottom-0 me-3 mb-3" />
                         </div>
-                        <div className="ms-5">
-                            <h4 className="my-4">Latest Discussions</h4>
+                        <CreatePost className="mt-4 me-3 me-lg-5"
+                                    specificSong={song} canPost={songSaved} /> 
+                    </div>
+                    <div className="col-12 col-md-6 p-0 overflow-auto">
+                        <div className="img-height bg-light-yellow ps-5 rounded-top-right p-3 position-relative d-none d-md-block">
+                            <h1 className="text-primary">
+                                <strong>{song.name}</strong>
+                            </h1>
+                            <h4 className="text-muted mb-2">
+                                by {song.artists.map(a => a.name).join(', ')} ({song.album.released.substring(0,4)})
+                            </h4>
+                            <hr className='border-2 border-top border-dark' />
+                            <h5 className="text-muted">Album: {song.album.name}</h5>
+                            <h5 className="text-muted">Duration: {toMinutesSeconds(song.length_ms)}</h5>
+                            <SaveSongButton songId={songId} className="position-absolute end-0 bottom-0 me-3 mb-3" />
+                        </div>
+                        <div className="ms-3 ms-lg-5">
+                            <h4 className="my-2 my-md-4">Latest Discussions</h4>
                             {
                                 (
                                     songsPosts.length > 0 &&

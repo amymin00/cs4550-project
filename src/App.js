@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { combineReducers, createStore } from "redux";
 // Page component imports
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import HomeScreen from "./components/HomeScreen"
 import Login from "./components/Login/log-in";
 import Register from "./components/Login/register";
@@ -62,6 +63,7 @@ function App() {
                                 </Route>
                             </Routes>
                         </div>
+                        {/* <Footer /> */}
                     </BrowserRouter>
                 </Provider>
             </ProfileProvider>

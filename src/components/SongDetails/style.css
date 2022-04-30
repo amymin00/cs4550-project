@@ -2,18 +2,30 @@
     font-size: 10vw;
 }
 
-.vh-75 {
-    height: 75vh;
-}
-
 .fit-image {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
 }
 
-.rounded-top-left {
-    border-top-left-radius: .75rem;
+@media screen and (min-width: 1024px) {
+    .rounded-top-left {
+        border-top-left-radius: .75rem;
+    }
+
+    .img-height {
+        height: 75vh;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .rounded-top-left {
+        border-top-left-radius: .75rem;
+    }
+
+    .img-height {
+        height: 50vh;
+    }
 }
 
 .rounded-top-right {

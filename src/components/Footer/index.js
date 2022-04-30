@@ -4,10 +4,10 @@ import './footer.css';
 
 const Footer = () => {
   return (
-      <div className="footer">
-      <div>CS4550 Final Project by Amy Min, McKelvie Smith, Shreya Mitra, and Bayden Ibrahim</div> 
+      <div className="footer bg-primary">
+        <div>CS4550 Final Project by Amy Min, McKelvie Smith, Shreya Mitra, and Bayden Ibrahim</div> 
         <Link to="/privacy">
-          Privacy Policy
+            Privacy Policy
         </Link>
       </div>
   );
