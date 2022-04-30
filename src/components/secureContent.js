@@ -15,7 +15,7 @@ const SecureContent = ({children}) => {
             }
         }
         check();
-    }, [checkLoggedIn]);
+    }, []);
 
     if (loggedIn) {
         return children;
