@@ -34,7 +34,7 @@ function App() {
                         <NavBar />
                         <div className="container">
                             <Routes>
-                                <Route path="/">
+                                <Route exact path="/" >
                                     <Route index element={<HomeScreen />} />
                                     <Route path="/login" element={
                                         <AnonRoute>
@@ -46,8 +46,8 @@ function App() {
                                             <Register/>
                                         </AnonRoute>
                                     } />
-                                    <Route path="/profile/:username" element={<Profile/>} />
-                                    <Route path="/profile/edit" element={
+                                    <Route exact path="/profile/:username" element={<Profile/>} />
+                                    <Route exact path="/profile/edit" element={
                                         <SecureRoute>
                                             <EditProfile/>
                                         </SecureRoute>

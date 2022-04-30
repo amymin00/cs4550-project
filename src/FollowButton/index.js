@@ -65,9 +65,14 @@ const FollowButton = ({user = {
                 await service.updateUser(otherUser);
                 setOtherUser(otherUser);
             };
-            updateLoggedInUser();
-            updateOtherUser();
-            setIsFollowingUser(true);
+            const performFollow = async () => {
+                await Promise.all([
+                    updateLoggedInUser(),
+                    updateOtherUser(),
+                    setIsFollowingUser(true)
+                ]);
+            };
+            performFollow();
         } catch (e) {
             console.log(`In FollowButton index.js, unable to perform follow functionality: ${e}`);
         }
@@ -91,9 +96,14 @@ const FollowButton = ({user = {
                 await service.updateUser(updatedUser);
                 setOtherUser(otherUser);
             };
-            updateLoggedInUser();
-            updateOtherUser();
-            setIsFollowingUser(false);
+            const performUnfollow = async () => {
+                await Promise.all([
+                    updateLoggedInUser(),
+                    updateOtherUser(),
+                    setIsFollowingUser(false)
+                ]);
+            };
+            performUnfollow();
         } catch (e) {
             console.log(`In FollowButton index.js, unable to perform follow functionality: ${e}`);
         }
@@ -102,7 +112,7 @@ const FollowButton = ({user = {
     if (currentUser && currentUser._id !== otherUser._id) {
         return (
             <button className={btnStyle} onClick={handleClick}>
-                {(isFollowingUser && <span>Unfollow</span>) || <span>Follow</span>}
+                {(isFollowingUser && 'Unfollow') || 'Follow'}
             </button>
         );
     }

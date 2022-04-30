@@ -9,8 +9,8 @@ const postsReducer = (state = [], action) => {
               action.post : post);
     case CREATE_POST:
       return [
+        action.newPost,
         ...state,
-        action.newPost
       ];
     case FIND_ALL_POSTS:
       return action.posts;

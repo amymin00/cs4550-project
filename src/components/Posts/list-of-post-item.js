@@ -6,8 +6,7 @@ import {useProfile} from "../../contexts/profileContext";
 import CommentList from "./Comments";
 import * as commentService from "../../services/comment-service";
 import {findSong} from "../../services/song-service";
-import * as userService from "../../actions/user-actions";
-import Loading from "../Loading";
+import * as userService from "../../services/user-service";
 import timeAgo from "../../utils/TimeAgoUtil";
 
 const PostListItem = ({
@@ -27,10 +26,15 @@ const PostListItem = ({
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
   const [song, setSong] = useState(null);
-  const [postAuthorId, setPostAuthorId] = useState();
+  const [currentUserId, setCurrentUserId] = useState();
   const [author, setAuthor] = useState(null);
   const {checkLoggedIn} = useProfile();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const comment = {
+    author: currentUserId,
+    timestamp: 0,
+    text: newComment,
+  };
 
   useEffect(() => {
     const check = async () => {
@@ -38,38 +42,34 @@ const PostListItem = ({
         const user = await checkLoggedIn();
         if (user) {
           setIsLoggedIn(true);
-          setPostAuthorId(user._id);
+          setCurrentUserId(user._id);
         }
       } catch (e) {
         console.log(`Caught error in user-list-item.js: ${e}`);
       }
     };
-    check();
+    const getAuthor = async () => {
+        const author = await userService.findUserById(post.author);
+        setAuthor(author);
+    }
+    const findPostsComments = async () => {
+        const comments = await commentService.findCommentsInIdList(post.comments);
+        setComments(comments);
+    }
+    const getTrack = async () => {
+        const track = await findSong(post.song);
+        setSong(track);
+    };
+    const getPostDataObj = async () => {
+        await Promise.all([
+            check(),
+            getAuthor(),
+            findPostsComments(),
+            getTrack()
+        ]);
+    }
+    getPostDataObj();
   }, []);
-
-  ////////////////////////////////////////////////////////////////
-  // TODO getAuthor bug
-
-  const getAuthor = async () => {
-    const author = await userService.findUserById(post.author);
-    setAuthor(author);
-    console.log(author.name);
-  }
-  useEffect(getAuthor, []);
-
-  ////////////////////////////////////////////////////////////////
-
-  const comment = {
-    author: postAuthorId,
-    timestamp: 0,
-    text: newComment,
-  };
-
-  const findPostsComments = async () => {
-    const comments = await commentService.findCommentsInIdList(post.comments);
-    setComments(comments);
-  }
-  useEffect(findPostsComments, [dispatch]);
 
   const handleAddNewCommentOrAlertAnon = async () => {
     if (isLoggedIn) {
@@ -88,50 +88,42 @@ const PostListItem = ({
     setShowComments(!showComments);
   }
 
-  useEffect(() => {
-    const getTrack = async () => {
-      const track = await findSong(post.song);
-      setSong(track);
-    };
-    getTrack();
-  }, [post.song]);
-
   if (song) {
     return (
-        <ul className="list-group-item bg-secondary m-5">
+        <ul className={`list-group-item bg-secondary mb-4`}>
           <div className="card m-3">
             <img src={song.album.cover} className="card-img-top"/>
             <div className="card-body">
               <h5 className="card-title">{song.name}</h5>
               <h6 className="card-subtitle">{song.artists[0].name}</h6>
               <hr/>
-              <p className="card-text fw-bold">{post.author}
+              <p className="card-text fw-bold">{author.name}
                 <span><p className="d-inline fw-normal ps-2">{timeAgo(
                     post.timestamp)}</p></span></p>
               <p className="card-text">{post.text}</p>
             </div>
             <div>
               <p className="ps-3 pe-3 d-inline-block">
-                {post.likes.includes(postAuthorId) && <span><i
+                {post.likes.includes(currentUserId) && <span role="button"><i
                     className="fas fa-heart text-secondary pe-1"
                     onClick={() => {
                       isLoggedIn && updatePost(dispatch, {
                         ...post,
-                        post: post.likes.splice(post.likes.indexOf(postAuthorId), 1),
+                        post: post.likes.splice(post.likes.indexOf(currentUserId), 1),
                       })
                     }}></i>
                   </span>}
-                {!post.likes.includes(postAuthorId) && <span><i
+                {!post.likes.includes(currentUserId) && <span role="button"><i
                     className="far fa-heart pe-1"
                     onClick={() => {
-                      isLoggedIn && !post.likes.includes(postAuthorId) &&
+                      isLoggedIn && !post.likes.includes(currentUserId) &&
                       updatePost(dispatch, {
                         ...post,
-                        post: post.likes.push(postAuthorId),
+                        post: post.likes.push(currentUserId),
                       })}}></i>
                   </span>}
                 {post.likes.length} </p>
-              <p className="pe-3 d-inline-block"><span><i
+              <p className="pe-3 d-inline-block"><span role="button"><i
                   className="far fa-comment" onClick={() => toggleDisplayComments()}></i></span> {post.comments.length}
               </p>
             </div>
@@ -152,15 +144,16 @@ const PostListItem = ({
               <CommentList comments={comments}/>
             </div>}
           </div>
-          {isLoggedIn && post.author=== postAuthorId && <div className="float-end">
+          {isLoggedIn && post.author=== currentUserId && <div className="float-end">
             <i onClick={() => deletePost(
                 dispatch, post)}
+                role="button"
                className="pt-3 fa fa-trash text-light fa-2x"/>
           </div>}
         </ul>
     );
   } else {
-    return <Loading/>
+    return null;
   }
 }
 export default PostListItem;

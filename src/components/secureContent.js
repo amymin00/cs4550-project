@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import { useProfile } from '../contexts/profileContext';
 
-const SecureContent = ({children, anonymousContent}) => {
+const SecureContent = ({children}) => {
     const [loggedIn, setLoggedIn] = useState(false);
     const { checkLoggedIn } = useProfile();
 

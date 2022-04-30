@@ -14,6 +14,16 @@ export const findPost = async (post) => {
   return response.data;
 }
 
+export const findPostsByAuthor = async authorId => {
+    const response = await axios.get(`${POSTS_API}/author/${authorId}`);
+    return response.data;
+}
+
+export const findPostBySong = async songId => {
+    const response = await axios.get(`${POSTS_API}/song/${songId}`);
+    return response.data;
+}
+
 export const createPost = async (post) => {
   console.log(post);
   const response = await axios.post(POSTS_API, post)
@@ -21,8 +31,7 @@ export const createPost = async (post) => {
 }
 
 export const deletePost = async (post) => {
-  const response = await axios
-  .delete(`${POSTS_API}/${post._id}`);
+  const response = await axios.delete(`${POSTS_API}/${post._id}`);
   return response.data;
 }
 
