@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useProfile } from "../../contexts/profileContext";
 import refreshPage from "../../utils/refreshPage";
+import validName from "../../utils/validName";
 
 const Login = () => {
     const { login } = useProfile();
@@ -17,7 +18,6 @@ const Login = () => {
             navigate(-1);
             refreshPage();
         } catch (e) {
-            console.log(e);
             alert('Unable to login with given user credentials');
         }
     };

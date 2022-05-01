@@ -1,8 +1,8 @@
-import { FIND_USERS_SONGS, SONG_SAVED, SONG_UNSAVED } from "../actions/song-actions";
+import { FIND_ALL_SONGS, SONG_SAVED, SONG_UNSAVED } from "../actions/song-actions";
 
 export const songsReducer = (state = [], action) => {
     switch (action.type) {
-        case FIND_USERS_SONGS:
+        case FIND_ALL_SONGS:
             return action.songs;
         default:
             return state;

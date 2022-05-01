@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { searchForSongs } from '../../services/song-service';
-import SongItem from '../SongListItem';
+import SongListItem from '../SongList/SongListItem';
 import './style.css';
 
 export default function Search({className=''}) {
@@ -48,13 +48,13 @@ export default function Search({className=''}) {
                 <ul id='search-results-menu'
                     className='show dropdown-menu rounded-0 shadow-sm border-0'>
                     {
-                        songs.slice(0, 10).map(song =>
+                        songs.map(song =>
                             <li key={song.id} className='dropdown-item'>
                                 <Link to={`/songs/details/${song.id}`}
                                     className='text-decoration-none'
                                     key={song.id}
                                     onClick={clearQuery}>
-                                    <SongItem song={song} />
+                                    <SongListItem song={song} />
                                 </Link>
                             </li>
                         )

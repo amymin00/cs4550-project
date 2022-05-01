@@ -28,7 +28,6 @@ const SecureMenu = () => {
             navigate('/login');
             refreshPage();
         } catch (e) {
-            console.log(e);
             alert('Unable to logout');
         }
     };

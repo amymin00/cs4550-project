@@ -16,8 +16,8 @@ export const searchForSongs = async query => {
     return songs;
 }
 
-export const findSongsById = async songIds => {
-    const response = await axios.post(`${SONGS_API}/list`, {songs: songIds});
+export const findSongsById = async (songIds, ordered = false) => {
+    const response = await axios.post(`${SONGS_API}/list`, {songs: songIds, ordered: ordered});
     const songs = parseSearchResults(response.data);
     return songs;
 }

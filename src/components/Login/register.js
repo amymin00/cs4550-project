@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useProfile } from "../../contexts/profileContext";
 import refreshPage from "../../utils/refreshPage";
+import validName from "../../utils/validName";
 
 const Register = () => {
     const { register } = useProfile();
@@ -16,6 +17,8 @@ const Register = () => {
         e.preventDefault();
         
         try {
+            validName(nameRef.current.value);
+            
             const user = {
                 name: nameRef.current.value,
                 email: emailRef.current.value,

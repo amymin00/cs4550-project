@@ -41,7 +41,6 @@ const FollowButton = ({user = {
     }, [currentUser]);
 
     const handleClick = () => {
-        console.log('clicked the button');
         if (followingUser) {
             unfollow();
         } else {
@@ -50,7 +49,6 @@ const FollowButton = ({user = {
     };
 
     const follow = async () => {
-        console.log('in follow')
         try {
             const updateLoggedInUser = async () => {
                 currentUser.following.push(otherUser._id);
@@ -81,7 +79,6 @@ const FollowButton = ({user = {
     };
 
     const unfollow = () => {
-        console.log('in unfollow')
         try {
             const updateLoggedInUser = async () => {
                 const updatedUser = {

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import SongItem from "../SongListItem";
 import UserList from "../user-list";
 import PostList from "../Posts";
+import SongList from "../SongList";
 import CreatePost from "../Posts/createPost";
 import * as userService from '../../services/user-service';
 import * as songService from '../../services/song-service';
@@ -29,8 +28,7 @@ const ProfileMain = ({
     const [usersSongs, setUsersSongs] = useState([]);
 
     const dispatch = useDispatch();
-    const posts = useSelector(
-        state => state.posts);
+    const posts = useSelector(state => state.posts);
     const findUserPosts = async () => {
         const posts = await postService.findPostsByAuthor(profileUser._id);
         dispatch({
@@ -48,15 +46,16 @@ const ProfileMain = ({
                 setFollowers(followers);
             };
             const findUsersFollowing = async () => {
-                // console.log('in findUsersFollowing');
                 const following = await userService.findUsersFollowing(profileUser);
-                // console.log(`user following ppl #: ${following.length}`);
                 setFollowing(following);
             };
             const findUsersSongs = async () => {
-                const songs = await songService.findSongsById(profileUser.songs);
-                setUsersSongs(songs);
+                if (usersSongs.length === 0 && profileUser.songs.length > 0) {
+                    const songs = await songService.findSongsById(profileUser.songs);
+                    setUsersSongs(songs);
+                }
             };
+
             const getUsersObjects = async () => {
                 await Promise.all([
                     findUsersFollowers(),
@@ -66,14 +65,14 @@ const ProfileMain = ({
             };
             getUsersObjects();
         }
-    }, [profileUser]);
+    }, [dispatch]);
 
     return (
         <div className='row'>
             {/* Left column */}
             <div className='col-4 col-lg-3 d-none d-md-block'>
                 <h5 className='p-0'>Followers</h5>
-                {(followers.length > 0 && <UserList users={followers} />) ||
+                {(followers.length > 0 && <UserList users={followers} className='' />) ||
                         <p>
                             {
                                 (isThisUser && 'You have ') ||
@@ -83,7 +82,7 @@ const ProfileMain = ({
                         </p>
                 }
                 <h5 className='p-0 mt-3'>Following</h5>
-                {(following.length > 0 && <UserList users={following} />) ||
+                {(following.length > 0 && <UserList users={following} className='' />) ||
                     (isThisUser && <p>Add people to follow!</p>) ||
                     <p>{profileUser.username} is not following anyone</p>}
             </div>
@@ -122,20 +121,7 @@ const ProfileMain = ({
                     Songs
                 </h5>
                 {
-                    (
-                        usersSongs.length > 0 &&
-                        <div className='list-group'>
-                            {
-                                usersSongs.map(song => 
-                                    <Link to={`/songs/details/${song.id}`}
-                                            key={song.id}
-                                            className='list-group-item'>
-                                        <SongItem song={song} />
-                                    </Link>
-                                )
-                            }
-                        </div>
-                    ) ||
+                    <SongList songs={usersSongs} /> ||
                     <p>
                         {
                             (isThisUser && 'You have ') ||

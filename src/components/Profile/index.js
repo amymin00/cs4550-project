@@ -7,15 +7,9 @@ import ProfileMain from './profileMain';
 import * as userService from '../../services/user-service';
 import './style.css';
 
-/**
- * TODOS:
- * 1. get posts/comments made by this user
- */
-
-
 const Profile = () => {
     const { username } = useParams();
-    const { checkLoggedIn } = useProfile();
+    const { checkLoggedIn, currentUser } = useProfile();
     const [isThisUser, setIsThisUser] = useState(false);
     const [profileUser, setProfileUser] = useState();
 
@@ -24,9 +18,7 @@ const Profile = () => {
         const check = async () => {
             try {
                 const user = await checkLoggedIn();
-                if (user && user.username === username) {
-                    setIsThisUser(true);
-                }
+                setIsThisUser(user && user.username === username);
             } catch (e) {
                 console.log(`Caught error in Profile index.js: ${e}`);
             }
@@ -34,10 +26,15 @@ const Profile = () => {
         const getProfileUser = async () => {
             const user = await userService.findUserByUsername(username);
             setProfileUser(user);
-        }
-        check();
-        getProfileUser();
-    }, []);
+        };
+        const getUsers = async () => {
+            await Promise.all([
+                check(),
+                getProfileUser()
+            ]);
+        };
+        getUsers();
+    }, [checkLoggedIn]);
 
     if (profileUser) {
         return (
@@ -48,7 +45,7 @@ const Profile = () => {
             </div>
         );
     } else {
-        return <Loading />
+        return <Loading />;
     }
 }
 

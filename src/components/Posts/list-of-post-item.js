@@ -10,16 +10,8 @@ import * as userService from "../../services/user-service";
 import timeAgo from "../../utils/TimeAgoUtil";
 
 const PostListItem = ({
-  post = {
-    _id: "",
-    title: "",
-    author: "",
-    timestamp: 0,
-    song: "",
-    text: "",
-    likes: [],
-    comments: [],
-  }
+  post = null,
+  hideImage = false,
 }) => {
   const dispatch = useDispatch();
   const [newComment, setNewComment] = useState();
@@ -49,17 +41,24 @@ const PostListItem = ({
       }
     };
     const getAuthor = async () => {
-        const author = await userService.findUserById(post.author);
-        setAuthor(author);
+        if (post) {
+            const author = await userService.findUserById(post.author);
+            setAuthor(author);
+        }
     }
     const findPostsComments = async () => {
-        const comments = await commentService.findCommentsInIdList(post.comments);
-        setComments(comments);
+        if (post) {
+            const comments = await commentService.findCommentsInIdList(post.comments);
+            setComments(comments);
+        }
     }
     const getTrack = async () => {
-        const track = await findSong(post.song);
-        setSong(track);
+        if (post && !song) {
+            const track = await findSong(post.song);
+            setSong(track);
+        }
     };
+    
     const getPostDataObj = async () => {
         await Promise.all([
             check(),
@@ -69,12 +68,11 @@ const PostListItem = ({
         ]);
     }
     getPostDataObj();
-  }, []);
+  }, [dispatch]);
 
   const handleAddNewCommentOrAlertAnon = async () => {
     if (isLoggedIn) {
       const commentToAdd = await createComment(dispatch, comment);
-    //   console.log(commentToAdd);
       await updatePost(dispatch, {
         ...post,
         post: post.comments.push(commentToAdd._id),
@@ -88,16 +86,33 @@ const PostListItem = ({
     setShowComments(!showComments);
   }
 
-  if (song && author) {
+  if (post && song && author) {
     return (
         <ul className={`list-group-item bg-secondary mb-4`}>
           <div className="card m-3">
-            <img src={song.album.cover} className="card-img-top"/>
+            {
+                !hideImage && 
+                <a href={`/songs/details/${song.id}`}
+                    className='text-decoration-none text-muted'>
+                    <img src={song.album.cover} className="card-img-top"/>
+                </a>
+            }
             <div className="card-body">
-              <h5 className="card-title">{song.name}</h5>
-              <h6 className="card-subtitle">{song.artists[0].name}</h6>
-              <hr/>
-              <p className="card-text fw-bold">{author.name}
+              {
+                !hideImage &&
+                <a href={`/songs/details/${song.id}`}
+                    className='text-decoration-none text-muted'>
+                  <p className="card-title mb-0 lead">{song.name}</p>
+                  <p className="card-subtitle mb-0 lead">{song.artists[0].name}</p>
+                  <hr/>
+                </a>
+              }
+              <h4>{post.title}</h4>
+              <p className="card-text fw-bold">
+                <a href={`/profile/${author.username}`}
+                    className='text-decoration-none text-dark'>
+                    {author.name}
+                </a>
                 <span><p className="d-inline fw-normal ps-2">{timeAgo(
                     post.timestamp)}</p></span></p>
               <p className="card-text">{post.text}</p>
