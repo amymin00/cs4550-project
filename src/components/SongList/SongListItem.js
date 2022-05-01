@@ -1,14 +1,15 @@
-import React from "react";
 import './style.css';
 import toMinutesSeconds from "../../utils/toMinutesSeconds";
 
-const SongItem = ({song = {
+const SongListItem = ({song = {
     id: '',
     name: '',
     artists: [],
     length_ms: 0,
     album: {},
 }}) => {
+
+    
     return (
         <div className='row w-auto'>
             <div className='col-3'>
@@ -34,4 +35,4 @@ const SongItem = ({song = {
     );
 }
 
-export default SongItem;
+export default SongListItem;

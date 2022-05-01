@@ -13,6 +13,7 @@ export const searchForSongs = async query => {
     const formattedQuery = query.toLowerCase().replaceAll(' ', '-');
     const response = await axios.get(`${SONGS_API}/search/${formattedQuery}`);
     const songs = parseSearchResults(response.data.tracks.items);
+    console.log(songs);
     return songs;
 }
 
@@ -34,7 +35,7 @@ const parseTrack = track => {
             id: a.id, 
             name: a.name,
         }
-    });
+    }).slice(0,3);
 
     return {
         id: track.id,
@@ -42,6 +43,7 @@ const parseTrack = track => {
         artists: artists,
         length_ms: track.duration_ms,
         album: album,
+        explicit: track.explicit
     };
 };
 

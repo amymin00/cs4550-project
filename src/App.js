@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { combineReducers, createStore } from "redux";
 // Page component imports
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import HomeScreen from "./components/HomeScreen"
 import Login from "./components/Login/log-in";
 import Register from "./components/Login/register";
@@ -15,16 +16,21 @@ import React from "react";
 import EditProfile from "./components/Profile/EditProfile";
 import SongDetails from './components/SongDetails';
 // Misc.
-import userReducer from "./reducers/user-reducer";
+import usersReducer from "./reducers/user-reducer";
 import commentsReducer from "./reducers/comment-reducer";
 import postsReducer from "./reducers/post-reducer";
+import { songsReducer, songSavedReducer } from './reducers/song-reducer';
 import { ProfileProvider } from './contexts/profileContext';
 import SecureRoute from './components/secureRoute';
 import AnonRoute from './components/anonRoute';
 
 function App() {
     const reducer = combineReducers({
-        users: userReducer, comments: commentsReducer, posts: postsReducer
+        users: usersReducer,
+        comments: commentsReducer, 
+        posts: postsReducer, 
+        songs: songsReducer,
+        songSaved: songSavedReducer,
     });
     const store = createStore(reducer);
     return (
@@ -34,7 +40,7 @@ function App() {
                         <NavBar />
                         <div className="container">
                             <Routes>
-                                <Route path="/">
+                                <Route exact path="/" >
                                     <Route index element={<HomeScreen />} />
                                     <Route path="/login" element={
                                         <AnonRoute>
@@ -46,8 +52,8 @@ function App() {
                                             <Register/>
                                         </AnonRoute>
                                     } />
-                                    <Route path="/profile/:username" element={<Profile/>} />
-                                    <Route path="/profile/edit" element={
+                                    <Route exact path="/profile/:username" element={<Profile/>} />
+                                    <Route exact path="/profile/edit" element={
                                         <SecureRoute>
                                             <EditProfile/>
                                         </SecureRoute>
@@ -57,6 +63,7 @@ function App() {
                                 </Route>
                             </Routes>
                         </div>
+                        {/* <Footer /> */}
                     </BrowserRouter>
                 </Provider>
             </ProfileProvider>

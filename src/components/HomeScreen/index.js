@@ -1,90 +1,135 @@
 import React, { useEffect, useState } from "react";
+import { useProfile } from '../../contexts/profileContext';
+import { useDispatch, useSelector } from "react-redux";
 import PostList from "../Posts";
-import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/post-actions";
-import { useProfile } from "../../contexts/profileContext";
-import * as service from "../../services/user-service";
+import * as postService from '../../services/post-service';
+import * as userService from '../../services/user-service';
+import * as songService from "../../services/song-service";
+import CreatePost from "../Posts/createPost";
 import UserList from "../user-list";
+import SongList from "../SongList";
 
 const HomeScreen = () => {
-  const dispatch = useDispatch();
-  const [newPost, setNewPost] = useState();
-  const [postAuthorId, setPostAuthorId] = useState();
-  const { checkLoggedIn } = useProfile();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [thisUser, setThisUser] = useState();
-  const [users, setUsers] = useState();
+    const dispatch = useDispatch();
+    const { checkLoggedIn } = useProfile();
+    const posts = useSelector(state => state.posts);
+    const users = useSelector(state => state.users);
+    const songs = useSelector(state => state.songs);
+    const [loggedInUser, setLoggedInUser] = useState();
 
-  useEffect(() => {
-    const check = async () => {
-      try {
-        const user = await checkLoggedIn();
-        if (user) {
-          setIsLoggedIn(true);
-          setThisUser(user);
-          setPostAuthorId(user._id);
-        }
-      } catch (e) {
-        console.log(`Caught error in user-list-item.js: ${e}`);
-      }
+    // Get profile user and currently logged in user
+    useEffect(() => {
+        const check = async () => {
+            try {
+                const user = await checkLoggedIn();
+                setLoggedInUser(user);
+            } catch (e) {
+                console.log(`Caught error in HomeScreen index.js: ${e}`);
+            }
+        };
+        check();
+    }, []);
+
+    useEffect(() => {
+        const getPosts = async () => {
+            let posts = [];
+
+            if (loggedInUser) {
+                if (loggedInUser.creator) {
+                    posts = await postService.findPostsBySongsList(loggedInUser.songs);
+                } else {
+                    posts = await postService.findPostsByAuthorsList(loggedInUser.following);
+                }
+            } else {
+                posts = await postService.findAllPosts();
+            }
+
+            dispatch({
+                type: 'FIND_ALL_POSTS',
+                posts: posts
+            });
+        };
+
+        const getNewlyJoinedUsers = async () => {
+            const users = await userService.findAllUsers();
+            dispatch({
+                type: 'FIND_ALL_USERS',
+                users: users
+            });
+        };
+
+        const getPopularSongs = async () => {
+            const songIds = await postService.findPopularSongs();
+            const songs = await songService.findSongsById(songIds);
+            dispatch({
+                type: 'FIND_ALL_SONGS',
+                songs: songs
+            });
+        };
+
+        const getObjectsLists = async () => {
+            await Promise.all([
+                getPosts(),
+                getNewlyJoinedUsers(),
+                getPopularSongs()
+            ]);
+        };
+
+        getObjectsLists();
+    }, [loggedInUser]);
+
+    const PostsHeader = () => {
+        return (
+            <h4 className="ms-5">
+                {
+                    (
+                        loggedInUser && (
+                            (
+                                loggedInUser.creator &&
+                                'What people are saying about your songs'
+                            ) ||
+                            'Discussion on your favorite songs'
+                        )
+                    ) ||
+                    'What the community is talking about'
+                }
+            </h4>
+        );
     };
-    check();
-  }, []);
-
-  const post = {
-    title: "New Post", // TODO add when styling new post
-    author: postAuthorId,
-    timestamp: 0,
-    song: "3UXw2DNuCIWA5WshABJnbj", // TODO get from saved songs
-    text: newPost,
-    likes: [],
-    comments: [],
-  };
-
-  const handleCreatePostOrAlertAnonUsers = () => {
-    if (isLoggedIn) {
-      createPost(dispatch, post);
-    } else {
-      alert("Please log in or create an account to post!");
-    }
-  };
-
-  useEffect(() => {
-    const findAllUsers = async () => {
-      const users = await service.findAllUsers(thisUser);
-      setUsers(users);
-    };
-    findAllUsers();
-  });
-
-  return (
-    <div>
-      <div>
-        <textarea
-          className="form-control"
-          value={newPost}
-          placeholder="Cool post!"
-          onChange={(event) => setNewPost(event.target.value)}
-        ></textarea>
-        <button
-          className="btn btn-primary rounded-pill mt-2 mb-2 float-end"
-          onClick={() => handleCreatePostOrAlertAnonUsers()}
-        >
-          Post
-        </button>
-      </div>
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <UserList users={users} />
-          </div>
-          <div className="col">
-            <PostList />
-          </div>
+    
+    return (
+        <div className="my-3">
+            <div className="row mb-4">
+                {
+                    loggedInUser &&
+                    <>
+                        <h1><strong>Welcome {loggedInUser.name.split(' ')[0]}!</strong></h1>
+                        <h3>Check out what the community has to say below</h3>
+                    </>
+                }
+            </div>
+            <div className="row">
+                <div className="col-8 col-md-4 col-lg-6 pe-md-2 pe-xl-5">
+                    <div className="row">
+                        <div className="col-12 col-lg-5 col-xl-6">
+                            <h4 className="mb-0">Newest members</h4>
+                            <UserList users={users} className='mt-3' />
+                        </div>
+                        <div className="col-12 col-lg-7 col-xl-6">
+                            <h4 className="mb-0 mt-4 mt-lg-0">Popular songs</h4>
+                            <SongList songs={songs} className='mt-3' />
+                        </div>
+                    </div>
+                </div>
+                <div className="mt-4 mt-lg-0 col-12 col-md-8 col-lg-6 ps-2 ps-xl-5">
+                    <CreatePost canPost={true} className='ms-5' />
+                    <PostsHeader />
+                    <PostList posts={posts} className='mt-3 mx-5' />
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+        
+    );
 };
 
 export default HomeScreen;

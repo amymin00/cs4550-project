@@ -37,9 +37,11 @@ export const ProfileProvider = ({children}) => {
     }
 
     const updateCurrentUser = async updatedUser => {
+        console.log('---------------  profileContext  ----------------')
         try {
             await api.put(`${API_URI}/profile`, updatedUser);
             const user = await checkLoggedIn();
+            console.log(user)
             return user;
         } catch (e) {
             console.log(`Update user operation invalid: ${e}`);

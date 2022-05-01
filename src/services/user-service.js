@@ -22,7 +22,7 @@ export const findUserByUsername = async username => {
 }
 
 export const createUser = async (user) => {
-  console.log(user);
+//   console.log(user);
   const response = await axios.post(`${API_URI}/register`, user)
   return response.data;
 }
@@ -40,13 +40,11 @@ export const updateUser = async (user) => {
 export const findUsersFollowers = async (user) => {
   const response = await axios.get(`${USERS_API}/followers/${user._id}`);
   const followers = response.data;
-//   console.log('got here!!!');
   return followers;
 }
 
 export const findUsersFollowing = async (user) => {
   const response = await axios.get(`${USERS_API}/following/${user._id}`);
   const following = response.data;
-//   console.log(`in user service: user ${user.username} has ${following.length} following, actually has ${user.following.length}`);
   return following;
 }
