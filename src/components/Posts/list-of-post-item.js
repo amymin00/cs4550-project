@@ -8,6 +8,7 @@ import * as commentService from "../../services/comment-service";
 import {findSong} from "../../services/song-service";
 import * as userService from "../../services/user-service";
 import timeAgo from "../../utils/TimeAgoUtil";
+import refreshPage from "../../utils/refreshPage";
 
 const PostListItem = ({
   post = {
@@ -79,6 +80,7 @@ const PostListItem = ({
         ...post,
         post: post.comments.push(commentToAdd._id),
       });
+      refreshPage();
     } else {
       alert("Please log in or create an account to comment!");
     }

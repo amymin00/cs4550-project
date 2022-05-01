@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import * as service from "../../services/user-service";
 import { useProfile } from "../../contexts/profileContext";
+import refreshPage from '../../utils/refreshPage';
+
 
 const FollowButton = ({user = {
     _id: '0',
@@ -47,6 +49,7 @@ const FollowButton = ({user = {
         } else {
             follow();
         }
+        refreshPage();
     };
 
     const follow = async () => {
