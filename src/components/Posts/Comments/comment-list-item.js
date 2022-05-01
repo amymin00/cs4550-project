@@ -30,7 +30,7 @@ const ListOfCommentsItem = ({
         </ul>
     );
   }
-  
+
   return null;
 }
 export default ListOfCommentsItem;

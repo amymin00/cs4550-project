@@ -131,7 +131,6 @@ const HomeScreen = () => {
                 </div>
             </div>
         </div>
-        
     );
 };
 

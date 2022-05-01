@@ -58,7 +58,7 @@ const PostListItem = ({
             setSong(track);
         }
     };
-
+    
     const getPostDataObj = async () => {
         await Promise.all([
             check(),
