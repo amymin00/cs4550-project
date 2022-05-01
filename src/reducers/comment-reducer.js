@@ -23,7 +23,6 @@ const commentsReducer = (state = [], action) => {
     case DELETE_COMMENT:
       return state.filter(
           comment => comment._id !== action.comment._id);
-
     default:
       return state;
   }
