@@ -26,8 +26,7 @@ export const ProfileProvider = ({children}) => {
             setCurrentUser(user);
             return user;
         } catch (e) {
-            console.log(`Failed to retrieve current user: ${e}`);
-            // throw e;
+            // console.log(`Failed to retrieve current user: ${e}`);
         }
     }
 
@@ -43,7 +42,6 @@ export const ProfileProvider = ({children}) => {
             return user;
         } catch (e) {
             console.log(`Update user operation invalid: ${e}`);
-            throw e;
         }
     }
 

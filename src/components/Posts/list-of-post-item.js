@@ -54,7 +54,6 @@ const PostListItem = ({
     }
     const getTrack = async () => {
         if (post && !song) {
-            console.log('calling findSongById in post item')
             const track = await findSong(post.song);
             setSong(track);
         }

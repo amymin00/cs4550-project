@@ -27,7 +27,6 @@ const EditProfile = ({
     const navigate = useNavigate();
 
     const handleEdit = async (e) => {
-        console.log('submitted edit profile form')
         e.preventDefault();
 
         try {

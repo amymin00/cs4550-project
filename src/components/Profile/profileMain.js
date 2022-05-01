@@ -51,7 +51,6 @@ const ProfileMain = ({
             };
             const findUsersSongs = async () => {
                 if (usersSongs.length === 0 && profileUser.songs.length > 0) {
-                    console.log('calling findSongsById in profileMain')
                     const songs = await songService.findSongsById(profileUser.songs);
                     setUsersSongs(songs);
                 }

@@ -18,7 +18,6 @@ const Login = () => {
             navigate(-1);
             refreshPage();
         } catch (e) {
-            console.log(e);
             alert('Unable to login with given user credentials');
         }
     };

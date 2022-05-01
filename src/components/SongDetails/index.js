@@ -46,7 +46,6 @@ const SongDetails = () => {
             try {
                 const user = await checkLoggedIn();
                 const setLoggedInInfo = async () => {
-                    console.log('calling findSongsById in song details')
                     await Promise.all([
                         setIsLoggedIn(true),
                         findUsersSongs(dispatch, user),

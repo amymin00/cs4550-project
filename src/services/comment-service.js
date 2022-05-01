@@ -21,7 +21,6 @@ export const findComment = async (comment) => {
 }
 
 export const createComment = async (comment) => {
-//   console.log(comment);
   const response = await axios.post(COMMENTS_API, comment)
   return response.data;
 }

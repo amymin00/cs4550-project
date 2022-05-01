@@ -31,7 +31,6 @@ const CreatePost = ({className = '',
 
     useEffect(() => {
         if (currentUser) {
-            console.log('calling findUsersSongs in createPost')
             const getSongs = async () => await findUsersSongs(dispatch, currentUser);
             getSongs();
         }

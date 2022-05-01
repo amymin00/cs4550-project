@@ -32,14 +32,12 @@ const HomeScreen = () => {
 
     useEffect(() => {
         const getPosts = async () => {
-            console.log('in getPosts')
             let posts = [];
 
             if (loggedInUser) {
                 if (loggedInUser.creator) {
                     posts = await postService.findPostsBySongsList(loggedInUser.songs);
                 } else {
-                    console.log('should find posts list by authors')
                     posts = await postService.findPostsByAuthorsList(loggedInUser.following);
                 }
             } else {
@@ -60,7 +58,6 @@ const HomeScreen = () => {
         };
         const getPopularSongs = async () => {
             if (songs.length === 0) {
-                console.log('calling findSongsById in home screen')
                 const songIds = await postService.findPopularSongs();
                 const songs = await songService.findSongsById(songIds, true);
                 setSongs(songs);

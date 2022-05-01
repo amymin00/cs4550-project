@@ -22,7 +22,6 @@ export const findUserByUsername = async username => {
 }
 
 export const createUser = async (user) => {
-//   console.log(user);
   const response = await axios.post(`${API_URI}/register`, user)
   return response.data;
 }
