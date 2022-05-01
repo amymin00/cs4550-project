@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SecureContent from "../secureContent";
 import { createPost } from "../../actions/post-actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,19 +11,31 @@ const CreatePost = ({className = '',
 }) => {
     const dispatch = useDispatch();
     const usersSongs = useSelector(state => state.songs);
-    const { currentUser } = useProfile();
-    // usersSongs initially undefined to wait for useProfile to 
-    // correctly get currentUser and tell the difference between
-    // that waiting and a user with no songs
+    const { checkLoggedIn } = useProfile();
+    const [currentUser, setCurrentUser] = useState();
     const titleRef = useRef();
     const textRef = useRef();
     const songRef = useRef();
 
     useEffect(() => {
-        if (!specificSong && currentUser) {
-            findUsersSongs(dispatch, currentUser);
+        const check = async () => {
+            try {
+                const user = await checkLoggedIn();
+                setCurrentUser(user);
+            } catch (e) {
+                console.log(`Error loading in createPost.js: ${e}`);
+            }
+        };
+        check();
+    }, []);
+
+    useEffect(() => {
+        if (currentUser) {
+            console.log('calling findUsersSongs in createPost')
+            const getSongs = async () => await findUsersSongs(dispatch, currentUser);
+            getSongs();
         }
-    }, [dispatch, currentUser]);
+    }, [currentUser]);
 
     const handleCreate = async e => {
         e.preventDefault();

@@ -49,7 +49,6 @@ const HomeScreen = () => {
                 posts: posts
             });
         };
-
         const getNewlyJoinedUsers = async () => {
             const users = await userService.findAllUsers();
             dispatch({
@@ -57,14 +56,16 @@ const HomeScreen = () => {
                 users: users
             });
         };
-
         const getPopularSongs = async () => {
-            const songIds = await postService.findPopularSongs();
-            const songs = await songService.findSongsById(songIds);
-            dispatch({
-                type: 'FIND_ALL_SONGS',
-                songs: songs
-            });
+            if (songs.length === 0) {
+                console.log('calling findSongsById in home screen')
+                const songIds = await postService.findPopularSongs();
+                const songs = await songService.findSongsById(songIds);
+                dispatch({
+                    type: 'FIND_ALL_SONGS',
+                    songs: songs
+                });
+            }
         };
 
         const getObjectsLists = async () => {
@@ -74,7 +75,6 @@ const HomeScreen = () => {
                 getPopularSongs()
             ]);
         };
-
         getObjectsLists();
     }, []);
 

@@ -27,7 +27,7 @@ export const ProfileProvider = ({children}) => {
             return user;
         } catch (e) {
             console.log(`Failed to retrieve current user: ${e}`);
-            throw e;
+            // throw e;
         }
     }
 

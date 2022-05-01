@@ -46,6 +46,7 @@ const SongDetails = () => {
             try {
                 const user = await checkLoggedIn();
                 const setLoggedInInfo = async () => {
+                    console.log('calling findSongsById in song details')
                     await Promise.all([
                         setIsLoggedIn(true),
                         findUsersSongs(dispatch, user),
@@ -55,11 +56,14 @@ const SongDetails = () => {
             } catch (e) {
                 console.log(`Error loading SongDetails page: ${e}`);
             }
-        }
-        const getTrack = async () => {
-            const track = await findSong(songId);
-            setSong(track);
         };
+        const getTrack = async () => {
+            if (!song) {
+                const track = await findSong(songId);
+                setSong(track);
+            }
+        };
+
         const loadPage = async () => {
             await Promise.all([
                 check(),

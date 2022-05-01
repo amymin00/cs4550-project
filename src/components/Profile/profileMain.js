@@ -28,8 +28,7 @@ const ProfileMain = ({
     const [usersSongs, setUsersSongs] = useState([]);
 
     const dispatch = useDispatch();
-    const posts = useSelector(
-        state => state.posts);
+    const posts = useSelector(state => state.posts);
     const findUserPosts = async () => {
         const posts = await postService.findPostsByAuthor(profileUser._id);
         dispatch({
@@ -51,9 +50,13 @@ const ProfileMain = ({
                 setFollowing(following);
             };
             const findUsersSongs = async () => {
-                const songs = await songService.findSongsById(profileUser.songs);
-                setUsersSongs(songs);
+                if (usersSongs.length === 0 && profileUser.songs.length > 0) {
+                    console.log('calling findSongsById in profileMain')
+                    const songs = await songService.findSongsById(profileUser.songs);
+                    setUsersSongs(songs);
+                }
             };
+
             const getUsersObjects = async () => {
                 await Promise.all([
                     findUsersFollowers(),
@@ -63,7 +66,7 @@ const ProfileMain = ({
             };
             getUsersObjects();
         }
-    }, [profileUser]);
+    }, [dispatch]);
 
     return (
         <div className='row'>
