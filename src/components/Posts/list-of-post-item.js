@@ -1,4 +1,4 @@
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {deletePost, updatePost} from "../../actions/post-actions";
 import React, {useEffect, useState} from "react";
 import {createComment} from "../../actions/comment-actions";
@@ -16,7 +16,8 @@ const PostListItem = ({
   const dispatch = useDispatch();
   const [newComment, setNewComment] = useState();
   const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState([]);
+//   const [comments, setComments] = useState([]);
+  const comments = useSelector(state => state.comments);
   const [song, setSong] = useState(null);
   const [currentUserId, setCurrentUserId] = useState();
   const [author, setAuthor] = useState(null);
@@ -49,7 +50,10 @@ const PostListItem = ({
     const findPostsComments = async () => {
         if (post) {
             const comments = await commentService.findCommentsInIdList(post.comments);
-            setComments(comments);
+            dispatch({
+                type: 'FIND_ALL_COMMENTS',
+                comments: comments,
+            })
         }
     }
     const getTrack = async () => {
@@ -88,7 +92,7 @@ const PostListItem = ({
 
   if (post && song && author) {
     return (
-        <ul className={`list-group-item bg-secondary mb-4`}>
+        <ul className={`list-group-item bg-secondary mb-2`}>
           <div className="card m-3">
             {
                 !hideImage && 

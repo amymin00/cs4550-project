@@ -28,19 +28,16 @@ export default function Search({className=''}) {
     return (
         <div id='search' className={`dropdown ${className}`}>
             {/* Search form */}
-            <form className='d-flex align-items-center bg-white rounded-2'>
+            <div className='d-flex align-items-center bg-white rounded-2'>
                 <input ref={queryRef}
                         id='navbarDropdown'
                         className='form-control pe-2 border-0 shadow-none' 
                         type='search'
                         placeholder='Search songs'
-                        aria-label='Search'/>
-                <button className='btn btn-secondary rounded-0 rounded-end border-0'
-                        type='submit'
-                        onClick={fetchSongs}>
-                    <i className="fa fa-search fa-lg mx-2"></i>
-                </button>
-            </form>
+                        aria-label='Search'
+                        onInput={fetchSongs}/>
+                <i className="fa fa-search fa-lg mx-2"></i>
+            </div>
 
             {/* Search results dropdown */}
             {

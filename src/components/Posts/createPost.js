@@ -97,7 +97,7 @@ const CreatePost = ({className = '',
                                     }
                                     {
                                         usersSongs &&
-                                        usersSongs.map(s => <option value={s.id}>{s.name} by {s.artists[0].name}</option>)
+                                        usersSongs.map(s => <option key={s.id} value={s.id}>{s.name} by {s.artists[0].name}</option>)
                                     }
                                 </select>
                             </div>

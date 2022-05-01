@@ -15,15 +15,14 @@ const commentsReducer = (state = [], action) => {
               action.comment : comment);
     case CREATE_COMMENT:
       return [
-        ...state,
-        action.newComment
+        action.newComment,
+        ...state
       ];
     case FIND_ALL_COMMENTS:
       return action.comments;
     case DELETE_COMMENT:
       return state.filter(
           comment => comment._id !== action.comment._id);
-
     default:
       return state;
   }

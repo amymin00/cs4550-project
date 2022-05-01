@@ -9,7 +9,7 @@ import './style.css';
 
 const Profile = () => {
     const { username } = useParams();
-    const { checkLoggedIn, currentUser } = useProfile();
+    const { checkLoggedIn } = useProfile();
     const [isThisUser, setIsThisUser] = useState(false);
     const [profileUser, setProfileUser] = useState();
 

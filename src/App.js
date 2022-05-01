@@ -38,7 +38,7 @@ function App() {
                 <Provider store={store}>
                     <BrowserRouter>
                         <NavBar />
-                        <div className="container">
+                        <div className="container mb-3">
                             <Routes>
                                 <Route exact path="/" >
                                     <Route index element={<HomeScreen />} />
@@ -62,8 +62,9 @@ function App() {
                                     <Route path="/privacy" element={<PrivacyPolicy />} />
                                 </Route>
                             </Routes>
+                            <div className='footer-height'></div>
                         </div>
-                        {/* <Footer /> */}
+                        <Footer />
                     </BrowserRouter>
                 </Provider>
             </ProfileProvider>

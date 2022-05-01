@@ -58,7 +58,7 @@ const Header = ({isThisUser = false,
                                 Edit Profile
                             </Link>
                         ) ||
-                        <FollowButton user={profileUser} />
+                        <FollowButton user={profileUser} className='w-auto ms-sm-5 mb-3 mb-sm-0 float-sm-end' />
                     }
                 </div>
             </div>                
