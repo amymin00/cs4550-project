@@ -65,6 +65,7 @@ const SongDetails = () => {
                         <div className="bg-light-yellow ps-5 p-3 pt-0 pt-md-3 position-relative d-block d-md-none">
                             <h1 className="text-primary">
                                 <strong>{song.name}</strong>
+                                {song.explicit && <span className="h4 text-secondary fw-bold"> (explicit)</span>}
                             </h1>
                             <h4 className="text-muted mb-2">
                                 by {song.artists.map(a => a.name).join(', ')} ({song.album.released.substring(0,4)})
@@ -80,7 +81,8 @@ const SongDetails = () => {
                     <div className="col-12 col-md-6 p-0 overflow-auto">
                         <div className="img-height bg-light-yellow ps-3 ps-lg-5 rounded-top-right p-3 position-relative d-none d-md-block">
                             <h1 className="text-primary">
-                                <strong>{song.name}</strong>
+                                <strong>{song.name}</strong> 
+                                {song.explicit && <span className="h4 text-secondary fw-bold"> (explicit)</span>}
                             </h1>
                             <h4 className="text-muted mb-2">
                                 by {song.artists.map(a => a.name).join(', ')} ({song.album.released.substring(0,4)})
@@ -90,7 +92,7 @@ const SongDetails = () => {
                             <h5 className="text-muted">Duration: {toMinutesSeconds(song.length_ms)}</h5>
                             <SaveSongButton songId={songId} className="position-absolute end-0 bottom-0 me-3 mb-3" />
                         </div>
-                        <div className="ms-3 ms-lg-5">
+                        <div className="ms-3 ms-lg-5 mb-1">
                             <h4 className="my-2 my-md-4">Latest Discussions</h4>
                             {
                                 (
