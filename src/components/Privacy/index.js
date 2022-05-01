@@ -1,11 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="container">
-      <Link to="/home"> Home </Link>
-      <h2>Privacy Policy</h2>
+    <div>
+      <h2 className="fw-bold text-center mb-3">Privacy Policy</h2>
       <p>
         "Spotify with Friends" was built to give Spotify listeners and artists a
         better way to share what music their friends are listening to, as well

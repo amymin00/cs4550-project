@@ -63,7 +63,7 @@ function App() {
                                 </Route>
                             </Routes>
                         </div>
-                        {/* <Footer /> */}
+                        <Footer />
                     </BrowserRouter>
                 </Provider>
             </ProfileProvider>

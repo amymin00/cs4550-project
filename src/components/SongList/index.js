@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SongListItem from "./SongListItem";
 
 const SongList = ({songs = [],
+                   ranked = false,
                    className = '',
 }) => {  
     if (songs.length > 0) {
@@ -13,7 +14,10 @@ const SongList = ({songs = [],
                        <Link to={`/songs/details/${song.id}`}
                                key={song.id}
                                className='list-group-item'>
-                           <SongListItem song={song} number={index + 1} />
+                            {
+                                (ranked && <SongListItem song={song} number={index + 1} />) ||
+                                <SongListItem song={song} />
+                            }
                        </Link>
                    )
                }

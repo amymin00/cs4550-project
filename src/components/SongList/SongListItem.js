@@ -25,7 +25,7 @@ const SongListItem = ({number = 0,
                 <div className='row w-100 text-wrap text-dark pe-1'>
                         <nobr className='text-wrap'>
                             <span className="bold-song-name">{song.name}</span> 
-                            <span className="text-muted"> ({toMinutesSeconds(song.length_ms)})</span>
+                            <span className="text-muted d-none d-md-block"> ({toMinutesSeconds(song.length_ms)})</span>
                         </nobr>
                         <nobr className='text-wrap'>
                             <span className='text-success'>{song.artists[0].name}&nbsp;</span>

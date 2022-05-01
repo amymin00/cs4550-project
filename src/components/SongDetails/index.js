@@ -12,25 +12,6 @@ import { useProfile } from "../../contexts/profileContext";
 import './style.css';
 import { useDispatch, useSelector } from "react-redux";
 
-/**
- * song object: 
- * {
-        id: track.id,
-        name: track.name,
-        artists: [list of {
-            id: a.id, 
-            name: a.name,
-        }],
-        length_ms: track.duration_ms,
-        album: {
-            id: track.album.id,
-            name: track.album.name,
-            cover: track.album.images[0].url,
-            released: track.album.release_date,
-        },
-    }
- */
-
 const SongDetails = () => {
     const { songId } = useParams();
     const dispatch = useDispatch();
