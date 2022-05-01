@@ -21,6 +21,8 @@ export const findPostsByAuthor = async authorId => {
 }
 
 export const findPostsByAuthorsList = async ids => {
+    console.log('finding posts by author ids:')
+    console.log(ids)
     const response = await axios.post(`${POSTS_API}/author/list`, {authors: ids});
     return response.data;
 }
@@ -36,7 +38,7 @@ export const findPostsBySongsList = async ids => {
 }
 
 export const findPopularSongs = async () => {
-    const response = await axios.post(`${POSTS_API}/song/popular`);
+    const response = await axios.get(`${POSTS_API}/song/popular`);
     return response.data;
 }
 

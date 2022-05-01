@@ -14,7 +14,8 @@ const HomeScreen = () => {
     const { checkLoggedIn } = useProfile();
     const posts = useSelector(state => state.posts);
     const users = useSelector(state => state.users);
-    const songs = useSelector(state => state.songs);
+    // const songs = useSelector(state => state.songs);
+    const [songs, setSongs] = useState([]);
     const [loggedInUser, setLoggedInUser] = useState();
 
     // Get profile user and currently logged in user
@@ -32,12 +33,14 @@ const HomeScreen = () => {
 
     useEffect(() => {
         const getPosts = async () => {
+            console.log('in getPosts')
             let posts = [];
 
             if (loggedInUser) {
                 if (loggedInUser.creator) {
                     posts = await postService.findPostsBySongsList(loggedInUser.songs);
                 } else {
+                    console.log('should find posts list by authors')
                     posts = await postService.findPostsByAuthorsList(loggedInUser.following);
                 }
             } else {
@@ -60,11 +63,12 @@ const HomeScreen = () => {
             if (songs.length === 0) {
                 console.log('calling findSongsById in home screen')
                 const songIds = await postService.findPopularSongs();
-                const songs = await songService.findSongsById(songIds);
-                dispatch({
-                    type: 'FIND_ALL_SONGS',
-                    songs: songs
-                });
+                const songs = await songService.findSongsById(songIds, true);
+                setSongs(songs);
+                // dispatch({
+                //     type: 'FIND_ALL_SONGS',
+                //     songs: songs
+                // });
             }
         };
 
@@ -76,7 +80,7 @@ const HomeScreen = () => {
             ]);
         };
         getObjectsLists();
-    }, []);
+    }, [loggedInUser]);
 
     const PostsHeader = () => {
         return (
@@ -88,7 +92,7 @@ const HomeScreen = () => {
                                 loggedInUser.creator &&
                                 'What people are saying about your songs'
                             ) ||
-                            'Discussion on your favorite songs'
+                            'Posts by your following list'
                         )
                     ) ||
                     'What the community is talking about'
@@ -124,7 +128,14 @@ const HomeScreen = () => {
                 <div className="mt-4 mt-lg-0 col-12 col-md-8 col-lg-6 ps-2 ps-xl-5">
                     <CreatePost canPost={true} className='ms-5' />
                     <PostsHeader />
-                    <PostList posts={posts} className='mt-3 mx-5' />
+                    {
+                        (
+                            posts.length > 0 &&
+                            <PostList posts={posts} className='mt-3 mx-5' />
+                        ) ||
+                        <span className="mx-5">Nobody has posted in your community</span>
+                    }
+                    
                 </div>
             </div>
         </div>
