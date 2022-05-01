@@ -88,7 +88,7 @@ const PostListItem = ({
 
   if (post && song && author) {
     return (
-        <ul className={`list-group-item bg-secondary mb-4`}>
+        <ul className={`list-group-item bg-secondary mb-2`}>
           <div className="card m-3">
             {
                 !hideImage && 

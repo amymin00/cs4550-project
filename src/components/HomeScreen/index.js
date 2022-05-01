@@ -94,7 +94,7 @@ const HomeScreen = () => {
     };
     
     return (
-        <div className="my-3">
+        <div className="mt-3">
             <div className="row mb-4">
                 {
                     loggedInUser &&
