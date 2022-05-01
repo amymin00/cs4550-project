@@ -9,11 +9,11 @@ const SongList = ({songs = [],
         return (
            <div className={`list-group ${className}`}>
                {
-                   songs.map(song => 
+                   songs.map((song, index) => 
                        <Link to={`/songs/details/${song.id}`}
                                key={song.id}
                                className='list-group-item'>
-                           <SongListItem song={song} />
+                           <SongListItem song={song} number={index + 1} />
                        </Link>
                    )
                }

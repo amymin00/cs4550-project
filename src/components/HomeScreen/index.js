@@ -14,7 +14,6 @@ const HomeScreen = () => {
     const { checkLoggedIn } = useProfile();
     const posts = useSelector(state => state.posts);
     const users = useSelector(state => state.users);
-    // const songs = useSelector(state => state.songs);
     const [songs, setSongs] = useState([]);
     const [loggedInUser, setLoggedInUser] = useState();
 
@@ -65,10 +64,6 @@ const HomeScreen = () => {
                 const songIds = await postService.findPopularSongs();
                 const songs = await songService.findSongsById(songIds, true);
                 setSongs(songs);
-                // dispatch({
-                //     type: 'FIND_ALL_SONGS',
-                //     songs: songs
-                // });
             }
         };
 
@@ -113,7 +108,7 @@ const HomeScreen = () => {
                 }
             </div>
             <div className="row">
-                <div className="col-8 col-md-4 col-lg-6 pe-md-2 pe-xl-5">
+                <div className="col-8 col-md-5 col-lg-6 pe-md-2 pe-xl-5">
                     <div className="row">
                         <div className="col-12 col-lg-5">
                             <h4 className="mb-0">Newest members</h4>
@@ -125,7 +120,7 @@ const HomeScreen = () => {
                         </div>
                     </div>
                 </div>
-                <div className="mt-4 mt-lg-0 col-12 col-md-8 col-lg-6 ps-2 ps-xl-5">
+                <div className="mt-4 mt-lg-0 col-12 col-md-7 col-lg-6 ps-2 ps-xl-5">
                     <CreatePost canPost={true} className='ms-5' />
                     <PostsHeader />
                     {
