@@ -76,7 +76,7 @@ const HomeScreen = () => {
         };
 
         getObjectsLists();
-    }, [loggedInUser]);
+    }, []);
 
     const PostsHeader = () => {
         return (
@@ -111,11 +111,11 @@ const HomeScreen = () => {
             <div className="row">
                 <div className="col-8 col-md-4 col-lg-6 pe-md-2 pe-xl-5">
                     <div className="row">
-                        <div className="col-12 col-lg-5 col-xl-6">
+                        <div className="col-12 col-lg-5">
                             <h4 className="mb-0">Newest members</h4>
                             <UserList users={users} className='mt-3' />
                         </div>
-                        <div className="col-12 col-lg-7 col-xl-6">
+                        <div className="col-12 col-lg-7">
                             <h4 className="mb-0 mt-4 mt-lg-0">Popular songs</h4>
                             <SongList songs={songs} className='mt-3' />
                         </div>

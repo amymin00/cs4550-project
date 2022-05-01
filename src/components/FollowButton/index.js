@@ -79,7 +79,7 @@ const FollowButton = ({user = {
     };
 
     const unfollow = () => {
-        console.log('in unfollow')
+        // console.log('in unfollow')
         try {
             const updateLoggedInUser = async () => {
                 const updatedUser = {

@@ -43,7 +43,6 @@ const EditProfile = ({
                         password: passwordRef.current.value,
                         biography: biographyRef.current.value
                     };
-                    console.log(user);
                     await updateCurrentUser(user);
                     
                     navigate(`/profile/${usernameRef.current.value}`);

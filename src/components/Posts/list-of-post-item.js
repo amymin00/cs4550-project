@@ -1,6 +1,7 @@
 import {useDispatch} from "react-redux";
 import {deletePost, updatePost} from "../../actions/post-actions";
 import React, {useEffect, useState} from "react";
+import Link from "react-dom";
 import {createComment} from "../../actions/comment-actions";
 import {useProfile} from "../../contexts/profileContext";
 import CommentList from "./Comments";
@@ -96,12 +97,12 @@ const PostListItem = ({
             {!hideImage && <img src={song.album.cover} className="card-img-top"/>}
             <div className="card-body">
               {
-                !hideImage && 
-                <>
+                !hideImage &&
+                <Link to={`/song/details/${song.id}`}>
                   <p className="card-title mb-0 lead">{song.name}</p>
                   <p className="card-subtitle mb-0 lead">{song.artists[0].name}</p>
                   <hr/>
-                </>
+                </Link>
               }
               <h4>{post.title}</h4>
               <p className="card-text fw-bold">{author.name}

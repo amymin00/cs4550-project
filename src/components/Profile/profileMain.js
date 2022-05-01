@@ -42,16 +42,12 @@ const ProfileMain = ({
     // Get profile user's followers, following, and song data objects
     useEffect(() => {
         if (profileUser) {
-            console.log('wow')
-            console.log(profileUser);
             const findUsersFollowers = async () => {
                 const followers = await userService.findUsersFollowers(profileUser);
                 setFollowers(followers);
             };
             const findUsersFollowing = async () => {
-                // console.log('in findUsersFollowing');
                 const following = await userService.findUsersFollowing(profileUser);
-                // console.log(`user following ppl #: ${following.length}`);
                 setFollowing(following);
             };
             const findUsersSongs = async () => {
