@@ -105,19 +105,19 @@ const HomeScreen = () => {
                 }
             </div>
             <div className="row">
-                <div className="col-8 col-md-5 col-lg-6 pe-0 pe-md-2 pe-xl-5">
+                <div className="col-8 col-md-5 col-lg-7 pe-0 pe-md-2 pe-xl-3">
                     <div className="row">
-                        <div className="col-12 col-lg-6">
+                        <div className="col-12 col-lg-5">
                             <h4 className="mb-0">Newest members</h4>
                             <UserList users={users} className='mt-3' />
                         </div>
-                        <div className="col-12 col-lg-6">
+                        <div className="col-12 col-lg-7">
                             <h4 className="mb-0 mt-4 mt-lg-0">Popular songs</h4>
                             <SongList songs={songs} ranked={true} className='mt-3' />
                         </div>
                     </div>
                 </div>
-                <div className="mt-4 mt-lg-0 col-12 col-md-7 col-lg-6 ps-2 ps-xl-5">
+                <div className="mt-4 mt-lg-0 col-12 col-md-7 col-lg-5 ps-2 ps-xl-3">
                     <CreatePost canPost={true} className='ms-5' />
                     <PostsHeader />
                     {
