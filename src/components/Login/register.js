@@ -53,7 +53,7 @@ const Register = () => {
                     <div className="form-outline mb-4">
                         <input required
                                 ref={emailRef}
-                                type="email" id="registerUsername" 
+                                type="email" id="registerEmail" 
                                 className="form-control"
                                 placeholder="johnsmith@email.com" />
                         <label className="form-label"

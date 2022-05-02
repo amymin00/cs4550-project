@@ -38,10 +38,8 @@ const SongDetails = () => {
             }
         };
         const getTrack = async () => {
-            if (!song) {
-                const track = await findSong(songId);
-                setSong(track);
-            }
+            const track = await findSong(songId);
+            setSong(track);
         };
 
         const loadPage = async () => {
@@ -52,7 +50,7 @@ const SongDetails = () => {
             ]);
         };
         loadPage();
-    }, [dispatch]);
+    }, [songId]);
 
     if (song && usersSongs) {
         return (

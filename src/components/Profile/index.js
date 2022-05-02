@@ -34,7 +34,7 @@ const Profile = () => {
             ]);
         };
         getUsers();
-    }, [checkLoggedIn]);
+    }, [username]);
 
     if (profileUser) {
         return (
