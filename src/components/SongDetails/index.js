@@ -91,7 +91,7 @@ const SongDetails = () => {
                             <SaveSongButton songId={songId} className="position-absolute end-0 bottom-0 me-3 mb-3" />
                         </div>
                         <div className="ms-3 ms-lg-5 mb-1">
-                            <h4 className="my-2 my-md-3">Latest Discussions</h4>
+                            <h4 className="my-3">Latest Discussions</h4>
                             {
                                 (
                                     songsPosts.length > 0 &&

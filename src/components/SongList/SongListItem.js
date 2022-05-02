@@ -17,11 +17,11 @@ const SongListItem = ({number = 0,
                     <h5 className='fw-bold text-secondary'>{number}</h5>
                 </div>
             }
-            <div className='col-3'>
+            <div className='col-4'>
                 <img src={song.album.cover} alt=''
                     className='w-100'></img>
             </div>
-            <div className='col-8'>
+            <div className='col-7'>
                 <div className='row w-100 text-wrap text-dark pe-1'>
                         <nobr className='text-wrap'>
                             <span className="bold-song-name">{song.name}</span> 
