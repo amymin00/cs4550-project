@@ -97,10 +97,16 @@ const HomeScreen = () => {
         <div className="mt-3">
             <div className="row mb-4">
                 {
-                    loggedInUser &&
+                    (
+                        loggedInUser &&
+                        <>
+                            <h1><strong>Welcome {loggedInUser.name.split(' ')[0]}!</strong></h1>
+                            <h3>Check out what the community has to say below</h3>
+                        </>
+                    ) ||
                     <>
-                        <h1><strong>Welcome {loggedInUser.name.split(' ')[0]}!</strong></h1>
-                        <h3>Check out what the community has to say below</h3>
+                        <h1>Share your favorite songs on Spotify with friends</h1>
+                        <hr className="mt-3" />
                     </>
                 }
             </div>
