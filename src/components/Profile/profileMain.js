@@ -36,7 +36,7 @@ const ProfileMain = ({
             posts: posts
         });
     }
-    useEffect(findUserPosts, [dispatch]);
+    useEffect(findUserPosts, [profileUser]);
 
     // Get profile user's followers, following, and song data objects
     useEffect(() => {
@@ -50,10 +50,8 @@ const ProfileMain = ({
                 setFollowing(following);
             };
             const findUsersSongs = async () => {
-                if (usersSongs.length === 0 && profileUser.songs.length > 0) {
-                    const songs = await songService.findSongsById(profileUser.songs);
-                    setUsersSongs(songs);
-                }
+                const songs = await songService.findSongsById(profileUser.songs);
+                setUsersSongs(songs);
             };
 
             const getUsersObjects = async () => {
@@ -65,7 +63,7 @@ const ProfileMain = ({
             };
             getUsersObjects();
         }
-    }, [dispatch]);
+    }, [posts]);
 
     return (
         <div className='row'>
