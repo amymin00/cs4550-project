@@ -10,9 +10,11 @@ const CommentList = ({comments = []}) => {
             <h5>Comments</h5>
           </ul>
           {
-              comments.map && comments.map(comment =>
+              (comments.length > 0 && comments.map(comment =>
                   <ListOfCommentsItem key={comment._id}
                                 comment={comment}/>)
+              ) ||
+              <span className="text-muted">No comments to show</span>
           }
 
 

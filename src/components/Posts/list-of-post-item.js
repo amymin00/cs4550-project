@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {deletePost, updatePost} from "../../actions/post-actions";
 import React, {useEffect, useState} from "react";
 import {createComment} from "../../actions/comment-actions";
@@ -8,6 +8,7 @@ import * as commentService from "../../services/comment-service";
 import {findSong} from "../../services/song-service";
 import * as userService from "../../services/user-service";
 import timeAgo from "../../utils/TimeAgoUtil";
+import refreshPage from "../../utils/refreshPage";
 
 const PostListItem = ({
   post = null,
@@ -16,8 +17,8 @@ const PostListItem = ({
   const dispatch = useDispatch();
   const [newComment, setNewComment] = useState();
   const [showComments, setShowComments] = useState(false);
-//   const [comments, setComments] = useState([]);
-  const comments = useSelector(state => state.comments);
+  const [comments, setComments] = useState([]);
+  const [numComments, setNumComments] = useState(0);
   const [song, setSong] = useState(null);
   const [currentUserId, setCurrentUserId] = useState();
   const [author, setAuthor] = useState(null);
@@ -50,10 +51,8 @@ const PostListItem = ({
     const findPostsComments = async () => {
         if (post) {
             const comments = await commentService.findCommentsInIdList(post.comments);
-            dispatch({
-                type: 'FIND_ALL_COMMENTS',
-                comments: comments,
-            })
+            setComments(comments);
+            setNumComments(comments.length);
         }
     }
     const getTrack = async () => {
@@ -74,6 +73,8 @@ const PostListItem = ({
     getPostDataObj();
   }, [dispatch]);
 
+  const alertLoginForAction = action => alert(`Please log in or create an account to ${action}!`);
+
   const handleAddNewCommentOrAlertAnon = async () => {
     if (isLoggedIn) {
       const commentToAdd = await createComment(dispatch, comment);
@@ -81,8 +82,10 @@ const PostListItem = ({
         ...post,
         post: post.comments.push(commentToAdd._id),
       });
+      alert('Adding your comment...');
+      refreshPage();
     } else {
-      alert("Please log in or create an account to comment!");
+        alertLoginForAction('comment');
     }
   };
 
@@ -135,15 +138,15 @@ const PostListItem = ({
                 {!post.likes.includes(currentUserId) && <span role="button"><i
                     className="far fa-heart pe-1"
                     onClick={() => {
-                      isLoggedIn && !post.likes.includes(currentUserId) &&
+                      (isLoggedIn && !post.likes.includes(currentUserId) &&
                       updatePost(dispatch, {
                         ...post,
                         post: post.likes.push(currentUserId),
-                      })}}></i>
+                      })) || (!isLoggedIn && alertLoginForAction('like posts'))}}></i>
                   </span>}
                 {post.likes.length} </p>
               <p className="pe-3 d-inline-block"><span role="button"><i
-                  className="far fa-comment" onClick={() => toggleDisplayComments()}></i></span> {post.comments.length}
+                  className={`fa${(showComments && 's') || 'r'} fa-comment`} onClick={() => toggleDisplayComments()}></i></span> {numComments}
               </p>
             </div>
             <div className="ms-3 me-3">
