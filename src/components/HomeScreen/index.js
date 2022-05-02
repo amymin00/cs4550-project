@@ -107,11 +107,11 @@ const HomeScreen = () => {
             <div className="row">
                 <div className="col-8 col-md-5 col-lg-6 pe-0 pe-md-2 pe-xl-5">
                     <div className="row">
-                        <div className="col-12 col-lg-5">
+                        <div className="col-12 col-lg-6">
                             <h4 className="mb-0">Newest members</h4>
                             <UserList users={users} className='mt-3' />
                         </div>
-                        <div className="col-12 col-lg-7">
+                        <div className="col-12 col-lg-6">
                             <h4 className="mb-0 mt-4 mt-lg-0">Popular songs</h4>
                             <SongList songs={songs} ranked={true} className='mt-3' />
                         </div>
